@@ -75,7 +75,7 @@ class MonControleur {
 
     public function testform(Request $rq, Response $rs, $args) : Response {
         $vue = new VueWish( [] , $this->container ) ;
-        if ($_SESSION['Connection']) {
+        if (!$_SERVER['HTTP_CONNECTION']) {
             $rs->getBody()->write($vue->render(10));
         } else {
             $rs->getBody()->write( $vue->render( 8 ) ) ;
@@ -94,10 +94,16 @@ class MonControleur {
 
     public function testpass(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody() ;
-        $login       = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
+        $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
         $u = User::where('login','=',$login)->first();
-        $res = password_verify($pass, $u->pass);
+        if(gettype($u) != 'NULL'){
+            $res = password_verify($pass, $u->pass);
+        }
+        else{
+            $res = false;
+        }
+
 
         if ($res) $_SESSION['iduser'] = $u->id;
 
@@ -114,6 +120,7 @@ class MonControleur {
         $l = new Liste();
         $l->titre = $titre;
         $l->description = $description;
+        //ajouter la condition s'il manque un titre ou une description
         $l->save();
         $url_listes = $this->container->router->pathFor( 'aff_listes' ) ;
         return $rs->withRedirect($url_listes);

@@ -75,7 +75,7 @@ class MonControleur {
 
     public function testform(Request $rq, Response $rs, $args) : Response {
         $vue = new VueWish( [] , $this->container ) ;
-        if ($_SERVER['HTTP_CONNECTION']) {
+        if (!$_SERVER['HTTP_CONNECTION']) {
             $rs->getBody()->write($vue->render(10));
         } else {
             $rs->getBody()->write( $vue->render( 8 ) ) ;

@@ -97,7 +97,7 @@ class MonControleur {
         $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
         $u = User::where('login','=',$login)->first();
-        if(gettype($u->pass) != 'NULL'){
+        if(gettype($u) != 'NULL'){
             $res = password_verify($pass, $u->pass);
         }
         else{
@@ -120,6 +120,7 @@ class MonControleur {
         $l = new Liste();
         $l->titre = $titre;
         $l->description = $description;
+        //ajouter la condition s'il manque un titre ou une description
         $l->save();
         $url_listes = $this->container->router->pathFor( 'aff_listes' ) ;
         return $rs->withRedirect($url_listes);

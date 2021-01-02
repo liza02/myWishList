@@ -94,10 +94,16 @@ class MonControleur {
 
     public function testpass(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody() ;
-        $login       = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
+        $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
         $u = User::where('login','=',$login)->first();
-        $res = password_verify($pass, $u->pass);
+        if(gettype($u->pass) != 'NULL'){
+            $res = password_verify($pass, $u->pass);
+        }
+        else{
+            $res = false;
+        }
+
 
         if ($res) $_SESSION['iduser'] = $u->id;
 

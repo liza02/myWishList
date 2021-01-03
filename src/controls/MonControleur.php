@@ -32,7 +32,7 @@ class MonControleur {
     public function afficherListe(Request $rq, Response $rs, $args) : Response {
         $liste = Liste::find( $args['no'] ) ;
         $vue = new VueWish( [ $liste->toArray() ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 2 ) ) ;
+        $rs->getBody()->write( $vue->render(2));
         return $rs;
     }
 	public function afficherItem(Request $rq, Response $rs, $args) : Response {

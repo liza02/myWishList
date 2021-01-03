@@ -136,14 +136,15 @@ FIN;
 <html>
   <head>
     <title>Exemple</title>
+    <link rel="stylesheet" href="../css/style.css">
   </head>
   <body>
 		<h1><a href="$url_accueil">Wish List</a></h1>
 		<nav>
 			<ul>
-				<li><a href="$url_accueil">Accueil</a></li>
-				<li><a href="$url_listes">Listes</a></li>
-				<li><a href="$url_liste_1">Liste 1</a></li>
+				<li><a class="bouton" href="$url_accueil">Accueil</a></li>
+				<li><a class="bouton" href="$url_listes">Listes</a></li>
+				<li><a class="bouton" href="$url_liste_1">Liste 1</a></li>
 				<li><a href="$url_item_2">Item 2</a></li>
 				<li><a href="$url_form_liste">Nouvelle Liste</a></li>
 				<li><a href="$url_formlogin">Nouveau login</a></li>

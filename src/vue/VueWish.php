@@ -62,6 +62,8 @@ class VueWish {
 <form method="POST" action="$url_new_liste">
 	<label>Titre:<br> <input type="text" name="titre"/></label><br>
 	<label>Description: <br><input type="text" name="description"/></label><br>
+	<label>Date d'expiration : <br><input type="date" name="date" 
+	value="2020-01-01" min="2020-01-01" max="2020-12-31"></label>
 	<button type="submit">Enregistrer la liste</button>
 </form>	
 FIN;

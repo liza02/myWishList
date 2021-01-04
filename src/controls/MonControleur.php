@@ -125,9 +125,12 @@ class MonControleur {
         $post = $rq->getParsedBody() ;
         $titre       = filter_var($post['titre']       , FILTER_SANITIZE_STRING) ;
         $description = filter_var($post['description'] , FILTER_SANITIZE_STRING) ;
+        $date = filter_var($post['date'], FILTER_SANITIZE_STRING);
         $l = new Liste();
         $l->titre = $titre;
         $l->description = $description;
+        $l->token = bin2hex(random_bytes(10));
+        $l->expiration = $date;
         //ajouter la condition s'il manque un titre ou une description
         $l->save();
         $url_listes = $this->container->router->pathFor( 'aff_listes' ) ;

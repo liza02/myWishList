@@ -30,7 +30,7 @@ class VueWish {
 		$html .= "<b>Nom:</b> {$i['nom']}<br>";
 		$html .= "<b>Descr:</b> {$i['descr']}<br>";
 		$image = "../img/" . $i['img'];
-		$html .= "<b>Image:</b> <img src=$image><br>";
+		$html .= "<b>Image:</b> <br> <img src=$image><br>";
 		return $html;
 	}
 

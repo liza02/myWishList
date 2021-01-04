@@ -40,7 +40,15 @@ class MonControleur {
 		$vue = new VueWish( [ $item->toArray() ] , $this->container ) ;
 		$rs->getBody()->write( $vue->render( 3 ) ) ;
 		return $rs;
-	}	
+	}
+
+	public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
+	    $liste = Liste::find($args['no']);
+	    $item = Item::where('liste_id','=',$liste->no)->get();
+	    $vue = new VueWish( [ $item->toArray() ] , $this->container );
+	    $rs->getBody()->write( $vue->render(11));
+	    return $rs;
+    }
 	public function formListe(Request $rq, Response $rs, $args) : Response {
 		// pour afficher le formulaire liste
 		$vue = new VueWish( [] , $this->container ) ;

@@ -41,6 +41,20 @@ class VueWish {
         $html .= "<b>Description:</b> {$l['description']}<br>";
         return $html;
     }
+
+    private function uneListeItems() : string {
+        $html1 = "<h2>Liste {$this->tab[0][0]['liste_id']} :</h2>";
+	    $html2 = "";
+	    foreach ($this->tab as $tableau){
+            foreach ($tableau as $items){
+                $image = "../img/" . $items['img'];
+                $html2 .= "<li> <h3> Item </h3> id: {$items['id']} | titre: {$items['nom']} | descr: {$items['descr']} | Image: <br> <img src=$image></li>";
+                $html2 .= "<br>";
+            }
+        }
+	    $html2 = $html1 . "<ul> $html2 </ul>";
+	    return $html2;
+    }
 	
 	private function formListe() : string {
 		$url_new_liste = $this->container->router->pathFor( 'newListe' ) ;		
@@ -79,7 +93,6 @@ FIN;
     }
 	
 	public function render( int $select ) : string {
-		
 		switch ($select) {
             case 0 : {
                 $content = 'accueil racine du site';
@@ -121,6 +134,10 @@ FIN;
             case 10 : {
                 $url_deconnexion = $this->container->router->pathFor( 'deconnexion' );
                 $content = "<a href='$url_deconnexion'>Deconnexion</a>";
+                break;
+            }
+            case 11 : {
+                $content = $this->uneListeItems();
                 break;
             }
 		}

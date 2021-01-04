@@ -21,7 +21,7 @@ $app = new \Slim\App($container);
 
 $app->get('/'          , MonControleur::class.':accueil'       )->setName('racine'    );
 $app->get('/listes'    , MonControleur::class.':afficherListes')->setName('aff_listes');
-$app->get('/liste/{no}', MonControleur::class.':afficherListe' )->setName('aff_liste' );
+$app->get('/liste/{no}', MonControleur::class.':afficherItemsListe' )->setName('aff_liste' );
 $app->get('/item/{id}' , MonControleur::class.':afficherItem'  )->setName('aff_item'  );
 
 $app->get('/nouvelleliste' , MonControleur::class.':formListe'  )->setName('formListe'  );

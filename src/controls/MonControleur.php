@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace mywishlist\controls;
 
+use mywishlist\vue\VueAccueil;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
@@ -18,10 +19,11 @@ class MonControleur {
 		$this->container = $container;
 	}
 	public function accueil(Request $rq, Response $rs, $args) : Response {
-        $vue = new MaVue( [] , $this->container ) ;
+        $vue = new VueAccueil( [] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 0 ) ) ;
         return $rs;
 	}
+
 	public function afficherListes(Request $rq, Response $rs, $args) : Response {
 		// pour afficher la liste des listes de souhaits
 		$listl = Liste::all() ;
@@ -142,6 +144,4 @@ class MonControleur {
         $url_listes = $this->container->router->pathFor( 'aff_listes' ) ;
         return $rs->withRedirect($url_listes);
     }
-	
-
 }

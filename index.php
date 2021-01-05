@@ -5,6 +5,8 @@ session_start();
 
 require 'vendor/autoload.php';
 
+use mywishlist\controls\ControleurAccueil;
+use mywishlist\controls\ControleurCompte;
 use \mywishlist\controls\MonControleur;
 
 $config = ['settings' => [
@@ -18,8 +20,25 @@ $db->bootEloquent();
 
 $container = new \Slim\Container($config);
 $app = new \Slim\App($container);
+/*
+ * Nouveau Chemin (ceux que je mets a jour)
+ */
+//Chemin Accueil
+$app->get('/'          , ControleurAccueil::class.':accueil'       )->setName('racine'    );
+$app->get('/compte', ControleurAccueil::class.':compte')->setName('compte');
+$app->get('/item', ControleurAccueil::class.':item')->setName('item');
+$app->get('/list', ControleurAccueil::class.':list')->setName('liste');
 
-$app->get('/'          , MonControleur::class.':accueil'       )->setName('racine'    );
+//Chemin Compte
+$app->get('/formlogin'    , ControleurCompte::class.':formlogin'   )->setName('formlogin');
+$app->post('/nouveaulogin', ControleurCompte::class.':nouveaulogin')->setName('nouveaulogin');
+$app->get('/testform' , ControleurCompte::class.':testform'  )->setName('testform'  );
+$app->post('/testpass', ControleurCompte::class.':testpass'  )->setName('testpass'  );
+$app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('deconnexion'  );
+/*
+ * Chemin de base que je supprime dès que j'en ai plus besoin
+ */
+//$app->get('/'          , MonControleur::class.':accueil'       )->setName('racine'    );
 $app->get('/listes'    , MonControleur::class.':afficherListes')->setName('aff_listes');
 $app->get('/liste/{no}', MonControleur::class.':afficherItemsListe' )->setName('aff_liste' );
 $app->get('/item/{id}' , MonControleur::class.':afficherItem'  )->setName('aff_item'  );
@@ -28,12 +47,12 @@ $app->post('/reserver/{id}' , MonControleur::class.':reserverItem'  )->setName('
 $app->get('/nouvelleliste' , MonControleur::class.':formListe'  )->setName('formListe'  );
 $app->post('/nouvelleliste' , MonControleur::class.':newListe'  )->setName('newListe'  );
 
-$app->get('/formlogin'    , MonControleur::class.':formlogin'   )->setName('formlogin'  );
-$app->post('/nouveaulogin', MonControleur::class.':nouveaulogin')->setName('nouveaulogin'  );
+//$app->get('/formlogin'    , MonControleur::class.':formlogin'   )->setName('formlogin'  );
+//$app->post('/nouveaulogin', MonControleur::class.':nouveaulogin')->setName('nouveaulogin'  );
 
-$app->get('/testform' , MonControleur::class.':testform'  )->setName('testform'  );
-$app->post('/testpass', MonControleur::class.':testpass'  )->setName('testpass'  );
+//$app->get('/testform' , MonControleur::class.':testform'  )->setName('testform'  );
+//$app->post('/testpass', MonControleur::class.':testpass'  )->setName('testpass'  );
 
-$app->post('/deconnexion', MonControleur::class.':deconnexion'  )->setName('deconnexion'  );
+//$app->post('/deconnexion', MonControleur::class.':deconnexion'  )->setName('deconnexion'  );
 
 $app->run();

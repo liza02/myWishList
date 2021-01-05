@@ -4,9 +4,17 @@
 namespace mywishlist\controls;
 
 
-use mywishlist\vue\MaVue;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+
+use mywishlist\vue\MaVue;
+use mywishlist\vue\VueAccueil;
+use mywishlist\vue\VueCompte;
+use mywishlist\vue\VueItem;
+
+use \mywishlist\models\Liste;
+use \mywishlist\models\Item;
+use \mywishlist\models\User;
 
 class ControleurCompte
 {
@@ -17,8 +25,8 @@ class ControleurCompte
     }
 
     public function formlogin(Request $rq, Response $rs, $args) : Response {
-        $vue = new MaVue( [] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 6 ) ) ;
+        $vue = new VueCompte( [] , $this->container ) ;
+        $rs->getBody()->write( $vue->render(1) ) ;
         return $rs;
     }
 
@@ -37,17 +45,17 @@ class ControleurCompte
             $login = 'existe déjà';
         }
 
-        $vue = new MaVue( [ 'login' => $login ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 7 ) ) ;
+        $vue = new VueCompte( [ 'login' => $login ] , $this->container ) ;
+        $rs->getBody()->write( $vue->render( 2 ) ) ;
         return $rs;
     }
 
     public function testform(Request $rq, Response $rs, $args) : Response {
-        $vue = new MaVue( [] , $this->container ) ;
+        $vue = new VueCompte( [] , $this->container ) ;
         if (!$_SERVER['HTTP_CONNECTION']) {
-            $rs->getBody()->write($vue->render(10));
+            $rs->getBody()->write($vue->render(5));
         } else {
-            $rs->getBody()->write( $vue->render( 8 ) ) ;
+            $rs->getBody()->write( $vue->render(3) ) ;
         }
         return $rs;
     }
@@ -55,8 +63,8 @@ class ControleurCompte
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
         session_destroy();
         $_SESSION = [];
-        $vue = new MaVue( [], $this->container);
-        $rs->getBody()->write($vue->render((8)));
+        $vue = new VueCompte( [], $this->container);
+        $rs->getBody()->write($vue->render(3));
         return $rs;
 
     }
@@ -72,12 +80,9 @@ class ControleurCompte
         else{
             $res = false;
         }
-
-
         if ($res) $_SESSION['iduser'] = $u->id;
-
-        $vue = new MaVue( [ 'res' => $res ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 9 ) ) ;
+        $vue = new VueCompte( [ 'res' => $res ] , $this->container ) ;
+        $rs->getBody()->write( $vue->render(4) ) ;
         return $rs;
     }
 }

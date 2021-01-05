@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Structure de la table `item`
 --
 
+DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
   `id` int(11) NOT NULL,
   `liste_id` int(11) NOT NULL,
@@ -71,7 +72,7 @@ INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`, `ca
 --
 -- Structure de la table `liste`
 --
-
+Drop table if EXISTS liste;
 CREATE TABLE `liste` (
   `no` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -98,6 +99,7 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 -- Structure de la table `message`
 --
 
+Drop table if EXISTS message;
 CREATE TABLE `message` (
   `id` int(4) NOT NULL,
   `message` varchar(120) NOT NULL,
@@ -112,6 +114,7 @@ CREATE TABLE `message` (
 -- Structure de la table `user`
 --
 
+Drop table if EXISTS user;
 CREATE TABLE `user` (
   `id` int(6) NOT NULL,
   `login` varchar(60) NOT NULL,

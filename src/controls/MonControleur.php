@@ -6,7 +6,7 @@ namespace mywishlist\controls;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-use \mywishlist\vue\VueWish;
+use \mywishlist\vue\VueAccueil;
 use \mywishlist\models\Liste;
 use \mywishlist\models\Item;
 use mywishlist\models\User;
@@ -18,26 +18,26 @@ class MonControleur {
 		$this->container = $container;
 	}
 	public function accueil(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueWish( [] , $this->container ) ;
+        $vue = new VueAccueil( [] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 0 ) ) ;
         return $rs;
 	}
 	public function afficherListes(Request $rq, Response $rs, $args) : Response {
 		// pour afficher la liste des listes de souhaits
 		$listl = Liste::all() ;
-		$vue = new VueWish( $listl->toArray() , $this->container ) ;
+		$vue = new VueAccueil( $listl->toArray() , $this->container ) ;
 		$rs->getBody()->write( $vue->render( 1 ) ) ;
 		return $rs;
 	}
     public function afficherListe(Request $rq, Response $rs, $args) : Response {
         $liste = Liste::find( $args['no'] ) ;
-        $vue = new VueWish( [ $liste->toArray() ] , $this->container ) ;
+        $vue = new VueAccueil( [ $liste->toArray() ] , $this->container ) ;
         $rs->getBody()->write( $vue->render(2));
         return $rs;
     }
 	public function afficherItem(Request $rq, Response $rs, $args) : Response {
 		$item = Item::find( $args['id'] ) ;
-		$vue = new VueWish( [ $item->toArray() ] , $this->container ) ;
+		$vue = new VueAccueil( [ $item->toArray() ] , $this->container ) ;
 		$rs->getBody()->write( $vue->render( 3 ) ) ;
 		return $rs;
 	}
@@ -51,18 +51,18 @@ class MonControleur {
 	public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
 	    $liste = Liste::find($args['no']);
 	    $item = Item::where('liste_id','=',$liste->no)->get();
-	    $vue = new VueWish( [ $item->toArray() ] , $this->container );
+	    $vue = new VueAccueil( [ $item->toArray() ] , $this->container );
 	    $rs->getBody()->write( $vue->render(11));
 	    return $rs;
     }
 	public function formListe(Request $rq, Response $rs, $args) : Response {
 		// pour afficher le formulaire liste
-		$vue = new VueWish( [] , $this->container ) ;
+		$vue = new VueAccueil( [] , $this->container ) ;
 		$rs->getBody()->write( $vue->render( 5 ) ) ;
 		return $rs;
 	}
     public function formlogin(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueWish( [] , $this->container ) ;
+        $vue = new VueAccueil( [] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 6 ) ) ;
         return $rs;
     }
@@ -82,13 +82,13 @@ class MonControleur {
             $login = 'existe déjà';
         }
 
-        $vue = new VueWish( [ 'login' => $login ] , $this->container ) ;
+        $vue = new VueAccueil( [ 'login' => $login ] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 7 ) ) ;
         return $rs;
     }
 
     public function testform(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueWish( [] , $this->container ) ;
+        $vue = new VueAccueil( [] , $this->container ) ;
         if (!$_SERVER['HTTP_CONNECTION']) {
             $rs->getBody()->write($vue->render(10));
         } else {
@@ -100,7 +100,7 @@ class MonControleur {
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
 	    session_destroy();
 	    $_SESSION = [];
-	    $vue = new VueWish( [], $this->container);
+	    $vue = new VueAccueil( [], $this->container);
 	    $rs->getBody()->write($vue->render((8)));
 	    return $rs;
 
@@ -121,7 +121,7 @@ class MonControleur {
 
         if ($res) $_SESSION['iduser'] = $u->id;
 
-        $vue = new VueWish( [ 'res' => $res ] , $this->container ) ;
+        $vue = new VueAccueil( [ 'res' => $res ] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 9 ) ) ;
         return $rs;
     }

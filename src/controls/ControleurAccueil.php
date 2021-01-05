@@ -4,7 +4,7 @@
 namespace mywishlist\controls;
 
 
-class VueWish
+class ControleurAccueil
 {
 
 }

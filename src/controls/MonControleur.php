@@ -40,7 +40,21 @@ class MonControleur {
 		$vue = new VueWish( [ $item->toArray() ] , $this->container ) ;
 		$rs->getBody()->write( $vue->render( 3 ) ) ;
 		return $rs;
-	}	
+	}
+
+    public function reserverItem(Request $rq, Response $rs, $args) : Response {
+        $post = $rq->getParsedBody() ;
+        //TODO
+        return $rs;
+    }
+
+	public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
+	    $liste = Liste::find($args['no']);
+	    $item = Item::where('liste_id','=',$liste->no)->get();
+	    $vue = new VueWish( [ $item->toArray() ] , $this->container );
+	    $rs->getBody()->write( $vue->render(11));
+	    return $rs;
+    }
 	public function formListe(Request $rq, Response $rs, $args) : Response {
 		// pour afficher le formulaire liste
 		$vue = new VueWish( [] , $this->container ) ;
@@ -117,9 +131,12 @@ class MonControleur {
         $post = $rq->getParsedBody() ;
         $titre       = filter_var($post['titre']       , FILTER_SANITIZE_STRING) ;
         $description = filter_var($post['description'] , FILTER_SANITIZE_STRING) ;
+        $date = filter_var($post['date'], FILTER_SANITIZE_STRING);
         $l = new Liste();
         $l->titre = $titre;
         $l->description = $description;
+        $l->token = bin2hex(random_bytes(10));
+        $l->expiration = $date;
         //ajouter la condition s'il manque un titre ou une description
         $l->save();
         $url_listes = $this->container->router->pathFor( 'aff_listes' ) ;

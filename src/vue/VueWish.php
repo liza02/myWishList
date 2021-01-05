@@ -29,7 +29,7 @@ class VueWish {
 		$html = "<h2>Item {$i['id']}</h2>";
 		$html .= "<b>Nom:</b> {$i['nom']}<br>";
 		$html .= "<b>Descr:</b> {$i['descr']}<br>";
-		$image = "https://webetu.iutnc.univ-lorraine.fr/www/demang159u/mywishlist/img/" . $i['img'];
+		$image = "../img/" . $i['img'];
 		$html .= "<b>Image:</b> <br>
         <img src=$image><br>";
 		return $html;

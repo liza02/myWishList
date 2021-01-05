@@ -4,7 +4,7 @@
 namespace mywishlist\controls;
 
 
-use mywishlist\vue\VueAccueil;
+use mywishlist\vue\MaVue;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -17,7 +17,7 @@ class ControleurAccueil
     }
 
     public function accueil(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueAccueil( [] , $this->container ) ;
+        $vue = new MaVue( [] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 0 ) ) ;
         return $rs;
     }
@@ -25,7 +25,7 @@ class ControleurAccueil
     public function afficherListes(Request $rq, Response $rs, $args) : Response {
         // pour afficher la liste des listes de souhaits
         $listl = Liste::all() ;
-        $vue = new VueAccueil( $listl->toArray() , $this->container ) ;
+        $vue = new MaVue( $listl->toArray() , $this->container ) ;
         $rs->getBody()->write( $vue->render( 1 ) ) ;
         return $rs;
     }
@@ -33,7 +33,7 @@ class ControleurAccueil
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
         session_destroy();
         $_SESSION = [];
-        $vue = new VueAccueil( [], $this->container);
+        $vue = new MaVue( [], $this->container);
         $rs->getBody()->write($vue->render((8)));
         return $rs;
 

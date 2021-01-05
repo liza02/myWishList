@@ -4,7 +4,7 @@
 namespace mywishlist\controls;
 
 
-use mywishlist\vue\VueAccueil;
+use mywishlist\vue\MaVue;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -19,21 +19,21 @@ class ControleurListe
     public function afficherListes(Request $rq, Response $rs, $args) : Response {
         // pour afficher la liste des listes de souhaits
         $listl = Liste::all() ;
-        $vue = new VueAccueil( $listl->toArray() , $this->container ) ;
+        $vue = new MaVue( $listl->toArray() , $this->container ) ;
         $rs->getBody()->write( $vue->render( 1 ) ) ;
         return $rs;
     }
 
     public function afficherListe(Request $rq, Response $rs, $args) : Response {
         $liste = Liste::find( $args['no'] ) ;
-        $vue = new VueAccueil( [ $liste->toArray() ] , $this->container ) ;
+        $vue = new MaVue( [ $liste->toArray() ] , $this->container ) ;
         $rs->getBody()->write( $vue->render(2));
         return $rs;
     }
 
     public function afficherItem(Request $rq, Response $rs, $args) : Response {
         $item = Item::find( $args['id'] ) ;
-        $vue = new VueAccueil( [ $item->toArray() ] , $this->container ) ;
+        $vue = new MaVue( [ $item->toArray() ] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 3 ) ) ;
         return $rs;
     }
@@ -47,14 +47,14 @@ class ControleurListe
     public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::find($args['no']);
         $item = Item::where('liste_id','=',$liste->no)->get();
-        $vue = new VueAccueil( [ $item->toArray() ] , $this->container );
+        $vue = new MaVue( [ $item->toArray() ] , $this->container );
         $rs->getBody()->write( $vue->render(11));
         return $rs;
     }
 
     public function formListe(Request $rq, Response $rs, $args) : Response {
         // pour afficher le formulaire liste
-        $vue = new VueAccueil( [] , $this->container ) ;
+        $vue = new MaVue( [] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 5 ) ) ;
         return $rs;
     }
@@ -62,7 +62,7 @@ class ControleurListe
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
         session_destroy();
         $_SESSION = [];
-        $vue = new VueAccueil( [], $this->container);
+        $vue = new MaVue( [], $this->container);
         $rs->getBody()->write($vue->render((8)));
         return $rs;
 

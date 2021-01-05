@@ -4,7 +4,7 @@
 namespace mywishlist\controls;
 
 
-use mywishlist\vue\VueAccueil;
+use mywishlist\vue\MaVue;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -17,7 +17,7 @@ class ControleurCompte
     }
 
     public function formlogin(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueAccueil( [] , $this->container ) ;
+        $vue = new MaVue( [] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 6 ) ) ;
         return $rs;
     }
@@ -37,13 +37,13 @@ class ControleurCompte
             $login = 'existe déjà';
         }
 
-        $vue = new VueAccueil( [ 'login' => $login ] , $this->container ) ;
+        $vue = new MaVue( [ 'login' => $login ] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 7 ) ) ;
         return $rs;
     }
 
     public function testform(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueAccueil( [] , $this->container ) ;
+        $vue = new MaVue( [] , $this->container ) ;
         if (!$_SERVER['HTTP_CONNECTION']) {
             $rs->getBody()->write($vue->render(10));
         } else {
@@ -55,7 +55,7 @@ class ControleurCompte
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
         session_destroy();
         $_SESSION = [];
-        $vue = new VueAccueil( [], $this->container);
+        $vue = new MaVue( [], $this->container);
         $rs->getBody()->write($vue->render((8)));
         return $rs;
 
@@ -76,7 +76,7 @@ class ControleurCompte
 
         if ($res) $_SESSION['iduser'] = $u->id;
 
-        $vue = new VueAccueil( [ 'res' => $res ] , $this->container ) ;
+        $vue = new MaVue( [ 'res' => $res ] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 9 ) ) ;
         return $rs;
     }

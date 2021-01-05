@@ -3,10 +3,17 @@
 
 namespace mywishlist\controls;
 
-
-use mywishlist\vue\MaVue;
+use mywishlist\vue\VueListe;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+
+use mywishlist\vue\MaVue;
+use mywishlist\vue\VueAccueil;
+use mywishlist\vue\VueCompte;
+use mywishlist\vue\VueItem;
+
+use \mywishlist\models\Liste;
+use \mywishlist\models\Item;
 
 class ControleurListe
 {
@@ -16,13 +23,6 @@ class ControleurListe
         $this->container = $container;
     }
 
-    public function afficherListes(Request $rq, Response $rs, $args) : Response {
-        // pour afficher la liste des listes de souhaits
-        $listl = Liste::all() ;
-        $vue = new MaVue( $listl->toArray() , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 1 ) ) ;
-        return $rs;
-    }
 
     public function afficherListe(Request $rq, Response $rs, $args) : Response {
         $liste = Liste::find( $args['no'] ) ;
@@ -31,18 +31,6 @@ class ControleurListe
         return $rs;
     }
 
-    public function afficherItem(Request $rq, Response $rs, $args) : Response {
-        $item = Item::find( $args['id'] ) ;
-        $vue = new MaVue( [ $item->toArray() ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 3 ) ) ;
-        return $rs;
-    }
-
-    public function reserverItem(Request $rq, Response $rs, $args) : Response {
-        $post = $rq->getParsedBody() ;
-        //TODO
-        return $rs;
-    }
 
     public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::find($args['no']);
@@ -54,19 +42,11 @@ class ControleurListe
 
     public function formListe(Request $rq, Response $rs, $args) : Response {
         // pour afficher le formulaire liste
-        $vue = new MaVue( [] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 5 ) ) ;
+        $vue = new VueListe( [] , $this->container ) ;
+        $rs->getBody()->write( $vue->render( 1) ) ;
         return $rs;
     }
 
-    public function deconnexion(Request $rq, Response $rs, $args) : Response {
-        session_destroy();
-        $_SESSION = [];
-        $vue = new MaVue( [], $this->container);
-        $rs->getBody()->write($vue->render((8)));
-        return $rs;
-
-    }
 
     public function newListe(Request $rq, Response $rs, $args) : Response {
         // pour enregistrer 1 liste.....
@@ -81,7 +61,7 @@ class ControleurListe
         $l->expiration = $date;
         //ajouter la condition s'il manque un titre ou une description
         $l->save();
-        $url_listes = $this->container->router->pathFor( 'aff_listes' ) ;
+        $url_listes = $this->container->router->pathFor( 'liste' ) ;
         return $rs->withRedirect($url_listes);
     }
 }

@@ -7,6 +7,7 @@ require 'vendor/autoload.php';
 
 use mywishlist\controls\ControleurAccueil;
 use mywishlist\controls\ControleurCompte;
+use mywishlist\controls\ControleurListe;
 use \mywishlist\controls\MonControleur;
 
 $config = ['settings' => [
@@ -35,17 +36,21 @@ $app->post('/nouveaulogin', ControleurCompte::class.':nouveaulogin')->setName('n
 $app->get('/testform' , ControleurCompte::class.':testform'  )->setName('testform'  );
 $app->post('/testpass', ControleurCompte::class.':testpass'  )->setName('testpass'  );
 $app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('deconnexion'  );
+
+//Chemin Liste
+$app->get('/nouvelleliste' , ControleurListe::class.':formListe'  )->setName('formListe'  );
+$app->post('/nouvelleliste' , ControleurListe::class.':newListe'  )->setName('newListe'  );
 /*
  * Chemin de base que je supprime dès que j'en ai plus besoin
  */
 //$app->get('/'          , MonControleur::class.':accueil'       )->setName('racine'    );
-$app->get('/listes'    , MonControleur::class.':afficherListes')->setName('aff_listes');
+
 $app->get('/liste/{no}', MonControleur::class.':afficherItemsListe' )->setName('aff_liste' );
 $app->get('/item/{id}' , MonControleur::class.':afficherItem'  )->setName('aff_item'  );
 $app->post('/reserver/{id}' , MonControleur::class.':reserverItem'  )->setName('reserve_item'  );
 
-$app->get('/nouvelleliste' , MonControleur::class.':formListe'  )->setName('formListe'  );
-$app->post('/nouvelleliste' , MonControleur::class.':newListe'  )->setName('newListe'  );
+//$app->get('/nouvelleliste' , MonControleur::class.':formListe'  )->setName('formListe'  );
+//$app->post('/nouvelleliste' , MonControleur::class.':newListe'  )->setName('newListe'  );
 
 //$app->get('/formlogin'    , MonControleur::class.':formlogin'   )->setName('formlogin'  );
 //$app->post('/nouveaulogin', MonControleur::class.':nouveaulogin')->setName('nouveaulogin'  );

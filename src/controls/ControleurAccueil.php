@@ -3,6 +3,7 @@
 
 namespace mywishlist\controls;
 
+use mywishlist\vue\VueListe;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -40,7 +41,8 @@ class ControleurAccueil
         return $rs;
     }
     public function list(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueItem([], $this->container);
+        $listl = Liste::all();
+        $vue = new VueListe($listl->toArray(), $this->container);
         $rs->getBody()->write( $vue->render(0));
         return $rs;
     }

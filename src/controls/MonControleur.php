@@ -42,6 +42,12 @@ class MonControleur {
 		return $rs;
 	}
 
+    public function reserverItem(Request $rq, Response $rs, $args) : Response {
+        $post = $rq->getParsedBody() ;
+        //TODO
+        return $rs;
+    }
+
 	public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
 	    $liste = Liste::find($args['no']);
 	    $item = Item::where('liste_id','=',$liste->no)->get();

@@ -25,12 +25,19 @@ class VueWish {
 	
 	private function unItem() : string {
 		//var_dump($this->tab); // tableau de tableau, array de array
-		$i = $this->tab[0];
+        $i = $this->tab[0];
+        $url_reserv = $this->container->router->pathFor( 'reserve_item', ['id' => $i['id']] ) ;
 		$html = "<h2>Item {$i['id']}</h2>";
 		$html .= "<b>Nom:</b> {$i['nom']}<br>";
 		$html .= "<b>Descr:</b> {$i['descr']}<br>";
 		$image = "../img/" . $i['img'];
 		$html .= "<b>Image:</b> <br> <img src=$image><br>";
+		$html .=  <<<FIN
+<form method="POST" action="$url_reserv">
+    <button type="submit">Reserver</button>
+</form>    
+FIN;
+
 		return $html;
 	}
 

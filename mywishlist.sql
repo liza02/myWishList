@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Structure de la table `item`
 --
 
+DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
   `id` int(11) NOT NULL,
   `liste_id` int(11) NOT NULL,
@@ -38,7 +39,8 @@ CREATE TABLE `item` (
   `cagnotte` int(1) NOT NULL DEFAULT 0,
   `id_utilisateur` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `message` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
+  `message` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -71,7 +73,7 @@ INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`, `ca
 --
 -- Structure de la table `liste`
 --
-
+DROP TABLE IF EXISTS `liste`;
 CREATE TABLE `liste` (
   `no` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -79,7 +81,8 @@ CREATE TABLE `liste` (
   `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `expiration` date DEFAULT NULL,
   `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `public` varchar(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'false'
+  `public` varchar(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'false',
+  PRIMARY KEY (`no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -97,12 +100,14 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 -- Structure de la table `message`
 --
 
+DROP TABLE IF EXISTS message;
 CREATE TABLE `message` (
   `id` int(4) NOT NULL,
   `message` varchar(120) NOT NULL,
   `no_liste` int(4) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `id_item` int(11) DEFAULT NULL
+  `id_item` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -111,10 +116,12 @@ CREATE TABLE `message` (
 -- Structure de la table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(6) NOT NULL,
+  `id` int(6) NOT NULL AUTO_INCREMENT,
   `login` varchar(60) NOT NULL,
-  `pass` varchar(60) NOT NULL
+  `pass` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -123,34 +130,6 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `login`, `pass`) VALUES
 (1, 'yo', '$2y$10$YnErQdgdEVajoa9WAKNbTOXEWQSJ3VyUUl9bwkKcr1PcfDEE9aE/m');
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `item`
---
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `liste`
---
-ALTER TABLE `liste`
-  ADD PRIMARY KEY (`no`);
-
---
--- Index pour la table `message`
---
-ALTER TABLE `message`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -167,12 +146,6 @@ ALTER TABLE `item`
 --
 ALTER TABLE `liste`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
---
--- AUTO_INCREMENT pour la table `message`
---
-ALTER TABLE `message`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `user`

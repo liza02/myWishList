@@ -49,8 +49,8 @@ $app->get('/liste/{token}', ControleurListe::class.':afficherItemsListe' )->setN
 //$app->get('/'          , MonControleur::class.':accueil'       )->setName('racine'    );
 
 //$app->get('/liste/{no}', MonControleur::class.':afficherItemsListe' )->setName('aff_liste' );
-$app->get('/item/{id}' , MonControleur::class.':afficherItem'  )->setName('aff_item'  );
-$app->post('/reserver/{id}' , MonControleur::class.':reserverItem'  )->setName('reserve_item'  );
+//$app->get('/item/{id}' , MonControleur::class.':afficherItem'  )->setName('aff_item'  );
+//$app->post('/reserver/{id}' , MonControleur::class.':reserverItem'  )->setName('reserve_item'  );
 
 //$app->get('/nouvelleliste' , MonControleur::class.':formListe'  )->setName('formListe'  );
 //$app->post('/nouvelleliste' , MonControleur::class.':newListe'  )->setName('newListe'  );

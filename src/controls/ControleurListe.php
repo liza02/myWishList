@@ -26,16 +26,10 @@ class ControleurListe
 /*
  * A utiliser en mettant un selecteur
  */
-    public function afficherListe(Request $rq, Response $rs, $args) : Response {
-        $liste = Liste::find( $args['no'] ) ;
-        $vue = new MaVue( [ $liste->toArray() ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render(1));
-        return $rs;
-    }
-
 
     public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::find($args['token']);
+        var_dump($liste);
         $item = Item::where('liste_id','=',$liste->no)->get();
         $vue = new VueListe( [ $item->toArray() ] , $this->container );
         $rs->getBody()->write( $vue->render(1));
@@ -63,11 +57,10 @@ class ControleurListe
         $l->token = $token;
         $l->expiration = $date;
         //TODO public
-        $l->public = "";
         //ajouter la condition s'il manque un titre ou une description
         $l->save();
         //redirection sur afficher
-        $url_listes = $this->container->router->pathFor( "aff_liste" ) ;
+        $url_listes = $this->container->router->pathFor("aff_liste" ) ;
         return $rs->withRedirect($url_listes);
     }
 }

@@ -14,16 +14,6 @@ class VueListe
         $this->container = $container;
     }
 
-    private function lesListes() : string {
-        //var_dump($this->tab); // tableau de tableau, array de array
-        $html = '';
-        foreach($this->tab as $liste){
-            $html .= "<li>{$liste['titre']}, {$liste['description']}</li>";
-        }
-        $html = "<ul>$html</ul>";
-        return $html;
-    }
-
     private function formListe() : string {
         $url_new_liste = $this->container->router->pathFor( 'newListe' ) ;
         $html = <<<FIN
@@ -46,10 +36,9 @@ FIN;
                 $image = "../img/" . $items['img'];
                 $html2 .= "<li> <h3> Item </h3> id: {$items['id']} | titre: {$items['nom']} | descr: {$items['descr']} | Image: <br> <img src=$image></li>";
                 $html2 .= "<br>";
-
-                $html2 .= "<h4>Partager la liste ici :</h4> /{$items['token']}";
             }
         }
+        $html2 .= "<h4>Partager la liste ici :</h4> /{$items['token']}";
         $html2 = $html1 . "<ul> $html2 </ul>";
         return $html2;
     }
@@ -65,7 +54,6 @@ FIN;
             case 1 :
             {
                 $content = $this->uneListeItems();
-                echo "yo";
                 break;
             }
         }

@@ -65,6 +65,7 @@ FIN;
             case 1 :
             {
                 $content = $this->uneListeItems();
+                echo "yo";
                 break;
             }
         }

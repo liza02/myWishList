@@ -3,7 +3,6 @@
 
 namespace mywishlist\controls;
 
-use mywishlist\vue\VueListe;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -11,6 +10,7 @@ use mywishlist\vue\MaVue;
 use mywishlist\vue\VueAccueil;
 use mywishlist\vue\VueCompte;
 use mywishlist\vue\VueItem;
+use mywishlist\vue\VueListe;
 
 use \mywishlist\models\Liste;
 use \mywishlist\models\Item;
@@ -29,7 +29,7 @@ class ControleurListe
     public function afficherListe(Request $rq, Response $rs, $args) : Response {
         $liste = Liste::find( $args['no'] ) ;
         $vue = new MaVue( [ $liste->toArray() ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render(2));
+        $rs->getBody()->write( $vue->render(1));
         return $rs;
     }
 
@@ -37,8 +37,8 @@ class ControleurListe
     public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::find($args['no']);
         $item = Item::where('liste_id','=',$liste->no)->get();
-        $vue = new MaVue( [ $item->toArray() ] , $this->container );
-        $rs->getBody()->write( $vue->render(11));
+        $vue = new VueListe( [ $item->toArray() ] , $this->container );
+        $rs->getBody()->write( $vue->render(2));
         return $rs;
     }
 
@@ -59,14 +59,15 @@ class ControleurListe
         $l = new Liste();
         $l->titre = $titre;
         $l->description = $description;
-        $l->token = bin2hex(random_bytes(10));
+        $token = bin2hex(random_bytes(10));
+        $l->token = $token;
         $l->expiration = $date;
         //TODO public
         $l->public = "";
         //ajouter la condition s'il manque un titre ou une description
         $l->save();
-        //redirection
-        $url_listes = $this->container->router->pathFor( 'liste' ) ;
+        //redirection sur afficher
+        $url_listes = $this->container->router->pathFor( "liste/$token" ) ;
         return $rs->withRedirect($url_listes);
     }
 }

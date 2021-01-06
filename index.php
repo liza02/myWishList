@@ -41,12 +41,14 @@ $app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('d
 $app->get('/nouvelleliste' , ControleurListe::class.':formListe'  )->setName('formListe'  );
 $app->post('/nouvelleliste' , ControleurListe::class.':newListe'  )->setName('newListe'  );
 $app->get('/liste/',ControleurListe::class.':afficherItemListe' )->setName('itemListe');
+$app->get('/liste/{no}', MonControleur::class.':afficherItemsListe' )->setName('aff_liste' );
+
 /*
  * Chemin de base que je supprime dès que j'en ai plus besoin
  */
 //$app->get('/'          , MonControleur::class.':accueil'       )->setName('racine'    );
 
-$app->get('/liste/{no}', MonControleur::class.':afficherItemsListe' )->setName('aff_liste' );
+//$app->get('/liste/{no}', MonControleur::class.':afficherItemsListe' )->setName('aff_liste' );
 $app->get('/item/{id}' , MonControleur::class.':afficherItem'  )->setName('aff_item'  );
 $app->post('/reserver/{id}' , MonControleur::class.':reserverItem'  )->setName('reserve_item'  );
 

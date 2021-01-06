@@ -38,6 +38,22 @@ FIN;
         return $html;
     }
 
+    private function uneListeItems() : string {
+        $html1 = "<h2>Liste {$this->tab[0][0]['liste_id']} :</h2>";
+        $html2 = "";
+        foreach ($this->tab as $tableau){
+            foreach ($tableau as $items){
+                $image = "../img/" . $items['img'];
+                $html2 .= "<li> <h3> Item </h3> id: {$items['id']} | titre: {$items['nom']} | descr: {$items['descr']} | Image: <br> <img src=$image></li>";
+                $html2 .= "<br>";
+
+                $html2 .= "<h4>Partager la liste ici :</h4> /{$items['token']}";
+            }
+        }
+        $html2 = $html1 . "<ul> $html2 </ul>";
+        return $html2;
+    }
+
     public function render( int $select ) : string
     {
         switch ($select) {
@@ -48,11 +64,11 @@ FIN;
             }
             case 1 :
             {
-
+                $content = $this->uneListeItems();
+                break;
             }
         }
         $url_accueil = $this->container->router->pathFor('racine');
-        $url_form_liste = $this->container->router->pathFor( 'formListe');
         $html = <<<FIN
 <!DOCTYPE html>
 <html>

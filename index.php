@@ -31,10 +31,10 @@ $app->get('/item', ControleurAccueil::class.':item')->setName('item');
 $app->get('/list', ControleurAccueil::class.':list')->setName('liste');
 
 //Chemin Compte
-$app->get('/formlogin'    , ControleurCompte::class.':formlogin'   )->setName('formlogin');
-$app->post('/nouveaulogin', ControleurCompte::class.':nouveaulogin')->setName('nouveaulogin');
-$app->get('/testform' , ControleurCompte::class.':testform'  )->setName('testform'  );
-$app->post('/testpass', ControleurCompte::class.':testpass'  )->setName('testpass'  );
+$app->get('/compte/newlogin'    , ControleurCompte::class.':formlogin'   )->setName('formlogin');
+$app->post('/compte/newlogin', ControleurCompte::class.':nouveaulogin')->setName('nouveaulogin');
+$app->get('/compte/login' , ControleurCompte::class.':testform'  )->setName('testform'  );
+$app->post('/compte/login', ControleurCompte::class.':testpass'  )->setName('testpass'  );
 $app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('deconnexion'  );
 
 //Chemin Liste

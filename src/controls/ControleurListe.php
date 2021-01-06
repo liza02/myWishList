@@ -23,7 +23,9 @@ class ControleurListe
         $this->container = $container;
     }
 
-
+/*
+ * A utiliser en mettant un selecteur
+ */
     public function afficherListe(Request $rq, Response $rs, $args) : Response {
         $liste = Liste::find( $args['no'] ) ;
         $vue = new MaVue( [ $liste->toArray() ] , $this->container ) ;
@@ -59,6 +61,8 @@ class ControleurListe
         $l->description = $description;
         $l->token = bin2hex(random_bytes(10));
         $l->expiration = $date;
+        //TODO public
+        $l->public = "";
         //ajouter la condition s'il manque un titre ou une description
         $l->save();
         $url_listes = $this->container->router->pathFor( 'liste' ) ;

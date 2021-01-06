@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 05 jan. 2021 à 14:56
+-- Généré le : mer. 06 jan. 2021 à 16:14
 -- Version du serveur :  10.4.17-MariaDB
 -- Version de PHP : 7.4.13
 
@@ -27,7 +27,6 @@ SET time_zone = "+00:00";
 -- Structure de la table `item`
 --
 
-DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
   `id` int(11) NOT NULL,
   `liste_id` int(11) NOT NULL,
@@ -72,7 +71,7 @@ INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`, `ca
 --
 -- Structure de la table `liste`
 --
-Drop table if EXISTS liste;
+
 CREATE TABLE `liste` (
   `no` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -80,7 +79,7 @@ CREATE TABLE `liste` (
   `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `expiration` date DEFAULT NULL,
   `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `public` varchar(6) COLLATE utf8_unicode_ci NOT NULL
+  `public` varchar(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'false'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -88,10 +87,9 @@ CREATE TABLE `liste` (
 --
 
 INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `token`, `public`) VALUES
-(1, 1, 'Pour fêter le bac !', 'Pour un week-end à Nancy qui nous fera oublier les épreuves. ', '2018-06-27', 'nosecure1', ''),
-(2, 2, 'Liste de mariage d\'Alice et Bob', 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)', '2018-06-30', 'nosecure2', ''),
-(3, 3, 'C\'est l\'anniversaire de Charlie', 'Pour lui préparer une fête dont il se souviendra :)', '2017-12-12', 'nosecure3', ''),
-(15, NULL, 'o', 'o', '2020-01-17', '430d71b54568f6b70281', '');
+(1, 1, 'Pour fêter le bac !', 'Pour un week-end à Nancy qui nous fera oublier les épreuves. ', '2018-06-27', 'nosecure1', 'true'),
+(2, 2, 'Liste de mariage d\'Alice et Bob', 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)', '2018-06-30', 'nosecure2', 'true'),
+(3, 3, 'C\'est l\'anniversaire de Charlie', 'Pour lui préparer une fête dont il se souviendra :)', '2017-12-12', 'nosecure3', 'true');
 
 -- --------------------------------------------------------
 
@@ -99,7 +97,6 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 -- Structure de la table `message`
 --
 
-Drop table if EXISTS message;
 CREATE TABLE `message` (
   `id` int(4) NOT NULL,
   `message` varchar(120) NOT NULL,
@@ -114,7 +111,6 @@ CREATE TABLE `message` (
 -- Structure de la table `user`
 --
 
-Drop table if EXISTS user;
 CREATE TABLE `user` (
   `id` int(6) NOT NULL,
   `login` varchar(60) NOT NULL,
@@ -126,9 +122,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `login`, `pass`) VALUES
-(1, 'yo', '$2y$10$YnErQdgdEVajoa9WAKNbTOXEWQSJ3VyUUl9bwkKcr1PcfDEE9aE/m'),
-(2, 'test', '$2y$10$hAH.ROmskKnPuJnYzvn1eeVjtud7AaoLfxmX1FJqEprb6Z0AG5Y6i'),
-(3, 'a', '$2y$10$rGuOJhFEjnD2n.mf.lnIFurpuO9W9Lc4qCiVHAMeg1RBWr5Dz8h7a');
+(1, 'yo', '$2y$10$YnErQdgdEVajoa9WAKNbTOXEWQSJ3VyUUl9bwkKcr1PcfDEE9aE/m');
 
 --
 -- Index pour les tables déchargées
@@ -172,7 +166,7 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT pour la table `liste`
 --
 ALTER TABLE `liste`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT pour la table `message`
@@ -184,7 +178,7 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

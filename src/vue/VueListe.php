@@ -43,14 +43,12 @@ FIN;
         switch ($select) {
             case 0 :
             {
-                $content = 'Affichage de toutes les listes : ';
-                $content .= $this->lesListes();
+                $content = $this->formListe();
                 break;
             }
             case 1 :
             {
-                $content = $this->formListe();
-                break;
+
             }
         }
         $url_accueil = $this->container->router->pathFor('racine');
@@ -66,7 +64,7 @@ FIN;
 		<h1><a href="$url_accueil">Wish List</a></h1>
 		<nav>
 			<ul>
-				<li><a href="$url_form_liste">Nouvelle Liste</a></li>
+				
 			</ul>
 		</nav>
     $content

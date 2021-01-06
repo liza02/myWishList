@@ -17,7 +17,9 @@ class VueAccueil
     public function listesPublique() : string{
         $html = '';
         foreach($this->tab as $liste){
-            $html .= "<li>{$liste['titre']}, {$liste['description']}</li>";
+            $date = date('d/m/Y',strtotime($liste['expiration']));
+            $html .= "<li>Titre : {$liste['titre']} <br>
+                          Date d'expiration : $date </li>";
         }
         $html = "<ul>$html</ul>";
         return $html;
@@ -44,10 +46,10 @@ class VueAccueil
 		<h1><a href="$url_accueil">Wish List</a></h1>
 		<nav>
 			<ul>
-				<li><a class="bouton" href="$url_accueil">Page Accueil</a></li>
-				<li><a class="bouton" href="$url_compte">Page Compte</a></li>
+				<li><a class="bouton" href="$url_accueil">Accueil</a></li>
+				<li><a class="bouton" href="$url_compte">Mon compte</a></li>
 				<li><a class="bouton" href="$url_item">Page Item</a></li>
-				<li><a class="bouton" href="$url_liste">Page Liste</a></li>
+				<li><a class="bouton" href="$url_liste">Creer Liste</a></li>
 			</ul>
 		</nav>
 		<h3>Liste Publique</h3>

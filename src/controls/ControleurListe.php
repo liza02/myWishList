@@ -45,7 +45,7 @@ class ControleurListe
     public function formListe(Request $rq, Response $rs, $args) : Response {
         // pour afficher le formulaire liste
         $vue = new VueListe( [] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 1) ) ;
+        $rs->getBody()->write( $vue->render( 0) ) ;
         return $rs;
     }
 
@@ -65,6 +65,7 @@ class ControleurListe
         $l->public = "";
         //ajouter la condition s'il manque un titre ou une description
         $l->save();
+        //redirection
         $url_listes = $this->container->router->pathFor( 'liste' ) ;
         return $rs->withRedirect($url_listes);
     }

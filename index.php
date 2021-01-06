@@ -41,7 +41,7 @@ $app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('d
 $app->get('/nouvelleliste' , ControleurListe::class.':formListe'  )->setName('formListe'  );
 $app->post('/nouvelleliste' , ControleurListe::class.':newListe'  )->setName('newListe'  );
 $app->get('/liste/',ControleurListe::class.':afficherItemListe' )->setName('itemListe');
-$app->get('/liste/{token}', ControleurListe::class.':afficherItemsListe' )->setName('aff_liste' );
+$app->get('/liste/{token}', ControleurListe::class.':afficherItemsListe' )->setName('aff_liste');
 
 /*
  * Chemin de base que je supprime dès que j'en ai plus besoin

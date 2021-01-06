@@ -28,11 +28,9 @@ class ControleurListe
  */
 
     public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
-        $liste = Liste::find($args['token']);
-        var_dump($liste);
-        $item = Item::where('liste_id','=',$liste->no)->get();
-        $vue = new VueListe( [ $item->toArray() ] , $this->container );
-        $rs->getBody()->write( $vue->render(1));
+        $liste = Liste::where('token','=',$args['token'])->get();
+        $vue = new VueListe( [ $liste[0]->toArray() ] , $this->container );
+        $rs->getBody()->write( $vue->render(2));
         return $rs;
     }
 
@@ -60,7 +58,7 @@ class ControleurListe
         //ajouter la condition s'il manque un titre ou une description
         $l->save();
         //redirection sur afficher
-        $url_listes = $this->container->router->pathFor("aff_liste" ) ;
+        $url_listes = $this->container->router->pathFor("aff_liste", ['token' => $token]);
         return $rs->withRedirect($url_listes);
     }
 }

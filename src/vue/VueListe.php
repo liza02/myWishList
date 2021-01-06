@@ -43,18 +43,32 @@ FIN;
         return $html2;
     }
 
+    private function uneListe() : string {
+        $l = $this->tab[0];
+        $html = "<h2>Liste {$l['no']}</h2>";
+        $html .= "<b>Titre:</b> {$l['titre']}<br>";
+        $html .= "<b>Description:</b> {$l['description']}<br>";
+        $html .= "<b>Partage de liste: /myWishList/liste/{$l['token']}</b>";
+        return $html;
+    }
+
     public function render( int $select ) : string
     {
+        $content = "";
         switch ($select) {
             case 0 :
             {
-                $content = $this->formListe();
+                $content .= $this->formListe();
                 break;
             }
             case 1 :
             {
-                $content = $this->uneListeItems();
+                $content .= $this->uneListeItems();
                 break;
+            }
+            case 2 :
+            {
+                $content .= $this->uneListe();
             }
         }
         $url_accueil = $this->container->router->pathFor('racine');

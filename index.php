@@ -25,7 +25,7 @@ $app = new \Slim\App($container);
  * Nouveau Chemin (ceux que je mets a jour)
  */
 //Chemin Accueil
-$app->get('/'          , ControleurAccueil::class.':accueil'       )->setName('racine'    );
+$app->get('/'          , ControleurAccueil::class.':accueil')->setName('racine'    );
 $app->get('/compte', ControleurAccueil::class.':compte')->setName('compte');
 $app->get('/item', ControleurAccueil::class.':item')->setName('item');
 $app->get('/nouvelleListe', ControleurAccueil::class.':list')->setName('liste');

@@ -48,14 +48,20 @@ class ControleurListe
         $titre       = filter_var($post['titre']       , FILTER_SANITIZE_STRING) ;
         $description = filter_var($post['description'] , FILTER_SANITIZE_STRING) ;
         $date = filter_var($post['date'], FILTER_SANITIZE_STRING);
+        $public = filter_var($post['public'], FILTER_SANITIZE_STRING);
         $l = new Liste();
         $l->titre = $titre;
         $l->description = $description;
         $token = bin2hex(random_bytes(10));
         $l->token = $token;
         $l->expiration = $date;
+        if ($public) {
+            $l->public = "true";
+        }
+        else {
+            $l->public = "false";
+        }
         //TODO public
-        //ajouter la condition s'il manque un titre ou une description
         $l->save();
         //redirection sur afficher
         $url_listes = $this->container->router->pathFor("aff_liste", ['token' => $token]);

@@ -16,12 +16,23 @@ class VueListe
 
     private function formListe() : string {
         $url_new_liste = $this->container->router->pathFor( 'newListe' ) ;
+        $today = getdate();
+        $jour = $today['mday'];
+        $mois = $today['mon'];
+        $annee = $today['year'];
+        if ($mois < 10) {
+            $mois = 0 . $mois;
+        }
+        if ($jour < 10) {
+            $jour = 0 . $jour;
+        }
         $html = <<<FIN
 <form method="POST" action="$url_new_liste">
-	<label>Titre:<br> <input type="text" name="titre"/></label><br>
-	<label>Description: <br><input type="text" name="description"/></label><br>
+	<label>Titre:<br> <input type="text" name="titre" required/></label><br>
+	<label>Description: <br><input type="text" name="description" required/></label><br>
 	<label>Date d'expiration : <br><input type="date" name="date" 
-	value="2020-01-01" min="2020-01-01" max="2020-12-31"></label>
+	value="$annee-$mois-$jour" min="2020-01-01" max="2030-12-31" required></label><br>
+	<label>Liste publique ? <input type="checkbox" name="public"></label><br><br>
 	<button type="submit">Enregistrer la liste</button>
 </form>	
 FIN;

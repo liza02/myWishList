@@ -15,13 +15,16 @@ class VueAccueil
     }
 
     public function listesPublique() : string{
-        $html = '';
+        $html = "";
         foreach($this->tab as $liste){
             $date = date('d/m/Y',strtotime($liste['expiration']));
-            $html .= "<li>Titre : {$liste['titre']} <br>
+            $html .= "<li>{$liste['titre']} <br>
                           Date d'expiration : $date </li>";
+            $token = $liste['token'];
+            $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+            $html .= "<a class=bouton href=$url_liste>Accéder a la liste</a>";
         }
-        $html = "<ul>$html</ul>";
+        $html = "<h3>Listes Publiques</h3><ul>$html</ul>";
         return $html;
     }
 
@@ -52,7 +55,6 @@ class VueAccueil
 				<li><a class="bouton" href="$url_liste">Creer Liste</a></li>
 			</ul>
 		</nav>
-		<h3>Liste Publique</h3>
 		$content;
   </body>
 </html>

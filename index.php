@@ -8,7 +8,6 @@ require 'vendor/autoload.php';
 use mywishlist\controls\ControleurAccueil;
 use mywishlist\controls\ControleurCompte;
 use mywishlist\controls\ControleurListe;
-use \mywishlist\controls\MonControleur;
 
 $config = ['settings' => [
     'displayErrorDetails' => true,
@@ -21,26 +20,26 @@ $db->bootEloquent();
 
 $container = new \Slim\Container($config);
 $app = new \Slim\App($container);
+
 /*
  * Nouveau Chemin (ceux que je mets a jour)
  */
 //Chemin Accueil
-$app->get('/'          , ControleurAccueil::class.':accueil'       )->setName('racine'    );
+$app->get('/', ControleurAccueil::class.':accueil')->setName('racine');
 $app->get('/compte', ControleurAccueil::class.':compte')->setName('compte');
 $app->get('/item', ControleurAccueil::class.':item')->setName('item');
-$app->get('/nouvelleListe', ControleurAccueil::class.':list')->setName('liste');
+$app->get('/liste/nouvelleListe', ControleurAccueil::class.':list')->setName('liste');
 
 //Chemin Compte
-$app->get('/compte/newlogin'    , ControleurCompte::class.':formlogin'   )->setName('formlogin');
+$app->get('/compte/newlogin', ControleurCompte::class.':formlogin'   )->setName('formlogin');
 $app->post('/compte/newlogin', ControleurCompte::class.':nouveaulogin')->setName('nouveaulogin');
-$app->get('/compte/login' , ControleurCompte::class.':testform'  )->setName('testform'  );
-$app->post('/compte/login', ControleurCompte::class.':testpass'  )->setName('testpass'  );
-$app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('deconnexion'  );
+$app->get('/compte/login', ControleurCompte::class.':testform')->setName('testform');
+$app->post('/compte/login', ControleurCompte::class.':testpass')->setName('testpass');
+$app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('deconnexion');
 
 //Chemin Liste
-$app->get('/nouvelleliste' , ControleurListe::class.':formListe'  )->setName('formListe'  );
-$app->post('/nouvelleliste' , ControleurListe::class.':newListe'  )->setName('newListe'  );
-$app->get('/liste/',ControleurListe::class.':afficherItemListe' )->setName('itemListe');
+$app->get('/liste/nouvelleliste' , ControleurListe::class.':formListe')->setName('formListe');
+$app->post('/liste/nouvelleliste' , ControleurListe::class.':newListe')->setName('newListe');
 $app->get('/liste/{token}', ControleurListe::class.':afficherItemsListe' )->setName('aff_liste');
 
 /*

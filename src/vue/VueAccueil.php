@@ -18,11 +18,11 @@ class VueAccueil
         $html = "";
         foreach($this->tab as $liste){
             $date = date('d/m/Y',strtotime($liste['expiration']));
-            $html .= "<li>{$liste['titre']} <br>
+            $html .= "<li class='listepublique'>{$liste['titre']} <br>
                           Date d'expiration : $date </li>";
             $token = $liste['token'];
             $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-            $html .= "<a class=bouton href=$url_liste>Accéder a la liste</a>";
+            $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
         }
         $html = "<h3>Listes Publiques</h3><ul>$html</ul>";
         return $html;

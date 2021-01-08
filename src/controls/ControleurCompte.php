@@ -16,8 +16,7 @@ use \mywishlist\models\Liste;
 use \mywishlist\models\Item;
 use \mywishlist\models\User;
 
-class ControleurCompte
-{
+class ControleurCompte {
     private $container;
 
     public function __construct($container) {
@@ -35,13 +34,10 @@ class ControleurCompte
         $login       = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
 
-        $nb = User::where('login','=',$login)->count();
-        if ($nb == 0) {
-            $u = new User();
-            $u->login = $login;
-            $u->pass = password_hash($pass, PASSWORD_DEFAULT);
-            $u->save();
-        } else {
+        try {
+            Authentication::createUser($login, $pass);
+        }
+        catch (\Exception $e) {
             $login = 'existe déjà';
         }
 
@@ -73,14 +69,7 @@ class ControleurCompte
         $post = $rq->getParsedBody() ;
         $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
-        $u = User::where('login','=',$login)->first();
-        if(gettype($u) != 'NULL'){
-            $res = password_verify($pass, $u->pass);
-        }
-        else{
-            $res = false;
-        }
-        if ($res) $_SESSION['iduser'] = $u->id;
+        $res = Authentication::authenticate($login, $pass);
         $vue = new VueCompte( [ 'res' => $res ] , $this->container ) ;
         $rs->getBody()->write( $vue->render(4) ) ;
         return $rs;

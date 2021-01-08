@@ -64,7 +64,8 @@ FIN;
             case 4 :
             {
                 $res = ($this->tab['res']) ? 'OK' : 'KO';
-                $content = 'Mot de passe <b>' . $res . '</b>';
+                $content = 'Mot de passe <b>' . $res . '</b></br>';
+                if ($res == 'OK') $content .= 'Connecté en tant que <b>' . $_SESSION['profile']['username'] . '</b>';
                 break;
             }
             case 5 :

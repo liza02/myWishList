@@ -29,7 +29,7 @@ $app = new \Slim\App($container);
 $app->get('/', ControleurAccueil::class.':accueil')->setName('racine');
 $app->get('/compte', ControleurAccueil::class.':compte')->setName('compte');
 $app->get('/item', ControleurAccueil::class.':item')->setName('item');
-$app->get('/liste/nouvelleListe', ControleurAccueil::class.':list')->setName('liste');
+$app->get('/listes/nouvelleListe', ControleurAccueil::class.':list')->setName('liste');
 
 //Chemin Compte
 $app->get('/compte/newlogin', ControleurCompte::class.':formlogin'   )->setName('formlogin');
@@ -39,9 +39,10 @@ $app->post('/compte/login', ControleurCompte::class.':testpass')->setName('testp
 $app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('deconnexion');
 
 //Chemin Liste
-$app->get('/liste/nouvelleliste' , ControleurListe::class.':formListe')->setName('formListe');
-$app->post('/liste/nouvelleliste' , ControleurListe::class.':newListe')->setName('newListe');
-$app->get('/liste/{token}', ControleurListe::class.':afficherItemsListe' )->setName('aff_liste');
+$app->get('/listes/nouvelleliste' , ControleurListe::class.':formListe')->setName('formListe');
+$app->post('/listes/nouvelleliste' , ControleurListe::class.':newListe')->setName('newListe');
+$app->get('/listes/{token}', ControleurListe::class.':afficherListe' )->setName('aff_liste');
+//$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
 
 /*
  * Chemin de base que je supprime dès que j'en ai plus besoin

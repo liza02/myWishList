@@ -30,10 +30,15 @@ class VueAccueil
 
     public function render( int $select ) : string
     {
+        if (isset($_SESSION['profile']['username'])){
+            $content = "Connecté en tant que : "  . $_SESSION['profile']['username'] . "<br>";
+        }else{
+            $content = "Non connecté<br>";
+        }
         switch ($select) {
             case 0 :
             {
-                $content = $this->listesPublique();
+                $content .= $this->listesPublique();
                 $url_accueil = $this->container->router->pathFor('racine');
                 $url_compte = $this->container->router->pathFor('compte');
                 $url_item = $this->container->router->pathFor('item');

@@ -16,8 +16,8 @@ class VueItem
 
     private function unItem() : string {
         $i = $this->tab[0][0][0];
-        $l = $this->tab[0][1][0];
-        $url_reserv = $this->container->router->pathFor( 'reserve_item', ['id_item' => $i['id'], 'token' => $l['token']] ) ;
+        $token = $this->tab[0][2];
+        $url_reserv = $this->container->router->pathFor( 'reserve_item', ['id_item' => $i['id'], 'token' => $token] ) ;
         $html = "<h2>Item {$i['id']}</h2>";
         $html .= "<b>Nom:</b> {$i['nom']}<br>";
         $html .= "<b>Descr:</b> {$i['descr']}<br>";

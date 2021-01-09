@@ -130,8 +130,8 @@ CREATE TABLE `user` (
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `login`, `pass`) VALUES
-(1, 'yo', '$2y$10$YnErQdgdEVajoa9WAKNbTOXEWQSJ3VyUUl9bwkKcr1PcfDEE9aE/m');
+INSERT INTO `user` (`id`, `nom` ,`prenom` ,`login`, `pass`) VALUES
+(1, 'aless','demange','alessi','$2y$10$LvtaU0UQTKxC49/0Ter99efEboYQVoM5S/oOol1Jt91MJOaipXuZi');
 
 --
 -- AUTO_INCREMENT pour les tables déchargées

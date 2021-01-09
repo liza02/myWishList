@@ -31,11 +31,12 @@ class ControleurCompte {
 
     public function nouveaulogin(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody() ;
-        $login       = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
+        $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
-
+        $nom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
+        $prenom = filter_var($post['prenom'], FILTER_SANITIZE_STRING);
         try {
-            Authentication::createUser($login, $pass);
+            Authentication::createUser($nom, $prenom,$login, $pass);
         }
         catch (\Exception $e) {
             $login = 'existe déjà';

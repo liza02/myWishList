@@ -18,6 +18,8 @@ class VueCompte
         $url_nouveaulogin = $this->container->router->pathFor( 'nouveaulogin' ) ;
         $html = <<<FIN
 <form method="POST" action="$url_nouveaulogin">
+    <label>Nom:<br> <input type="text" name="nom"></label><br>
+    <label>Prenom:<br> <input type="text" name="prenom"></label><br>
     <label>Login:<br> <input type="text" name="login"/></label><br>
     <label>Mot de passe: <br><input type="text" name="pass"/></label><br>
     <button type="submit">Enregistrer le login</button>

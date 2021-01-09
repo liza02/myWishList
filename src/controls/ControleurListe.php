@@ -36,9 +36,10 @@ class ControleurListe
 
     public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::where('token','=',$args['token'])->get();
-        $item = Item::where('id_liste','=',$liste[0]['no'])->get();
+        $item = Item::where('liste_id','=',$liste[0]['no'])->get();
         $listeItem = array([$liste],[$item]);
-        $vue = new VueListe([$listeItem->toArray()], $this->container);
+        //var_dump($listeItem[1]);
+        $vue = new VueListe($listeItem, $this->container);
         $rs->getBody()->write( $vue->render(1));
         return $rs;
     }

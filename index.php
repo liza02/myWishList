@@ -41,7 +41,7 @@ $app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('d
 //Chemin Liste
 $app->get('/listes/nouvelleliste' , ControleurListe::class.':formListe')->setName('formListe');
 $app->post('/listes/nouvelleliste' , ControleurListe::class.':newListe')->setName('newListe');
-$app->get('/listes/{token}', ControleurListe::class.':afficherListe' )->setName('aff_liste');
+$app->get('/listes/{token}', ControleurListe::class.':afficherItemsListe' )->setName('aff_liste');
 //$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
 
 /*

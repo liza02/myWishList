@@ -40,22 +40,27 @@ FIN;
     }
 
     private function uneListeItems() : string {
-        $html1 = "<h2>Liste {$this->tab[0][0]['liste_id']} :</h2>";
+        $l = $this->tab[0][0][0];
+        $html1 = "<h2>Liste {$l['no']}</h2>";
+        $html1 .= "<b>Titre:</b> {$l['titre']}<br>";
+        $html1 .= "<b>Description:</b> {$l['description']}<br>";
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $html1 .= "<b>Partagez votre liste : </b>$actual_link";
         $html2 = "";
-        foreach ($this->tab as $tableau){
+        foreach ($this->tab[1] as $tableau){
             foreach ($tableau as $items){
                 $image = "../img/" . $items['img'];
                 $html2 .= "<li> <h3> Item </h3> id: {$items['id']} | titre: {$items['nom']} | descr: {$items['descr']} | Image: <br> <img src=$image></li>";
                 $html2 .= "<br>";
             }
         }
-        $html2 .= "<h4>Partager la liste ici :</h4> /{$items['token']}";
+        //$html2 .= "<h4>Partager la liste ici :</h4> /{$items['token']}";
         $html2 = $html1 . "<ul> $html2 </ul>";
         return $html2;
     }
 
     private function uneListe() : string {
-        $l = $this->tab[0][0];
+        $l = $this->tab[0];
         $html = "<h2>Liste {$l['no']}</h2>";
         $html .= "<b>Titre:</b> {$l['titre']}<br>";
         $html .= "<b>Description:</b> {$l['description']}<br>";

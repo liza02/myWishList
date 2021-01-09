@@ -3,10 +3,17 @@
 
 namespace mywishlist\controls;
 
-
-use mywishlist\vue\MaVue;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+
+use mywishlist\vue\MaVue;
+use mywishlist\vue\VueAccueil;
+use mywishlist\vue\VueCompte;
+use mywishlist\vue\VueItem;
+use mywishlist\vue\VueListe;
+
+use \mywishlist\models\Liste;
+use \mywishlist\models\Item;
 
 class ControleurItem
 {
@@ -18,9 +25,15 @@ class ControleurItem
 
     public function afficherItem(Request $rq, Response $rs, $args) : Response {
         $item = Item::find( $args['id_item'] ) ;
-        $vue = new VueItem( [ $item->toArray() ] , $this->container ) ;
+        $liste = Liste::where('token','=',$args['token'])->get();
+        $aray = array([$item],[$liste]);
+        $vue = new VueItem( [ $aray ] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 0 ) ) ;
         return $rs;
+    }
+
+    public function reserverItem(Request $rq, Response $rs, $args) : Response {
+        //TODO
     }
 
     public function deconnexion(Request $rq, Response $rs, $args) : Response {

@@ -15,12 +15,13 @@ class VueItem
     }
 
     private function unItem() : string {
-        $i = $this->tab[0];
-        $url_reserv = $this->container->router->pathFor( 'reserve_item', ['id' => $i['id']] ) ;
+        $i = $this->tab[0][0][0];
+        $l = $this->tab[0][1][0];
+        $url_reserv = $this->container->router->pathFor( 'reserve_item', ['id_item' => $i['id'], 'token' => $l['token']] ) ;
         $html = "<h2>Item {$i['id']}</h2>";
         $html .= "<b>Nom:</b> {$i['nom']}<br>";
         $html .= "<b>Descr:</b> {$i['descr']}<br>";
-        $image = "../img/" . $i['img'];
+        $image = "../../img/" . $i['img'];
         $html .= "<b>Image:</b> <br> <img src=$image><br>";
         $html .=  <<<FIN
 <form method="POST" action="$url_reserv">
@@ -35,10 +36,11 @@ FIN;
         $content = "";
         switch ($select) {
             case 0 :
-                {
-                    $content = $this->unItem();
-                    break;
-                }
+            {
+                $content .= $this->unItem();
+                break;
+            }
+        }
                 $url_accueil = $this->container->router->pathFor('racine');
                 $html = <<<FIN
 <!DOCTYPE html>
@@ -55,7 +57,6 @@ FIN;
   </body>
 </html>
 FIN;
-        }
         return $html;
     }
 }

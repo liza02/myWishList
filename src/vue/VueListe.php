@@ -49,7 +49,7 @@ FIN;
         $html2 = "";
         foreach ($this->tab[1] as $tableau){
             foreach ($tableau as $items){
-                $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id']]);
+                $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $image = "../img/" . $items['img'];
                 $html2 .= "<li> <a href='$url_item' <h3> Item </h3> </a>id: {$items['id']} | titre: {$items['nom']} | descr: {$items['descr']} | Image: <br> <img src=$image></li>";
                 $html2 .= "<br>";

@@ -60,17 +60,6 @@ FIN;
         return $html2;
     }
 
-    private function uneListe() : string {
-        $l = $this->tab[0];
-        $html = "<h2>Liste {$l['no']}</h2>";
-        $html .= "<b>Titre:</b> {$l['titre']}<br>";
-        $html .= "<b>Description:</b> {$l['description']}<br>";
-        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $html .= "<b>Partagez votre liste : </b>$actual_link";
-        //$html .= "<b>Partage de liste: /myWishList/liste/{$l['token']}</b>";
-        return $html;
-    }
-
     public function render( int $select ) : string
     {
        $content = "";

@@ -36,7 +36,8 @@ FIN;
         switch ($select) {
             case 0 :
                 {
-
+                    $content = $this->unItem();
+                    break;
                 }
                 $url_accueil = $this->container->router->pathFor('racine');
                 $html = <<<FIN

@@ -19,7 +19,7 @@ class ControleurItem
     public function afficherItem(Request $rq, Response $rs, $args) : Response {
         $item = Item::find( $args['id_item'] ) ;
         $vue = new VueItem( [ $item->toArray() ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 3 ) ) ;
+        $rs->getBody()->write( $vue->render( 0 ) ) ;
         return $rs;
     }
 

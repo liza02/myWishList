@@ -41,22 +41,43 @@ class VueAccueil
                 $html = <<<FIN
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>MyWishList</title>
     <link rel="stylesheet" href="../css/style.css">
-  </head>
-  <body>
-		<h1><a href="$url_accueil">Wish List</a></h1>
-		<nav>
-			<ul>
-				<li><a class="bouton" href="$url_accueil">Accueil</a></li>
-				<li><a class="bouton" href="$url_compte">Mon compte</a></li>
-				<li><a class="bouton" href="$url_item">Page Item</a></li>
-				<li><a class="bouton" href="$url_liste">Creer Liste</a></li>
-			</ul>
-		</nav>
-		$content;
-  </body>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<h1><a href="$url_accueil">Wish List</a></h1>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="$url_accueil">MYWISHLIST</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="$url_accueil">Accueil</a></li>
+                <li><a href="$url_compte">Mon compte</a></li>
+                <li><a href="$url_item">Page Item</a></li>
+                <li><a href="$url_liste">Creer Liste</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+$content;
+</body>
 </html>
 FIN;
             }

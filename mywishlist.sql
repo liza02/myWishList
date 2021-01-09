@@ -33,7 +33,7 @@ CREATE TABLE `item` (
   `liste_id` int(11) NOT NULL,
   `nom` text NOT NULL,
   `descr` text DEFAULT NULL,
-  `img` text DEFAULT NULL,
+  `img` text DEFAULT NULL DEFAULT 'default.png',
   `url` text DEFAULT NULL,
   `tarif` decimal(5,2) DEFAULT NULL,
   `cagnotte` int(1) NOT NULL DEFAULT 0,
@@ -119,6 +119,8 @@ CREATE TABLE `message` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
+  `nom` varchar (60) NOT NULL,
+  `prenom` varchar(60) NOT NULL,
   `login` varchar(60) NOT NULL,
   `pass` varchar(60) NOT NULL,
   PRIMARY KEY (`id`)

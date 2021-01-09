@@ -14,11 +14,30 @@ class VueItem
         $this->container = $container;
     }
 
+    private function unItem() : string {
+        $i = $this->tab[0];
+        $url_reserv = $this->container->router->pathFor( 'reserve_item', ['id' => $i['id']] ) ;
+        $html = "<h2>Item {$i['id']}</h2>";
+        $html .= "<b>Nom:</b> {$i['nom']}<br>";
+        $html .= "<b>Descr:</b> {$i['descr']}<br>";
+        $image = "../img/" . $i['img'];
+        $html .= "<b>Image:</b> <br> <img src=$image><br>";
+        $html .=  <<<FIN
+<form method="POST" action="$url_reserv">
+    <button type="submit">Reserver</button>
+</form>    
+FIN;
+        return $html;
+    }
+
     public function render( int $select ) : string
     {
+        $content = "";
         switch ($select) {
             case 0 :
-            {
+                {
+
+                }
                 $url_accueil = $this->container->router->pathFor('racine');
                 $html = <<<FIN
 <!DOCTYPE html>
@@ -31,11 +50,10 @@ class VueItem
 		<h1><a href="$url_accueil">Wish List</a></h1>
 		<nav>
 		</nav>
-    'Page des ITEMS'
+    $content
   </body>
 </html>
 FIN;
-            }
         }
         return $html;
     }

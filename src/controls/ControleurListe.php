@@ -23,14 +23,13 @@ class ControleurListe
         $this->container = $container;
     }
 
-/*
- * A utiliser en mettant un selecteur
- */
-
     public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::where('token','=',$args['token'])->get();
-        $vue = new VueListe( [ $liste[0]->toArray() ] , $this->container );
-        $rs->getBody()->write( $vue->render(2));
+        $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+        $listeItem = array([$liste],[$item]);
+        //var_dump($listeItem[1]);
+        $vue = new VueListe($listeItem, $this->container);
+        $rs->getBody()->write( $vue->render(1));
         return $rs;
     }
 
@@ -61,7 +60,6 @@ class ControleurListe
         else {
             $l->public = "false";
         }
-        //TODO public
         $l->save();
         //redirection sur afficher
         $url_listes = $this->container->router->pathFor("aff_liste", ['token' => $token]);

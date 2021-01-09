@@ -43,7 +43,7 @@ class VueAccueil
 <html>
 <head>
     <title>MyWishList</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
     <!-- Bootstrap CSS File -->
@@ -52,7 +52,6 @@ class VueAccueil
     <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<h1><a href="$url_accueil">Wish List</a></h1>
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
@@ -63,14 +62,17 @@ class VueAccueil
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="$url_accueil">MYWISHLIST</a>
+            <a class="navbar-brand" href="$url_accueil">
+            <img src="img/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+            MYWISHLIST
+            </a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="$url_accueil">Accueil</a></li>
-                <li><a href="$url_compte">Mon compte</a></li>
                 <li><a href="$url_item">Page Item</a></li>
                 <li><a href="$url_liste">Creer Liste</a></li>
+                <li><a href="$url_compte">Mon compte</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->

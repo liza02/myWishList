@@ -57,7 +57,6 @@ class VueAccueil
     <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<h1><a href="$url_accueil">Wish List</a></h1>
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">

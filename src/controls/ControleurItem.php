@@ -17,8 +17,8 @@ class ControleurItem
     }
 
     public function afficherItem(Request $rq, Response $rs, $args) : Response {
-        $item = Item::find( $args['id'] ) ;
-        $vue = new MaVue( [ $item->toArray() ] , $this->container ) ;
+        $item = Item::find( $args['id_item'] ) ;
+        $vue = new VueItem( [ $item->toArray() ] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 3 ) ) ;
         return $rs;
     }

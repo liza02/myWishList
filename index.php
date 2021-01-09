@@ -44,6 +44,9 @@ $app->post('/listes/nouvelleliste' , ControleurListe::class.':newListe')->setNam
 $app->get('/listes/{token}', ControleurListe::class.':afficherItemsListe' )->setName('aff_liste');
 //$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
 
+//Chemin Item
+$app->get('/liste/{token}/{id_item}', ControleurItem::class.':afficherItem' )->setName('aff_liste');
+
 /*
  * Chemin de base que je supprime dès que j'en ai plus besoin
  */

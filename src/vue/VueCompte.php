@@ -20,19 +20,19 @@ class VueCompte
             <form method="POST" action="$url_nouveaulogin">
                 <div class="form-group">
                     <label for="form_nom" >Nom</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Rzepka" required>
+                    <input type="text" class="form-control" id="form_nom" placeholder="Rzepka" name="nom" required>
                 </div>
                 <div class="form-group">
                     <label for="form_prenom" >Prénom</label>
-                    <input type="text" class="form-control" id="form_prenom" placeholder="Thomas" required>
+                    <input type="text" class="form-control" id="form_prenom" placeholder="Thomas" name="prenom" required>
                 </div>
                 <div class="form-group">
                     <label for="form_login" >Login</label>
-                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz" required>
+                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz" name="login" required>
                 </div>
                 <div class="form-group">
                     <label for="form_pass" >Mot de passe</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe" required>
+                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe" name="pass" required>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary text-center">Enregistrer le login</button>
@@ -111,7 +111,9 @@ class VueCompte
             case 4 :
             {
                 $path = "../";
-                $current_page="MonCompte";
+                $current_page = "Connexion";
+                $title = "Vous êtes connecté !";
+                $link = "";
                 $res = ($this->tab['res']) ? 'OK' : 'KO';
                 $content = 'Mot de passe <b>' . $res . '</b></br>';
                 if ($res == 'OK') $content .= 'Connecté en tant que <b>' . $_SESSION['profile']['username'] . '</b>';

@@ -5,11 +5,12 @@ namespace mywishlist\controls;
 use \mywishlist\models\User;
 
 class Authentication {
-    public static function createUser($username, $password) {
+    public static function createUser($nom, $prenom, $username, $password) {
         $nb = User::where('login','=',$username)->count();
-
         if ($nb == 0) {
             $u = new User();
+            $u->nom = $nom;
+            $u->prenom = $prenom;
             $u->login = $username;
             $u->pass = password_hash($password, PASSWORD_DEFAULT);
             $u->save();

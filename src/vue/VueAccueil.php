@@ -32,8 +32,10 @@ class VueAccueil
     {
         if (isset($_SESSION['profile']['username'])){
             $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
+            $connected = "Mon Compte";
         }else{
             $content = "<div id='not_connected'>Non connecté</div>";
+            $connected = "Connexion";
         }
         switch ($select) {
             case 0 :
@@ -72,11 +74,21 @@ class VueAccueil
                 <li class="nav-item"> <a class="nav-link active" href="$url_accueil">Accueil</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_item">Page Item</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_liste">Creer Liste</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_compte">Mon compte</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_compte">$connected</a></li>
             </ul>
         </div>
     </nav>
-    $content;
+    
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+        </ol>
+    </nav>
+
+    <div>
+        $content;
+    </div>
+    
 </body>
 </html>
 FIN;

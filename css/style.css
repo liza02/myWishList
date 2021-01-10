@@ -12,10 +12,10 @@
     text-align: right;
 }
 
-.card {
+.card_form {
     margin: 0 auto; /* Added */
     float: none; /* Added */
-    margin-bottom: 10px; /* Added */
-    margin-left: 150px;
-    margin-right: 150px;
+    margin-bottom: 20px; /* Added */
+    margin-left: 300px;
+    margin-right: 300px;
 }

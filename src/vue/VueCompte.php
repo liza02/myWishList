@@ -17,7 +17,7 @@ class VueCompte
     private function formlogin() : string {
         $url_nouveaulogin = $this->container->router->pathFor( 'nouveaulogin' ) ;
         $html = <<<FIN
-            <form method="POST" action="$url_nouveaulogin" class="justify-content-center">
+            <form method="POST" action="$url_nouveaulogin">
                 <div class="form-group">
                     <label for="form_nom" >Nom</label>
                     <input type="text" class="form-control" id="form_nom" placeholder="Rzepka">
@@ -34,7 +34,10 @@ class VueCompte
                     <label for="form_pass" >Mot de passe</label>
                     <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
                 </div>
-                <button type="submit" class="btn btn-primary">Enregistrer le login</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary text-center">Enregistrer le login</button>
+                </div>
+             
             </form>    
         FIN;
         return $html;
@@ -43,7 +46,7 @@ class VueCompte
     private function testform() : string {
         $url_testpass = $this->container->router->pathFor( 'testpass' ) ;
         $html = <<<FIN
-            <form method="POST" action="$url_testpass" class="justify-content-center">
+            <form method="POST" action="$url_testpass">
                 <div class="form-group">
                     <label for="form_login" >Login</label>
                     <input type="text" class="form-control" id="form_login" placeholder="thomasRz">
@@ -52,7 +55,10 @@ class VueCompte
                     <label for="form_pass" >Mot de passe</label>
                     <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
                 </div>
-                <button type="submit" class="btn btn-primary">Se connecter</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                </div>
+                
             </form>    
         FIN;
         return $html;
@@ -168,7 +174,7 @@ class VueCompte
         </ol>
     </nav>
     
-    <div class="card ">
+    <div class="card card_form">
         <div class="card-header text-center">
             $title
         </div>

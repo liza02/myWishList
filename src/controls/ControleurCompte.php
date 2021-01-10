@@ -41,9 +41,12 @@ class ControleurCompte {
         catch (\Exception $e) {
             $login = 'existe déjà';
         }
-        //$vue = new VueCompte( [ 'login' => $login ] , $this->container ) ;
-        $url_compte = $this->container->router->pathFor("compte", ['nom' => $nom]);
-        return $rs->withRedirect($url_compte);
+
+        $vue = new VueCompte( [ 'login' => $login ] , $this->container ) ;
+        $rs->getBody()->write( $vue->render(2)) ;
+//        $url_listes = $this->container->router->pathFor("compte", ['nom' => $n]);
+//        return $rs->withRedirect($url_listes);
+        return $rs;
     }
 
 

@@ -33,6 +33,7 @@ class VueCompte
                 <div class="form-group">
                     <label for="form_pass" >Mot de passe</label>
                     <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe" name="pass" required>
+                </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary text-center">Enregistrer le login</button>
                 </div>

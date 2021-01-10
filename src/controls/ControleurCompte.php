@@ -25,7 +25,7 @@ class ControleurCompte {
 
     public function formlogin(Request $rq, Response $rs, $args) : Response {
         $vue = new VueCompte( [] , $this->container ) ;
-        $rs->getBody()->write( $vue->render(1) ) ;
+        $rs->getBody()->write( $vue->render(1)) ;
         return $rs;
     }
 
@@ -41,21 +41,11 @@ class ControleurCompte {
         catch (\Exception $e) {
             $login = 'existe déjà';
         }
-
-        $vue = new VueCompte( [ 'login' => $login ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 2 ) ) ;
-        return $rs;
+        //$vue = new VueCompte( [ 'login' => $login ] , $this->container ) ;
+        $url_compte = $this->container->router->pathFor("compte", ['nom' => $nom]);
+        return $rs->withRedirect($url_compte);
     }
 
-    public function testform(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueCompte( [] , $this->container ) ;
-        if (!$_SERVER['HTTP_CONNECTION']) {
-            $rs->getBody()->write($vue->render(5));
-        } else {
-            $rs->getBody()->write( $vue->render(3) ) ;
-        }
-        return $rs;
-    }
 
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
         session_destroy();

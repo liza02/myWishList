@@ -32,6 +32,7 @@ class ControleurAccueil
 
     public function compte(Request $rq, Response $rs, $args) : Response {
         $vue = new VueCompte([], $this->container);
+        //TODO quand on s'inscrit
         $rs->getBody()->write( $vue->render(0));
         return $rs;
     }

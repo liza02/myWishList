@@ -20,19 +20,19 @@ class VueCompte
             <form method="POST" action="$url_nouveaulogin">
                 <div class="form-group">
                     <label for="form_nom" >Nom</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Rzepka">
+                    <input type="text" class="form-control" id="form_nom" placeholder="Rzepka" required>
                 </div>
                 <div class="form-group">
                     <label for="form_prenom" >Prénom</label>
-                    <input type="text" class="form-control" id="form_prenom" placeholder="Thomas">
+                    <input type="text" class="form-control" id="form_prenom" placeholder="Thomas" required>
                 </div>
                 <div class="form-group">
                     <label for="form_login" >Login</label>
-                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz">
+                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz" required>
                 </div>
                 <div class="form-group">
                     <label for="form_pass" >Mot de passe</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
+                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe" required>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary text-center">Enregistrer le login</button>
@@ -49,11 +49,11 @@ class VueCompte
             <form method="POST" action="$url_testpass">
                 <div class="form-group">
                     <label for="form_login" >Login</label>
-                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz">
+                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz" name="login" required>
                 </div>
                 <div class="form-group">
                     <label for="form_pass" >Mot de passe</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
+                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe" name="pass" required>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Se connecter</button>
@@ -74,6 +74,9 @@ class VueCompte
         $url_item = $this->container->router->pathFor('item');
         $url_liste = $this->container->router->pathFor('liste');
         $url_deconnexion = $this->container->router->pathFor('deconnexion');
+        $content = "";
+        $title = "";
+        $link = "";
 
         if (isset($_SESSION['profile']['username'])){
             $connected = "Mon Compte";
@@ -88,7 +91,11 @@ class VueCompte
                 $path = "";
                 $current_page = "Connexion";
                 $title = "Connectez vous !";
-                $content = $this->testform();
+                //TODO
+                if (isset($this->tab['login'])){
+                    $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré'."<br>";
+                }
+                $content .= $this->testform();
                 $link= '<div class="card-footer text-center" > Pas encore de compte ? <a href="' .$url_formlogin . '"> En créer un </a></div> ';
                 break;
             }
@@ -101,19 +108,10 @@ class VueCompte
                 $link = '<div class="card-footer text-center"> Deja un compte ? <a href="' .$url_compte . '"> Se connecter </a></div> ';
                 break;
             }
-            case 2 :
-            {
-                $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré';
-                break;
-            }
-            case 3 :
-            {
-                $current_page = "Test";
-                $content = $this->testform();
-                $content .= '<div> Pas encore de compte ? <a href="' .$url_formlogin . '"> En créer un </a></div> ';
-            }
             case 4 :
             {
+                $path = "../";
+                $current_page="MonCompte";
                 $res = ($this->tab['res']) ? 'OK' : 'KO';
                 $content = 'Mot de passe <b>' . $res . '</b></br>';
                 if ($res == 'OK') $content .= 'Connecté en tant que <b>' . $_SESSION['profile']['username'] . '</b>';

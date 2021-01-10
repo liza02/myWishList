@@ -29,6 +29,7 @@ $app = new \Slim\App($container);
 
 $app->get('/', ControleurAccueil::class.':accueil')->setName('racine');
 $app->get('/compte', ControleurAccueil::class.':compte')->setName('compte');
+$app->get('/connexion', ControleurAccueil::class.':connexion')->setName('connexion');
 $app->get('/item', ControleurAccueil::class.':item')->setName('item');
 $app->get('/listes/nouvelleListe', ControleurAccueil::class.':list')->setName('liste');
 

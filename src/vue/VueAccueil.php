@@ -33,16 +33,18 @@ class VueAccueil
         if (isset($_SESSION['profile']['username'])){
             $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
             $connected = "Mon Compte";
+            $url_compte = $this->container->router->pathFor('compte');
+
         }else{
             $content = "<div id='not_connected'>Non connecté</div>";
             $connected = "Connexion";
+            $url_compte = $this->container->router->pathFor('connexion');
         }
         switch ($select) {
             case 0 :
             {
                 $content .= $this->listesPublique();
                 $url_accueil = $this->container->router->pathFor('racine');
-                $url_compte = $this->container->router->pathFor('compte');
                 $url_item = $this->container->router->pathFor('item');
                 $url_liste = $this->container->router->pathFor('liste');
                 $html = <<<FIN

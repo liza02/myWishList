@@ -25,7 +25,7 @@ class ControleurCompte {
 
     public function formlogin(Request $rq, Response $rs, $args) : Response {
         $vue = new VueCompte( [] , $this->container ) ;
-        $rs->getBody()->write( $vue->render(1)) ;
+        $rs->getBody()->write( $vue->render(2)) ;
         return $rs;
     }
 
@@ -35,15 +35,15 @@ class ControleurCompte {
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
         $nom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
         $prenom = filter_var($post['prenom'], FILTER_SANITIZE_STRING);
+        $vue = new VueCompte( [ 'login' => $login ] , $this->container ) ;
         try {
             Authentication::createUser($nom, $prenom,$login, $pass);
+            $rs->getBody()->write( $vue->render(3)) ;
         }
         catch (\Exception $e) {
             $login = 'existe déjà';
+            $rs->getBody()->write( $vue->render(1)) ;
         }
-
-        $vue = new VueCompte( [ 'login' => $login ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render(2)) ;
 //        $url_listes = $this->container->router->pathFor("compte", ['nom' => $n]);
 //        return $rs->withRedirect($url_listes);
         return $rs;

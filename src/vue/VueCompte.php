@@ -89,20 +89,18 @@ class VueCompte
     {
 
         $url_accueil = $this->container->router->pathFor('racine');
-        $url_formlogin = $this->container->router->pathFor('formlogin');
-        $url_testform = $this->container->router->pathFor('testform');
-        $url_compte = $this->container->router->pathFor('compte');
         $url_item = $this->container->router->pathFor('item');
         $url_liste = $this->container->router->pathFor('liste');
         $url_deconnexion = $this->container->router->pathFor('deconnexion');
         $content = "";
-        $title = "";
-        $link = "";
+
 
         if (isset($_SESSION['profile']['username'])){
             $connected = "Mon Compte";
+            $url_compte = $this->container->router->pathFor('compte');
         }else{
             $connected = "Connexion";
+            $url_compte = $this->container->router->pathFor('connexion');
         }
 
         switch ($select) {
@@ -111,25 +109,27 @@ class VueCompte
             {
                 $path = "";
                 $current_page = "Connexion";
-                $title = "Connectez vous !";
+
                 //TODO
                 if (isset($this->tab['login'])){
                     $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré'."<br>";
                 }
                 $content .= $this->testform();
-                $link= '<div class="card-footer text-center" > Pas encore de compte ? <a href="' .$url_formlogin . '"> En créer un </a></div> ';
                 break;
             }
             case 1 :
             {
+                $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de l'inscription ! Le login existe déjà</div>";
+            }
+            // inscription
+            case 2 :
+            {
                 $path = "../";
                 $current_page = "Inscription";
-                $title = "Inscrivez vous !";
-                $content = $this->formlogin();
-                $link = '<div class="card-footer text-center"> Déjà un compte ? <a href="' .$url_compte . '"> Se connecter </a></div> ';
+                $content .= $this->formlogin();
                 break;
             }
-            case 2 :
+            case 3 :
             {
                 $path = "../";
                 if ($this->tab['login'] != "existe déjà") {
@@ -140,26 +140,15 @@ class VueCompte
                     $title = "Ce compte existe déjà";
                     $content = 'Création du compte impossible, le compte existe déjà';
                 }
-                $current_page = "Inscription";
-                $link = "";
-
-                break;
-            }
-            case 3 :
-            {
-                $current_page = "Test";
-                $content = $this->testform();
-                $content .= '<div> Pas encore de compte ? <a href="' .$url_formlogin . '"> En créer un </a></div> ';
+                $content = "<div class=\"alert alert-success\" role=\"alert\">Inscription réussie ! Login <b> $this->tab['login'] </b> enregistré</div>";
             }
             case 4 :
             {
                 $path = "../";
-                $current_page = "Connexion";
-                $title = "Vous êtes connecté !";
-                $link = "";
                 $res = ($this->tab['res']) ? 'OK' : 'KO';
-                $content = 'Mot de passe <b>' . $res . '</b></br>';
+                $content .= 'Mot de passe <b>' . $res . '</b></br>';
                 if ($res == 'OK') $content .= 'Connecté en tant que <b>' . $_SESSION['profile']['username'] . '</b>';
+                $current_page = "Espace personnel";
                 break;
             }
             case 5 :
@@ -168,7 +157,7 @@ class VueCompte
                 $content = "<a href='$url_deconnexion'>Deconnexion</a>";
                 break;
             }
-            case 6 :
+            case (6) :
             {
                 $content = "Deconnecté";
                 break;

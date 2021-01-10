@@ -21,6 +21,8 @@ class ControleurAccueil
 
     public function __construct($container) {
         $this->container = $container;
+//        session_destroy();
+//        $_SESSION = [];
     }
 
     public function accueil(Request $rq, Response $rs, $args) : Response {
@@ -31,11 +33,18 @@ class ControleurAccueil
     }
 
     public function compte(Request $rq, Response $rs, $args) : Response {
+        $vue = new VueCompte( [ 'res' => true ] , $this->container ) ;
+        $rs->getBody()->write( $vue->render(4));
+        return $rs;
+    }
+
+    public function connexion(Request $rq, Response $rs, $args) : Response {
         $vue = new VueCompte([], $this->container);
         //TODO quand on s'inscrit
         $rs->getBody()->write( $vue->render(0));
         return $rs;
     }
+
     public function item(Request $rq, Response $rs, $args) : Response {
         $vue = new VueItem([], $this->container);
         $rs->getBody()->write( $vue->render(0));

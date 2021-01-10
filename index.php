@@ -37,7 +37,7 @@ $app->get('/compte/newlogin', ControleurCompte::class.':formlogin'   )->setName(
 $app->post('/compte/newlogin', ControleurCompte::class.':nouveaulogin')->setName('nouveaulogin');
 $app->get('/compte/login', ControleurCompte::class.':testform')->setName('testform');
 $app->post('/compte/login', ControleurCompte::class.':testpass')->setName('testpass');
-$app->post('/deconnexion', ControleurCompte::class.':deconnexion'  )->setName('deconnexion');
+$app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
 
 //Chemin Liste
 $app->get('/listes/nouvelleliste' , ControleurListe::class.':formListe')->setName('formListe');

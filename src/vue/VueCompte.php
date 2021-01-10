@@ -49,6 +49,7 @@ FIN;
         $url_compte = $this->container->router->pathFor('compte');
         $url_item = $this->container->router->pathFor('item');
         $url_liste = $this->container->router->pathFor('liste');
+        $url_deconnexion = $this->container->router->pathFor('deconnexion');
 
         if (isset($_SESSION['profile']['username'])){
             $connected = "Mon Compte";
@@ -96,6 +97,11 @@ FIN;
                 $content = "<a href='$url_deconnexion'>Deconnexion</a>";
                 break;
             }
+            case 6 :
+            {
+                $content = "Deconnecté";
+                break;
+            }
         }
 
                 $html = <<<FIN
@@ -103,6 +109,7 @@ FIN;
 <html>
 <head>
     <title>MyWishList</title>
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -144,6 +151,21 @@ FIN;
     </div>
     
 </body>
+=======
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+  <body>
+		<h1><a href="$url_accueil">Wish List</a></h1>
+		<nav>
+			<ul>
+				<li><a href="$url_formlogin">Nouveau login</a></li>
+				<li><a href="$url_testform">Test login</a></li>
+				<li><a href="$url_deconnexion">Deconnexion</a></li>
+			</ul>
+		</nav>
+    $content
+  </body>
+>>>>>>> c1942a97810d7a040b2c9c862faf7013998dc4b3
 </html>
 FIN;
         return $html;

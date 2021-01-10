@@ -104,8 +104,18 @@ class VueCompte
         }
 
         switch ($select) {
-
+            //connexion echec
             case 0 :
+            {
+                $current_page = "Connexion";
+                $path = "../";
+                $res = ($this->tab['res']) ? 'OK' : 'KO';
+                $content .= 'Mot de passe <b>' . $res . '</b></br>';
+                $content .= "<div></div><a href=$url_compte>Se connecter</a></div>";
+                break;
+            }
+            //connexion
+            case 1 :
             {
                 $path = "";
                 $current_page = "Connexion";
@@ -117,19 +127,21 @@ class VueCompte
                 $content .= $this->testform();
                 break;
             }
-            case 1 :
+            // inscription echec
+            case 2 :
             {
                 $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de l'inscription ! Le login existe déjà</div>";
             }
-            // inscription
-            case 2 :
+            //inscription
+            case 3 :
             {
                 $path = "../";
                 $current_page = "Inscription";
                 $content .= $this->formlogin();
                 break;
             }
-            case 3 :
+            //mon compte inscription
+            case 4 :
             {
                 $path = "../";
                 if ($this->tab['login'] != "existe déjà") {
@@ -142,7 +154,8 @@ class VueCompte
                 }
                 $content = "<div class=\"alert alert-success\" role=\"alert\">Inscription réussie ! Login <b> $this->tab['login'] </b> enregistré</div>";
             }
-            case 4 :
+            //mon compte connexion
+            case 5 :
             {
                 $path = "";
                 $res = ($this->tab['res']) ? 'OK' : 'KO';
@@ -151,19 +164,18 @@ class VueCompte
                 $current_page = "Espace personnel";
                 break;
             }
-            case 5 :
+            case 6 :
             {
                 $url_deconnexion = $this->container->router->pathFor('deconnexion');
                 $content = "<a href='$url_deconnexion'>Deconnexion</a>";
                 break;
             }
-            case (6) :
+            case 7:
             {
                 $content = "Deconnecté";
                 break;
             }
         }
-
                 $html = <<<FIN
 <!DOCTYPE html>
 <html>

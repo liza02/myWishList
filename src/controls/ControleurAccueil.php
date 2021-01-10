@@ -34,14 +34,14 @@ class ControleurAccueil
 
     public function compte(Request $rq, Response $rs, $args) : Response {
         $vue = new VueCompte( [ 'res' => true ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render(4));
+        $rs->getBody()->write( $vue->render(5));
         return $rs;
     }
 
     public function connexion(Request $rq, Response $rs, $args) : Response {
         $vue = new VueCompte([], $this->container);
         //TODO quand on s'inscrit
-        $rs->getBody()->write( $vue->render(0));
+        $rs->getBody()->write( $vue->render(1));
         return $rs;
     }
 

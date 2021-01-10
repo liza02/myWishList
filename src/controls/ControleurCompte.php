@@ -25,7 +25,7 @@ class ControleurCompte {
 
     public function formlogin(Request $rq, Response $rs, $args) : Response {
         $vue = new VueCompte( [] , $this->container ) ;
-        $rs->getBody()->write( $vue->render(2)) ;
+        $rs->getBody()->write( $vue->render(3)) ;
         return $rs;
     }
 
@@ -38,11 +38,11 @@ class ControleurCompte {
         $vue = new VueCompte( [ 'login' => $login ] , $this->container ) ;
         try {
             Authentication::createUser($nom, $prenom,$login, $pass);
-            $rs->getBody()->write( $vue->render(3)) ;
+            $rs->getBody()->write( $vue->render(4)) ;
         }
         catch (\Exception $e) {
             $login = 'existe déjà';
-            $rs->getBody()->write( $vue->render(1)) ;
+            $rs->getBody()->write( $vue->render(2)) ;
         }
 //        $url_listes = $this->container->router->pathFor("compte", ['nom' => $n]);
 //        return $rs->withRedirect($url_listes);
@@ -54,7 +54,7 @@ class ControleurCompte {
         session_destroy();
         $_SESSION = [];
         $vue = new VueCompte( [], $this->container);
-        $rs->getBody()->write($vue->render(6));
+        $rs->getBody()->write($vue->render(7));
         return $rs;
 
     }
@@ -64,10 +64,13 @@ class ControleurCompte {
         $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
         $res = Authentication::authenticate($login, $pass);
-        $url_listes = $this->container->router->pathFor("compte");
-        return $rs->withRedirect($url_listes);
-//        $vue = new VueCompte( [ 'res' => $res ] , $this->container ) ;
-//        $rs->getBody()->write( $vue->render(4) ) ;
-//        return $rs;
+        if ($res){
+            $url_compte = $this->container->router->pathFor("compte");
+            return $rs->withRedirect($url_compte);
+        }else{
+            $vue = new VueCompte( [ 'res' => $res ] , $this->container ) ;
+            $rs->getBody()->write( $vue->render(0)) ;
+            return $rs;
+        }
     }
 }

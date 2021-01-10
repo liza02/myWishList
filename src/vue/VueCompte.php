@@ -17,26 +17,44 @@ class VueCompte
     private function formlogin() : string {
         $url_nouveaulogin = $this->container->router->pathFor( 'nouveaulogin' ) ;
         $html = <<<FIN
-<form method="POST" action="$url_nouveaulogin">
-    <label>Nom:<br> <input type="text" name="nom"></label><br>
-    <label>Prenom:<br> <input type="text" name="prenom"></label><br>
-    <label>Login:<br> <input type="text" name="login"/></label><br>
-    <label>Mot de passe: <br><input type="text" name="pass"/></label><br>
-    <button type="submit">Enregistrer le login</button>
-</form>    
-FIN;
+            <form method="POST" action="$url_nouveaulogin" class="justify-content-center">
+                <div class="form-group">
+                    <label for="form_nom" >Nom</label>
+                    <input type="text" class="form-control" id="form_nom" placeholder="Rzepka">
+                </div>
+                <div class="form-group">
+                    <label for="form_prenom" >Prénom</label>
+                    <input type="text" class="form-control" id="form_prenom" placeholder="Thomas">
+                </div>
+                <div class="form-group">
+                    <label for="form_login" >Login</label>
+                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz">
+                </div>
+                <div class="form-group">
+                    <label for="form_pass" >Mot de passe</label>
+                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary">Enregistrer le login</button>
+            </form>    
+        FIN;
         return $html;
     }
 
     private function testform() : string {
         $url_testpass = $this->container->router->pathFor( 'testpass' ) ;
         $html = <<<FIN
-<form method="POST" action="$url_testpass">
-    <label>Login:<br> <input type="text" name="login"/></label><br>
-    <label>Mot de passe: <br><input type="text" name="pass"/></label><br>
-    <button type="submit">Tester le login</button>
-</form>    
-FIN;
+            <form method="POST" action="$url_testpass" class="justify-content-center">
+                <div class="form-group">
+                    <label for="form_login" >Login</label>
+                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz">
+                </div>
+                <div class="form-group">
+                    <label for="form_pass" >Mot de passe</label>
+                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>    
+        FIN;
         return $html;
     }
 
@@ -61,16 +79,20 @@ FIN;
 
             case 0 :
             {
-                $path = "Connexion";
+                $path = "";
+                $current_page = "Connexion";
+                $title = "Connectez vous !";
                 $content = $this->testform();
-                $content .= '<div> Pas encore de compte ? <a href="' .$url_formlogin . '"> En créer un </a></div> ';
+                $link= '<div class="card-footer text-center" > Pas encore de compte ? <a href="' .$url_formlogin . '"> En créer un </a></div> ';
                 break;
             }
             case 1 :
             {
-                $path = "Inscription";
+                $path = "../";
+                $current_page = "Inscription";
+                $title = "Inscrivez vous !";
                 $content = $this->formlogin();
-                $content .= '<div> Deja un compte ? <a href="' .$url_compte . '"> Se connecter </a></div> ';
+                $link = '<div class="card-footer text-center"> Deja un compte ? <a href="' .$url_compte . '"> Se connecter </a></div> ';
                 break;
             }
             case 2 :
@@ -80,7 +102,7 @@ FIN;
             }
             case 3 :
             {
-                $path = "Test";
+                $current_page = "Test";
                 $content = $this->testform();
                 $content .= '<div> Pas encore de compte ? <a href="' .$url_formlogin . '"> En créer un </a></div> ';
             }
@@ -121,7 +143,7 @@ FIN;
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="$url_accueil">
-        <img src="img/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="{$path}img/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
         MYWISHLIST
         </a>
         
@@ -142,12 +164,18 @@ FIN;
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item " aria-current="page"><a href="$url_accueil">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">$path</li>
+            <li class="breadcrumb-item active" aria-current="page">$current_page</li>
         </ol>
     </nav>
-
-    <div>
-        $content;
+    
+    <div class="card">
+        <div class="card-header text-center">
+            $title
+        </div>
+        <div class="card-body">
+            $content
+        </div>
+        $link
     </div>
     
 </body>

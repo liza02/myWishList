@@ -151,21 +151,7 @@ FIN;
     </div>
     
 </body>
-=======
-    <link rel="stylesheet" href="../css/style.css">
-  </head>
-  <body>
-		<h1><a href="$url_accueil">Wish List</a></h1>
-		<nav>
-			<ul>
-				<li><a href="$url_formlogin">Nouveau login</a></li>
-				<li><a href="$url_testform">Test login</a></li>
-				<li><a href="$url_deconnexion">Deconnexion</a></li>
-			</ul>
-		</nav>
-    $content
-  </body>
->>>>>>> c1942a97810d7a040b2c9c862faf7013998dc4b3
+   
 </html>
 FIN;
         return $html;

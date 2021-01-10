@@ -109,10 +109,8 @@ class VueCompte
             {
                 $current_page = "Connexion";
                 $path = "../";
-                $res = ($this->tab['res']) ? 'OK' : 'KO';
-                $content .= 'Mot de passe <b>' . $res . '</b></br>';
-                $content .= "<div></div><a href=$url_compte>Se connecter</a></div>";
-                break;
+                $content = "<div class=\"alert alert-danger\" role=\"alert\">Mot de pass incorrect !</div>";
+
             }
             //connexion
             case 1 :
@@ -120,10 +118,10 @@ class VueCompte
                 $path = "";
                 $current_page = "Connexion";
 
-                //TODO
-                if (isset($this->tab['login'])){
-                    $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré'."<br>";
-                }
+//                //TODO
+//                if (isset($this->tab['login'])){
+//                    $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré'."<br>";
+//                }
                 $content .= $this->testform();
                 break;
             }
@@ -144,14 +142,6 @@ class VueCompte
             case 4 :
             {
                 $path = "../";
-                if ($this->tab['login'] != "existe déjà") {
-                    $title = "Votre inscription est complète !";
-                    $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré';
-                }
-                else {
-                    $title = "Ce compte existe déjà";
-                    $content = 'Création du compte impossible, le compte existe déjà';
-                }
                 $content = "<div class=\"alert alert-success\" role=\"alert\">Inscription réussie ! Login <b> $this->tab['login'] </b> enregistré</div>";
             }
             //mon compte connexion

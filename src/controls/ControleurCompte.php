@@ -69,7 +69,7 @@ class ControleurCompte {
             return $rs->withRedirect($url_compte);
         }else{
             $vue = new VueCompte( [ 'res' => $res ] , $this->container ) ;
-            $rs->getBody()->write( $vue->render(0)) ;
+            $rs->getBody()->write( $vue->render(0));
             return $rs;
         }
     }

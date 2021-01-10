@@ -70,7 +70,7 @@ FIN;
             {
                 $path = "Inscription";
                 $content = $this->formlogin();
-                $content .= '<div> Deja un compte ? <a href="' .$url_testform . '"> Se connecter </a></div> ';
+                $content .= '<div> Deja un compte ? <a href="' .$url_compte . '"> Se connecter </a></div> ';
                 break;
             }
             case 2 :

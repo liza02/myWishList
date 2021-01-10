@@ -34,10 +34,10 @@ $app->get('/item', ControleurAccueil::class.':item')->setName('item');
 $app->get('/listes/nouvelleListe', ControleurAccueil::class.':list')->setName('liste');
 
 //Chemin Compte
-$app->get('/compte/newlogin', ControleurCompte::class.':formlogin'   )->setName('formlogin');
-$app->post('/compte/newlogin', ControleurCompte::class.':nouveaulogin')->setName('nouveaulogin');
-$app->get('/compte/login', ControleurCompte::class.':testform')->setName('testform');
-$app->post('/compte/login', ControleurCompte::class.':testpass')->setName('testpass');
+$app->get('/compte/newlogin1', ControleurCompte::class.':formlogin'   )->setName('formlogin');
+$app->post('/compte/newlogin2', ControleurCompte::class.':nouveaulogin')->setName('nouveaulogin');
+$app->get('/compte/login1', ControleurCompte::class.':testform')->setName('testform');
+$app->post('/compte/login2', ControleurCompte::class.':testpass')->setName('testpass');
 $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
 
 //Chemin Liste

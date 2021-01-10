@@ -21,8 +21,8 @@ class ControleurAccueil
 
     public function __construct($container) {
         $this->container = $container;
-        session_destroy();
-        $_SESSION = [];
+//        session_destroy();
+//        $_SESSION = [];
     }
 
     public function accueil(Request $rq, Response $rs, $args) : Response {

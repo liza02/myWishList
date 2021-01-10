@@ -16,7 +16,7 @@ class VueCompte
 
     private function formlogin() : string {
         $url_nouveaulogin = $this->container->router->pathFor( 'nouveaulogin' ) ;
-        $url_compte = $this->container->router->pathFor('compte');
+        $url_compte = $this->container->router->pathFor('connexion');
         $html = <<<FIN
         <div class="card card_form">
             <div class="card-header text-center">
@@ -193,10 +193,10 @@ class VueCompte
         
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item"> <a class="nav-link active" href="$url_accueil">Accueil</a></li>
+                <li class="nav-item"> <a class="nav-link" href="$url_accueil">Accueil</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_item">Participer à une liste</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_liste">Gérer mes listes</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_compte">$connected</a></li>
+                <li class="nav-item"><a class="nav-link active" href="$url_compte">$connected</a></li>
             </ul>
         </div>
     </nav>

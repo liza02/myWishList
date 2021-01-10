@@ -144,7 +144,7 @@ class VueCompte
             }
             case 4 :
             {
-                $path = "../";
+                $path = "";
                 $res = ($this->tab['res']) ? 'OK' : 'KO';
                 $content .= 'Mot de passe <b>' . $res . '</b></br>';
                 if ($res == 'OK') $content .= 'Connecté en tant que <b>' . $_SESSION['profile']['username'] . '</b>';

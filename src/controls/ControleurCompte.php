@@ -64,8 +64,10 @@ class ControleurCompte {
         $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
         $res = Authentication::authenticate($login, $pass);
-        $vue = new VueCompte( [ 'res' => $res ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render(4) ) ;
-        return $rs;
+        $url_listes = $this->container->router->pathFor("compte");
+        return $rs->withRedirect($url_listes);
+//        $vue = new VueCompte( [ 'res' => $res ] , $this->container ) ;
+//        $rs->getBody()->write( $vue->render(4) ) ;
+//        return $rs;
     }
 }

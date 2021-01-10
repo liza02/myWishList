@@ -76,6 +76,11 @@ FIN;
                 $content = "<a href='$url_deconnexion'>Deconnexion</a>";
                 break;
             }
+            case 6 :
+            {
+                $content = "Deconnecté";
+                break;
+            }
         }
                 $url_accueil = $this->container->router->pathFor('racine');
                 $url_formlogin = $this->container->router->pathFor('formlogin');

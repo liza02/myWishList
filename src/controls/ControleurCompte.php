@@ -61,7 +61,7 @@ class ControleurCompte {
         session_destroy();
         $_SESSION = [];
         $vue = new VueCompte( [], $this->container);
-        $rs->getBody()->write($vue->render(3));
+        $rs->getBody()->write($vue->render(6));
         return $rs;
 
     }

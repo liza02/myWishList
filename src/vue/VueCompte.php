@@ -80,6 +80,7 @@ FIN;
                 $url_accueil = $this->container->router->pathFor('racine');
                 $url_formlogin = $this->container->router->pathFor('formlogin');
                 $url_testform = $this->container->router->pathFor('testform');
+                $url_deconnexion = $this->container->router->pathFor('deconnexion');
                 $html = <<<FIN
 <!DOCTYPE html>
 <html>
@@ -93,6 +94,7 @@ FIN;
 			<ul>
 				<li><a href="$url_formlogin">Nouveau login</a></li>
 				<li><a href="$url_testform">Test login</a></li>
+				<li><a href="$url_deconnexion">Deconnexion</a></li>
 			</ul>
 		</nav>
     $content

@@ -33,7 +33,6 @@ class VueCompte
                 <div class="form-group">
                     <label for="form_pass" >Mot de passe</label>
                     <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe" name="pass" required>
-                </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary text-center">Enregistrer le login</button>
                 </div>
@@ -105,8 +104,30 @@ class VueCompte
                 $current_page = "Inscription";
                 $title = "Inscrivez vous !";
                 $content = $this->formlogin();
-                $link = '<div class="card-footer text-center"> Deja un compte ? <a href="' .$url_compte . '"> Se connecter </a></div> ';
+                $link = '<div class="card-footer text-center"> Déjà un compte ? <a href="' .$url_compte . '"> Se connecter </a></div> ';
                 break;
+            }
+            case 2 :
+            {
+                $path = "../";
+                if ($this->tab['login'] != "existe déjà") {
+                    $title = "Votre inscription est complète !";
+                    $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré';
+                }
+                else {
+                    $title = "Ce compte existe déjà";
+                    $content = 'Création du compte impossible, le compte existe déjà';
+                }
+                $current_page = "Inscription";
+                $link = "";
+
+                break;
+            }
+            case 3 :
+            {
+                $current_page = "Test";
+                $content = $this->testform();
+                $content .= '<div> Pas encore de compte ? <a href="' .$url_formlogin . '"> En créer un </a></div> ';
             }
             case 4 :
             {

@@ -16,50 +16,71 @@ class VueCompte
 
     private function formlogin() : string {
         $url_nouveaulogin = $this->container->router->pathFor( 'nouveaulogin' ) ;
+        $url_compte = $this->container->router->pathFor('compte');
         $html = <<<FIN
-            <form method="POST" action="$url_nouveaulogin">
-                <div class="form-group">
-                    <label for="form_nom" >Nom</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Rzepka" name="nom" required>
-                </div>
-                <div class="form-group">
-                    <label for="form_prenom" >Prénom</label>
-                    <input type="text" class="form-control" id="form_prenom" placeholder="Thomas" name="prenom" required>
-                </div>
-                <div class="form-group">
-                    <label for="form_login" >Login</label>
-                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz" name="login" required>
-                </div>
-                <div class="form-group">
-                    <label for="form_pass" >Mot de passe</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe" name="pass" required>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary text-center">Enregistrer le login</button>
-                </div>
-             
-            </form>    
+        <div class="card card_form">
+            <div class="card-header text-center">
+                Inscrivez vous !
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_nouveaulogin">
+                    <div class="form-group">
+                        <label for="form_nom" >Nom</label>
+                        <input type="text" class="form-control" id="form_nom" placeholder="Rzepka" name="nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_prenom" >Prénom</label>
+                        <input type="text" class="form-control" id="form_prenom" placeholder="Thomas" name="prenom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_login" >Login</label>
+                        <input type="text" class="form-control" id="form_login" placeholder="thomasRz" name="login" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_pass" >Mot de passe</label>
+                        <input type="password" class="form-control" id="form_nom" placeholder="Mot de passe" name="pass" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary text-center">Enregistrer le login</button>
+                    </div>
+                 
+                </form>    
+            </div>
+            <div class="card-footer text-center" > 
+                Déjà un compte ? <a href="$url_compte"> Se connecter </a>
+            </div>
+        </div>
         FIN;
         return $html;
     }
 
     private function testform() : string {
         $url_testpass = $this->container->router->pathFor( 'testpass' ) ;
+        $url_formlogin = $this->container->router->pathFor('formlogin');
         $html = <<<FIN
-            <form method="POST" action="$url_testpass">
-                <div class="form-group">
-                    <label for="form_login" >Login</label>
-                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz" name="login" required>
-                </div>
-                <div class="form-group">
-                    <label for="form_pass" >Mot de passe</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe" name="pass" required>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Se connecter</button>
-                </div>
-                
-            </form>    
+        <div class="card card_form">
+            <div class="card-header text-center">
+                Connectez vous !
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_testpass">
+                    <div class="form-group">
+                        <label for="form_login" >Login</label>
+                        <input type="text" class="form-control" id="form_login" placeholder="thomasRz" name="login" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_pass" >Mot de passe</label>
+                        <input type="password" class="form-control" id="form_nom" placeholder="Mot de passe" name="pass" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                    </div>
+                </form> 
+            </div>
+            <div class="card-footer text-center" > 
+                Pas encore de compte ? <a href="$url_formlogin"> En créer un </a>
+            </div>
+        </div>   
         FIN;
         return $html;
     }
@@ -195,17 +216,9 @@ class VueCompte
             <li class="breadcrumb-item active" aria-current="page">$current_page</li>
         </ol>
     </nav>
-    
-    <div class="card card_form">
-        <div class="card-header text-center">
-            $title
-        </div>
-        <div class="card-body">
+
             $content
-        </div>
-        $link
-    </div>
-    
+
 </body>
    
 </html>

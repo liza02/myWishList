@@ -72,8 +72,8 @@ class VueAccueil
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link active" href="$url_accueil">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_item">Page Item</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_liste">Creer Liste</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_item">Participer à une liste</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_liste">Gérer mes listes</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_compte">$connected</a></li>
             </ul>
         </div>

@@ -1,0 +1,13 @@
+#connected {
+    font-size: 15px;
+    color: GREEN;
+    margin-right: 20px;
+    text-align: right;
+}
+
+#not_connected {
+    font-size: 15px;
+    color: RED;
+    margin-right: 20px;
+    text-align: right;
+}

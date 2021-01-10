@@ -49,11 +49,11 @@ class VueCompte
             <form method="POST" action="$url_testpass">
                 <div class="form-group">
                     <label for="form_login" >Login</label>
-                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz">
+                    <input name = "login" type="text" class="form-control" id="form_login" placeholder="thomasRz">
                 </div>
                 <div class="form-group">
                     <label for="form_pass" >Mot de passe</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
+                    <input name = "pass" type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Se connecter</button>
@@ -114,6 +114,11 @@ class VueCompte
             }
             case 4 :
             {
+                $path = "../";
+                $current_page = "Connexion";
+                $title = "Vous êtes connecté !";
+                $link = "";
+
                 $res = ($this->tab['res']) ? 'OK' : 'KO';
                 $content = 'Mot de passe <b>' . $res . '</b></br>';
                 if ($res == 'OK') $content .= 'Connecté en tant que <b>' . $_SESSION['profile']['username'] . '</b>';

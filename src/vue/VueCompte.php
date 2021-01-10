@@ -20,19 +20,19 @@ class VueCompte
             <form method="POST" action="$url_nouveaulogin">
                 <div class="form-group">
                     <label for="form_nom" >Nom</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Rzepka">
+                    <input name = "nom" type="text" class="form-control" id="form_nom" placeholder="Rzepka">
                 </div>
                 <div class="form-group">
                     <label for="form_prenom" >Prénom</label>
-                    <input type="text" class="form-control" id="form_prenom" placeholder="Thomas">
+                    <input name = "prenom" type="text" class="form-control" id="form_prenom" placeholder="Thomas">
                 </div>
                 <div class="form-group">
                     <label for="form_login" >Login</label>
-                    <input type="text" class="form-control" id="form_login" placeholder="thomasRz">
+                    <input name = "login" type="text" class="form-control" id="form_login" placeholder="thomasRz">
                 </div>
                 <div class="form-group">
                     <label for="form_pass" >Mot de passe</label>
-                    <input type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
+                    <input name = "pass" type="text" class="form-control" id="form_nom" placeholder="Mot de passe">
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary text-center">Enregistrer le login</button>
@@ -98,12 +98,23 @@ class VueCompte
                 $current_page = "Inscription";
                 $title = "Inscrivez vous !";
                 $content = $this->formlogin();
-                $link = '<div class="card-footer text-center"> Deja un compte ? <a href="' .$url_compte . '"> Se connecter </a></div> ';
+                $link = '<div class="card-footer text-center"> Déjà un compte ? <a href="' .$url_compte . '"> Se connecter </a></div> ';
                 break;
             }
             case 2 :
             {
-                $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré';
+                $path = "../";
+                if ($this->tab['login'] != "existe déjà") {
+                    $title = "Votre inscription est complète !";
+                    $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré';
+                }
+                else {
+                    $title = "Ce compte existe déjà";
+                    $content = 'Création du compte impossible, le compte existe déjà';
+                }
+                $current_page = "Inscription";
+                $link = "";
+
                 break;
             }
             case 3 :

@@ -62,8 +62,12 @@ FIN;
 
     public function render( int $select ) : string
     {
-       $content = "";
-
+        $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
+        $connected = "Mon Compte";
+        $url_accueil= $this->container->router->pathFor('racine') ;
+        $url_item= $this->container->router->pathFor('item') ;
+        $url_gererMesListe = $this->container->router->pathFor('afficherGererMesListes') ;
+        $url_compte= $this->container->router->pathFor('afficherCompte') ;
         switch ($select) {
             case 0 :
             {
@@ -80,23 +84,51 @@ FIN;
                 $content .= $this->uneListe();
             }
         }
-        $url_accueil = $this->container->router->pathFor('racine');
-        $html = <<<FIN
+        $html = $html = <<<FIN
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>MyWishList</title>
-    <link rel="stylesheet" href="../css/style.css">
-  </head>
-  <body>
-		<h1><a href="$url_accueil">Wish List</a></h1>
-		<nav>
-			<ul>
-				
-			</ul>
-		</nav>
-    $content
-  </body>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="$url_accueil">
+        <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        MYWISHLIST
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"> <a class="nav-link active" href="$url_accueil">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_item">Participer à une liste</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_gererMesListe">Gérer mes listes</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_compte">MonCompte</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+        </ol>
+    </nav>
+
+    <div>
+        $content;
+    </div>
+    
+</body>
 </html>
 FIN;
         return $html;

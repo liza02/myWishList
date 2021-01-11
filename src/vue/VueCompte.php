@@ -243,7 +243,7 @@ class VueCompte
             // le bouton redirige vers l'affichage du compte (cf ligne 203)
             $url_compte = $this->container->router->pathFor('afficherCompte');
             // le bouton pour accéder aux listes mène aux listes
-            $url_liste = $this->container->router->pathFor('liste');
+            $url_liste = $this->container->router->pathFor('afficherGererMesListes');
         }else{
             // l'utilisateur n'est pas connecté
             // le bouton affiche Connexion

@@ -34,11 +34,13 @@ class VueAccueil
             $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
             $connected = "Mon Compte";
             $url_compte = $this->container->router->pathFor('afficherCompte');
+            $url_gererMesListe = $this->container->router->pathFor('afficherGererMesListes');
 
         }else{
             $content = "<div id='not_connected'>Non connecté</div>";
             $connected = "Connexion";
             $url_compte = $this->container->router->pathFor('connexion');
+            $url_gererMesListe = $this->container->router->pathFor('connexion');
         }
         switch ($select) {
             case 0 :
@@ -46,7 +48,7 @@ class VueAccueil
                 $content .= $this->listesPublique();
                 $url_accueil = $this->container->router->pathFor('racine');
                 $url_item = $this->container->router->pathFor('item');
-                $url_liste = $this->container->router->pathFor('liste');
+
                 $html = <<<FIN
 <!DOCTYPE html>
 <html>
@@ -75,7 +77,7 @@ class VueAccueil
             <ul class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link active" href="$url_accueil">Accueil</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_item">Participer à une liste</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_liste">Gérer mes listes</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_gererMesListe">Gérer mes listes</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_compte">$connected</a></li>
             </ul>
         </div>

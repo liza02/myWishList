@@ -38,9 +38,6 @@ class ControleurAccueil
         return $rs;
     }
     public function list(Request $rq, Response $rs, $args) : Response {
-        $listl = Liste::all();
-        $vue = new VueListe($listl->toArray(), $this->container);
-        $rs->getBody()->write( $vue->render(0));
-        return $rs;
+
     }
 }

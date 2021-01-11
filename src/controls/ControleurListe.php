@@ -23,6 +23,13 @@ class ControleurListe
         $this->container = $container;
     }
 
+    public function afficherGererMesListes(Request $rq, Response $rs, $args) : Response{
+        $listl = Liste::all();
+        $vue = new VueListe($listl->toArray(), $this->container);
+        $rs->getBody()->write( $vue->render(0));
+        return $rs;
+    }
+
     public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::where('token','=',$args['token'])->get();
         $item = Item::where('liste_id','=',$liste[0]['no'])->get();

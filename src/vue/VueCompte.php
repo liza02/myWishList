@@ -96,7 +96,7 @@ class VueCompte
 
         if (isset($_SESSION['profile']['username'])){
             $connected = "Mon Compte";
-            $url_compte = $this->container->router->pathFor('compte');
+            $url_compte = $this->container->router->pathFor('afficherCompte');
         }else{
             $connected = "Connexion";
             $url_compte = $this->container->router->pathFor('connexion');
@@ -109,7 +109,6 @@ class VueCompte
                 $current_page = "Connexion";
                 $path = "../";
                 $content = "<div class=\"alert alert-danger\" role=\"alert\">Mot de pass incorrect !</div>";
-
             }
             //connexion
             case 1 :

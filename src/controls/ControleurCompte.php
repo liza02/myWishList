@@ -100,7 +100,7 @@ class ControleurCompte {
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
         $res = Authentication::authenticate($login, $pass);
         if ($res){
-            $url_compte = $this->container->router->pathFor("compte");
+            $url_compte = $this->container->router->pathFor("afficherCompte");
             return $rs->withRedirect($url_compte);
         }else{
             $_SESSION['test']='test';

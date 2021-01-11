@@ -38,7 +38,7 @@ class VueCompte
                     </div>
                     <div class="form-group">
                         <label for="form_pass" >Mot de passe</label>
-                        <input type="password" class="form-control" id="form_nom" placeholder="Mot de passe" name="pass" required>
+                        <input type="password" class="form-control" id="form_pass" placeholder="Mot de passe" name="pass" required>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary text-center">Enregistrer le login</button>
@@ -87,7 +87,6 @@ class VueCompte
 
     public function render( int $select ) : string
     {
-
         $url_accueil = $this->container->router->pathFor('racine');
         $url_item = $this->container->router->pathFor('item');
         $url_liste = $this->container->router->pathFor('liste');
@@ -133,7 +132,7 @@ class VueCompte
             //inscription
             case 3 :
             {
-                $path = "../";
+                $path = "";
                 $current_page = "Inscription";
                 $content .= $this->formInscription();
                 break;

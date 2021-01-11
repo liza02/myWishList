@@ -51,6 +51,7 @@ class ControleurCompte {
         $prenom = filter_var($post['prenom'], FILTER_SANITIZE_STRING);
         $vue = new VueCompte( [ 'login' => $login ] , $this->container ) ;
         try {
+            //redirection sur mon afficherCompte avec $_SESSION
             Authentication::createUser($nom, $prenom,$login, $pass);
             $rs->getBody()->write( $vue->render(4)) ;
         }
@@ -103,13 +104,13 @@ class ControleurCompte {
             return $rs->withRedirect($url_compte);
         }else{
             $_SESSION['test']='test';
-            $_SESSION['res']=$res;
             $url_connexion = $this->container->router->pathFor("connexion");
             return $rs->withRedirect($url_connexion);
         }
     }
 
     public function afficherCompte(Request $rq, Response $rs, $args) : Response {
+        // isset pour inscriptionOK et redirection sur compte
         $vue = new VueCompte( [ 'res' => true ] , $this->container ) ;
         $rs->getBody()->write( $vue->render(5));
         return $rs;

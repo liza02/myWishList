@@ -78,7 +78,7 @@ FIN;
         $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
         $current_page="";
         $url_accueil= $this->container->router->pathFor('racine');
-        $url_item= $this->container->router->pathFor('item');
+        $url_item= $this->container->router->pathFor('participer');
         $url_gererMesListe = $this->container->router->pathFor('afficherGererMesListes') ;
         $url_compte= $this->container->router->pathFor('afficherCompte');
         switch ($select) {
@@ -135,10 +135,10 @@ FIN;
         
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item"> <a class="nav-link active" href="$url_accueil">Accueil</a></li>
+                <li class="nav-item"> <a class="nav-link" href="$url_accueil">Accueil</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_item">Participer à une liste</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_gererMesListe">Gérer mes listes</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_compte">MonCompte</a></li>
+                <li class="nav-item"><a class="nav-link active" href="$url_gererMesListe">Gérer mes listes</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_compte">Mon Compte</a></li>
             </ul>
         </div>
     </nav>

@@ -64,11 +64,13 @@ FIN;
             $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
             $connected = "Mon Compte";
             $url_compte = $this->container->router->pathFor('afficherCompte');
+            $url_liste = $this->container->router->pathFor('afficherGererMesListes');
 
         }else{
             $content = "<div id='not_connected'>Non connecté</div>";
             $connected = "Connexion";
             $url_compte = $this->container->router->pathFor('connexion');
+            $url_liste = $this->container->router->pathFor('connexion');
         }
         $html = "";
         switch ($select) {
@@ -81,7 +83,6 @@ FIN;
                 $content .= $this->lesListes();
                 $url_accueil = $this->container->router->pathFor('racine');
                 $url_participer = $this->container->router->pathFor('participer');
-                $url_liste = $this->container->router->pathFor('liste');
                 $html = <<<FIN
 <!DOCTYPE html>
 <html>
@@ -98,7 +99,7 @@ FIN;
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="$url_accueil">
-        <img src="img/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
         MYWISHLIST
         </a>
         

@@ -236,7 +236,7 @@ class VueCompte
     public function render( int $select ) : string
     {
         $url_accueil = $this->container->router->pathFor('racine');
-        $url_item = $this->container->router->pathFor('item');
+        $url_item = $this->container->router->pathFor('participer');
         $url_deconnexion = $this->container->router->pathFor('deconnexion');
         $content = "";
         $pathIntermediaire="";

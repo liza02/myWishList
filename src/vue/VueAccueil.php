@@ -47,7 +47,7 @@ class VueAccueil
             {
                 $content .= $this->listesPublique();
                 $url_accueil = $this->container->router->pathFor('racine');
-                $url_item = $this->container->router->pathFor('item');
+                $url_participer = $this->container->router->pathFor('participer');
 
                 $html = <<<FIN
 <!DOCTYPE html>
@@ -76,7 +76,7 @@ class VueAccueil
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link active" href="$url_accueil">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_item">Participer à une liste</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_participer">Participer à une liste</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_gererMesListe">Gérer mes listes</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_compte">$connected</a></li>
             </ul>

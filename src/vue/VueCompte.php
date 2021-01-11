@@ -91,6 +91,7 @@ class VueCompte
 
     public function afficherInformations() : string{
         $url_modifier = $this->container->router->pathFor('modifierCompte');
+        $url_changemdp = $this->container->router->pathFor('changerMotDePasse');
         $html = "";
         $nom = $this->tab['nom'];
         $prenom = $this->tab['prenom'];
@@ -98,7 +99,7 @@ class VueCompte
         if ($this->tab['email'] != null) {
             $email = $this->tab['email'];
         } else {
-            $email = "Entrez votre email !";
+            $email = "Pas encore d'email enregistré";
         }
 //        $email = "Pas encore d'email enregistré";
         $html = <<<FIN
@@ -110,7 +111,7 @@ class VueCompte
                 <form>
                     <div class="form-group row">
                         <label for="form_prenom" class="col-sm-2 col-form-label">   Prénom :</label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <input readonly type="text" class="form-control" id="form_prenom" placeholder="{$prenom}" name="prenom" required>
                         </div>
                         <label for="form_nom" class="col-sm-2 col-form-label">   Nom :</label>
@@ -121,20 +122,20 @@ class VueCompte
                         
                     <div class="form-group row">
                         <label for="form_login" class="col-sm-2 col-form-label">Login :</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-10">
                             <input readonly type="text" class="form-control" id="form_login" placeholder="{$login}" name="login" required>
                         </div>
                     </div>
                     
                    <div class="form-group row">
                         <label for="form_login" class="col-sm-2 col-form-label">Email :</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-10">
                             <input readonly type="text" class="form-control" id="form_login" placeholder="{$email}" name="login" required>
                         </div>
                     </div>
                     <div class="text-center">
                         <a type="submit" class="btn btn-primary" href="$url_modifier" role="button">Modifier mes informations</a>
-                        <a type="submit" class="btn btn-warning" href="#" role="button">Changer mon mot de passe</a>
+                        <a type="submit" class="btn btn-warning" href="$url_changemdp" role="button">Changer mon mot de passe</a>
                     </div>
                 </form> 
             </div>
@@ -144,6 +145,7 @@ class VueCompte
     }
 
     public function modifierInformations() {
+        $url_enregistrerModif = $this->container->router->pathFor( 'enregistrerModif' ) ;
         $html = "";
         $nom = $this->tab['nom'];
         $prenom = $this->tab['prenom'];
@@ -160,10 +162,10 @@ class VueCompte
                 Modifiez vos informations !
             </div>
             <div class="card-body">
-                <form>
+                <form method="POST" action="$url_enregistrerModif">
                     <div class="form-group row">
                         <label for="form_prenom" class="col-sm-2 col-form-label">   Prénom :</label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" id="form_prenom" placeholder="Prénom" name="prenom" value="{$prenom}" required>
                         </div>
                         <label for="form_nom" class="col-sm-2 col-form-label">   Nom :</label>
@@ -174,19 +176,49 @@ class VueCompte
                         
                     <div class="form-group row">
                         <label for="form_login" class="col-sm-2 col-form-label">Login :</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-10">
                             <input type="text" class="form-control" id="form_login" placeholder="Login" value="{$login}" name="login" required>
                         </div>
                     </div>
                     
                    <div class="form-group row">
                         <label for="form_login" class="col-sm-2 col-form-label">Email :</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-10">
                             <input type="text" class="form-control" id="form_login" placeholder="Email" value="{$login}" name="login" required>
                         </div>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Enregistrer mes informations</button>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
+        return $html;
+    }
+    public function changerMotDePasse() :string{
+        $url_enregistrerMdp = $this->container->router->pathFor( 'changerMotDePasse' ) ;
+        $html = <<<FIN
+        <div class="card card_form">
+            <div class="card-header text-center">
+                Modifiez votre mot de passe
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_enregistrerMdp">
+                    <div class="form-group">
+                        <label for="form_login" >Ancien mot de passe</label>
+                        <input type="password" class="form-control" id="form_login" placeholder="Ancien mot de passe" name="login" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_pass" >Nouveau mot de passe</label>
+                        <input type="password" class="form-control" id="form_nom" placeholder=" Nouveau mot de passe" name="pass" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_pass" >Confirmez le mot de passe</label>
+                        <input type="password" class="form-control" id="form_nom" placeholder="Nouveau mot de passe" name="pass" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
                     </div>
                 </form> 
             </div>
@@ -270,16 +302,24 @@ class VueCompte
                 $path = "../";
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";
                 $content .= $this->modifierInformations();
-                $current_page = "Espace personnel";
+                $current_page = "Modifier mon compte";
                 break;
             }
             case 7 :
+            {
+                $path = "../";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";
+                $content .= $this->changerMotDePasse();
+                $current_page = "Modifier mon mot de passe";
+                break;
+            }
+            case 8 :
             {
                 $url_deconnexion = $this->container->router->pathFor('deconnexion');
                 $content = "<a href='$url_deconnexion'>Deconnexion</a>";
                 break;
             }
-            case 8:
+            case 9:
             {
                 $content = "Deconnecté";
                 break;

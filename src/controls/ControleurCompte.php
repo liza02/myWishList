@@ -134,16 +134,34 @@ class ControleurCompte {
     }
 
     public function modifierCompte(Request $rq, Response $rs, $args) : Response  {
-        $vue = new VueCompte( [] , $this->container ) ;
+        $infosUser = User::where('login','=',$_SESSION['profile']['username'])->first();
+
+        $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
         $rs->getBody()->write( $vue->render(6)) ;
         return $rs;
+    }
+
+    public function enregistrerModif(Request $rq, Response $rs, $args) : Response {
+        //TODO
+    }
+
+    public function changerMotDePasse (Request $rq, Response $rs, $args) : Response  {
+        $infosUser = User::where('login','=',$_SESSION['profile']['username'])->first();
+
+        $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
+        $rs->getBody()->write( $vue->render(7)) ;
+        return $rs;
+    }
+
+    public function enregistrerMotDePasse(Request $rq, Response $rs, $args) : Response {
+        //TODO
     }
 
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
         session_destroy();
         $_SESSION = [];
         $vue = new VueCompte( [], $this->container);
-        $rs->getBody()->write($vue->render(8));
+        $rs->getBody()->write($vue->render(9));
         return $rs;
 
     }

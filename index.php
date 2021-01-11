@@ -38,6 +38,9 @@ $app->get('/connexion', ControleurCompte::class.':connexion')->setName('connexio
 $app->post('/connexion', ControleurCompte::class.':testConnexion')->setName('testConnexion');
 $app->get('/compte', ControleurCompte::class.':afficherCompte')->setName('afficherCompte');
 $app->get('/compte/modifier', ControleurCompte::class.':modifierCompte')->setName('modifierCompte');
+$app->post('/compte/modifier', ControleurCompte::class.':enregistrerModif')->setName('enregistrerModif');
+$app->get('/compte/changePassword', ControleurCompte::class.':changerMotDePasse')->setName('changerMotDePasse');
+$app->post('/compte/changePassword', ControleurCompte::class.':enregistrerMotDePasse')->setName('enregistrerMotDePasse');
 $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
 
 //Chemin Liste

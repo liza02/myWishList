@@ -240,6 +240,7 @@ class VueCompte
         $url_deconnexion = $this->container->router->pathFor('deconnexion');
         $content = "";
         $pathIntermediaire="";
+        $path = "";
 
         // pas le même état si l'utilisateur est connecté ou non
         if (isset($_SESSION['profile']['username'])){
@@ -249,7 +250,7 @@ class VueCompte
             // le bouton redirige vers l'affichage du compte (cf ligne 203)
             $url_compte = $this->container->router->pathFor('afficherCompte');
             // le bouton pour accéder aux listes mène aux listes
-            $url_liste = $this->container->router->pathFor('afficherGererMesListes');
+            $url_liste = $this->container->router->pathFor('afficherMesListes');
         }else{
             // l'utilisateur n'est pas connecté
             // le bouton affiche Connexion
@@ -269,7 +270,6 @@ class VueCompte
             //connexion: formulaire de connexion
             case 1 :
             {
-                $path = "";
                 $current_page = "Connexion";
                 $content .= $this->formConnexion();
                 break;
@@ -282,7 +282,6 @@ class VueCompte
             //inscription: formulaire d'inscription
             case 3 :
             {
-                $path = "";
                 $current_page = "Inscription";
                 $content .= $this->formInscription();
                 break;
@@ -290,13 +289,11 @@ class VueCompte
             //accès au compte apres inscription
             case 4 :
             {
-                $path = "../";
                 $content = "<div class=\"alert alert-success\" role=\"alert\">Inscription réussie ! Login <b> {$this->tab['login']} </b> enregistré</div>";
             }
             //accès au compte apres connexion
             case 5 :
             {
-                $path = "";
                 $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
                 $content .= $this->afficherInformations();
                 $current_page = "Espace personnel";

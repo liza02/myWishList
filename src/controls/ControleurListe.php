@@ -23,7 +23,7 @@ class ControleurListe
         $this->container = $container;
     }
 
-    public function afficherGererMesListes(Request $rq, Response $rs, $args) : Response{
+    public function afficherMesListes(Request $rq, Response $rs, $args) : Response{
         $nb = Liste::where('user_id','=',$_SESSION['profile']['userid'])->count();
         if ($nb != 0){
             $mesListes=Liste::where("user_id","=",$_SESSION['profile']['userid'])->get();
@@ -47,7 +47,14 @@ class ControleurListe
         return $rs;
     }
 
-    public function formListe(Request $rq, Response $rs, $args) : Response {
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function creerListe(Request $rq, Response $rs, $args) : Response {
         // pour afficher le formulaire liste
         $vue = new VueListe( [] , $this->container ) ;
         $rs->getBody()->write( $vue->render( 2) ) ;
@@ -55,7 +62,15 @@ class ControleurListe
     }
 
 
-    public function newListe(Request $rq, Response $rs, $args) : Response {
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     * @throws \Exception
+     */
+    public function enregistrerListe(Request $rq, Response $rs, $args) : Response {
         // pour enregistrer 1 liste.....
         $post = $rq->getParsedBody() ;
         $titre       = filter_var($post['titre']       , FILTER_SANITIZE_STRING) ;

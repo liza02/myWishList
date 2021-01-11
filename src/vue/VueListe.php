@@ -27,8 +27,8 @@ class VueListe
         return $html;
     }
 
-    private function formListe() : string {
-        $url_new_liste = $this->container->router->pathFor( 'newListe' ) ;
+    private function formCreerListe() : string {
+        $url_new_liste = $this->container->router->pathFor( 'enregistrerListe' ) ;
         $today = getdate();
         $jour = $today['mday'];
         $mois = $today['mon'];
@@ -77,25 +77,37 @@ FIN;
     {
         $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
         $current_page="";
+        $pathIntermediaire ="";
+        $path = "";
         $url_accueil= $this->container->router->pathFor('racine');
         $url_item= $this->container->router->pathFor('participer');
-        $url_gererMesListe = $this->container->router->pathFor('afficherGererMesListes') ;
+        $url_gererMesListe = $this->container->router->pathFor('afficherMesListes') ;
         $url_compte= $this->container->router->pathFor('afficherCompte');
+        $url_creerListe = $this->container->router->pathFor('creerListe') ;
         switch ($select) {
+            // affichage des listes
             case 0 :
             {
                 $current_page = "Mes Listes";
                 $content .= $this->afficherMesListes();
+                $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a>";
                 break;
             }
+            // affichage des listes: pas de listes
             case 1 :
             {
                 $current_page = "Mes Listes";
+                $content .= "<p> Vous n'avez pas de liste courament...</p>";
+                $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a>";
                 break;
             }
             case 2 :
             {
-                $content .= $this->formListe();
+                $path = "../";
+                $current_page = "Nouvelle liste";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_gererMesListe\">Mes Listes</a></li>";
+
+                $content .= $this->formCreerListe();
                 break;
             }
             case 3 :
@@ -125,7 +137,7 @@ FIN;
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="$url_accueil">
-        <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="{$path}img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
         MYWISHLIST
         </a>
         
@@ -146,11 +158,12 @@ FIN;
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item " aria-current="page"><a href="$url_accueil">Home</a></li>
+            $pathIntermediaire
             <li class="breadcrumb-item active" aria-current="page">$current_page</li>
         </ol>
     </nav>
 
-    <div>
+    <div class ="vueListe">
         $content
     </div>
     

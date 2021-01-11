@@ -45,9 +45,9 @@ $app->post('/compte/changePassword', ControleurCompte::class.':enregistrerMotDeP
 $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
 
 //Chemin Liste
-$app->get('/meslistes',ControleurListe::class.':afficherGererMesListes')->setName('afficherGererMesListes');
-$app->get('/listes/nouvelleliste' , ControleurListe::class.':formListe')->setName('formListe');
-$app->post('/listes/nouvelleliste' , ControleurListe::class.':newListe')->setName('newListe');
+$app->get('/meslistes',ControleurListe::class.':afficherMesListes')->setName('afficherMesListes');
+$app->get('/listes/nouvelleliste' , ControleurListe::class.':creerListe')->setName('creerListe');
+$app->post('/listes/nouvelleliste' , ControleurListe::class.':enregistrerListe')->setName('enregistrerListe');
 $app->get('/listes/{token}', ControleurListe::class.':afficherItemsListe' )->setName('aff_liste');
 //$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
 

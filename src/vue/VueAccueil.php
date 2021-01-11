@@ -33,7 +33,7 @@ class VueAccueil
         if (isset($_SESSION['profile']['username'])){
             $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
             $connected = "Mon Compte";
-            $url_compte = $this->container->router->pathFor('compte');
+            $url_compte = $this->container->router->pathFor('afficherCompte');
 
         }else{
             $content = "<div id='not_connected'>Non connecté</div>";

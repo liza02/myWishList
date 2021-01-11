@@ -44,7 +44,7 @@ class ControleurCompte {
      * @return Response
      */
     public function enregistrerInscription(Request $rq, Response $rs, $args) : Response {
-        $post = $rq->getParsedBody() ;
+        $post = $rq->getParsedBody();
         $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
         $nom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
@@ -53,13 +53,14 @@ class ControleurCompte {
         try {
             //redirection sur mon afficherCompte avec $_SESSION
             Authentication::createUser($nom, $prenom,$login, $pass);
-            $rs->getBody()->write( $vue->render(4)) ;
+            Authentication::authenticate($login, $pass);
+            $_SESSION['inscriptionOK'] = true;
+            $url_afficherCompte = $this->container->router->pathFor("afficherCompte");
+            return $rs->withRedirect($url_afficherCompte);
         }
         catch (\Exception $e) {
-            $rs->getBody()->write( $vue->render(2)) ;
+            $rs->getBody()->write( $vue->render(2));
         }
-//        $url_listes = $this->container->router->pathFor("compte", ['nom' => $n]);
-//        return $rs->withRedirect($url_listes);
         return $rs;
     }
 
@@ -71,9 +72,9 @@ class ControleurCompte {
      * @return Response
      */
     public function connexion(Request $rq, Response $rs, $args) : Response {
-        if (isset($_SESSION['test'])){
-            if($_SESSION['test']=='test'){
-                $vue = new VueCompte( [ 'res' => $_SESSION['res'] ] , $this->container ) ;
+        if (isset($_SESSION['connexionOK'])){
+            if(!$_SESSION['connexionOK']){
+                $vue = new VueCompte([] , $this->container ) ;
                 $rs->getBody()->write( $vue->render(0));
                 session_destroy();
                 $_SESSION = [];
@@ -103,7 +104,7 @@ class ControleurCompte {
             $url_compte = $this->container->router->pathFor("afficherCompte");
             return $rs->withRedirect($url_compte);
         }else{
-            $_SESSION['test']='test';
+            $_SESSION['connexionOK']=false;
             $url_connexion = $this->container->router->pathFor("connexion");
             return $rs->withRedirect($url_connexion);
         }
@@ -111,8 +112,19 @@ class ControleurCompte {
 
     public function afficherCompte(Request $rq, Response $rs, $args) : Response {
         // isset pour inscriptionOK et redirection sur compte
-        $vue = new VueCompte( [ 'res' => true ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render(5));
+        $vue = new VueCompte(['login' => $_SESSION['profile']['username']], $this->container ) ;
+        if (isset($_SESSION['inscriptionOK'])) {
+            if ($_SESSION['inscriptionOK']) {
+                $rs->getBody()->write( $vue->render(4));
+                $_SESSION['inscriptionOK'] = false;
+            }
+            else {
+                $rs->getBody()->write( $vue->render(5));
+            }
+        }
+        else {
+            $rs->getBody()->write( $vue->render(5));
+        }
         return $rs;
     }
 

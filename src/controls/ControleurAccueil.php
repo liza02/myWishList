@@ -26,8 +26,8 @@ class ControleurAccueil
     }
 
     public function accueil(Request $rq, Response $rs, $args) : Response {
-        $listl = Liste::where('public','=','true')->get();
-        $vue = new VueAccueil( $listl->toArray() , $this->container ) ;
+        $ensListes = Liste::where('public','=','true')->get();
+        $vue = new VueAccueil( $ensListes->toArray() , $this->container ) ;
         $rs->getBody()->write($vue->render(0));
         return $rs;
     }

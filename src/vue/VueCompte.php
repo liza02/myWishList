@@ -17,7 +17,7 @@ class VueCompte
     private function formInscription() : string {
         // fonction pour enregistrer le formulaire
         $url_enregistrerInscription = $this->container->router->pathFor( 'enregistrerInscription' ) ;
-        // proposition de redirection vers une connexion si on ôn possède deja un compte
+        // proposition de redirection vers une connexion si on possède deja un compte
         $url_redirConnexion = $this->container->router->pathFor('connexion');
         $html = <<<FIN
         <div class="card card_form">

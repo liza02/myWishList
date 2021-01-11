@@ -224,7 +224,7 @@ class VueCompte
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="$url_accueil">
-        <img src="{$path}img/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="{$path}img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
         MYWISHLIST
         </a>
         

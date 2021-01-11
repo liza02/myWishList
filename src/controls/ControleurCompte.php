@@ -113,8 +113,8 @@ class ControleurCompte {
     public function afficherCompte(Request $rq, Response $rs, $args) : Response {
         // isset pour inscriptionOK et redirection sur compte
         //TODO where fonctionnel ? -> récupération des listes de l'utilisateur connecté
-        $infosUser = User::where('user_id','=',$_SESSION['profile']['username'])->get();
-        $vue = new VueCompte(['login' => $_SESSION['profile']['username']], $this->container ) ;
+        $infosUser = User::where('login','=',$_SESSION['profile']['username'])->first();
+        $vue = new VueCompte($infosUser->toArray(), $this->container ) ;
         if (isset($_SESSION['inscriptionOK'])) {
             if ($_SESSION['inscriptionOK']) {
                 // on vient de s'inscrire

@@ -89,6 +89,44 @@ class VueCompte
         return $html;
     }
 
+    public function afficherInformations() : string{
+        $html = "";
+        $nom = $this->tab['nom'];
+        $prenom = $this->tab['prenom'];
+        $login = $this->tab['nom'];
+        $html = <<<FIN
+        <div class="card card_form">
+            <div class="card-header text-center">
+                Mes informations
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="form_prenom" >Prénom</label>
+                            <input readonly type="text" class="form-control" id="form_prenom" placeholder={$prenom} name="prenom" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="form_nom" >Nom</label>
+                            <input readonly type="text" class="form-control" id="form_nom" placeholder={$nom} name="nom" required>
+                        </div>
+                    </div>
+                        
+                    <div class="form-group">
+                        <label for="form_login" >Login</label>
+                        <input readonly type="text" class="form-control" id="form_login" placeholder={$login} name="login" required>
+                    </div>
+                   
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
+        return $html;
+    }
+
     public function render( int $select ) : string
     {
         $url_accueil = $this->container->router->pathFor('racine');
@@ -152,7 +190,8 @@ class VueCompte
             case 5 :
             {
                 $path = "";
-                $content .= 'Connecté en tant que <b>' . $_SESSION['profile']['username'] . '</b>';
+                $content .= 'Connecté en tant que <b>' . $this->tab['nom'] . '</b>';
+                $content .= $this->afficherInformations();
                 $current_page = "Espace personnel";
                 break;
             }

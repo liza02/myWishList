@@ -92,6 +92,7 @@ class VueCompte
     public function afficherInformations() : string{
         $url_modifier = $this->container->router->pathFor('modifierCompte');
         $url_changemdp = $this->container->router->pathFor('changerMotDePasse');
+        $url_deconnexion = $this->container->router->pathFor('deconnexion');
         $html = "";
         $nom = $this->tab['nom'];
         $prenom = $this->tab['prenom'];
@@ -139,7 +140,11 @@ class VueCompte
                     </div>
                 </form> 
             </div>
-        </div>   
+        </div>  
+        <div class="text-center">
+            <a href='$url_deconnexion' class="btn btn-danger text-center">Deconnexion</a> 
+        </div>
+        
         FIN;
         return $html;
     }
@@ -193,6 +198,7 @@ class VueCompte
                 </form> 
             </div>
         </div>   
+        
         FIN;
         return $html;
     }
@@ -311,17 +317,6 @@ class VueCompte
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";
                 $content .= $this->changerMotDePasse();
                 $current_page = "Modifier mon mot de passe";
-                break;
-            }
-            case 8 :
-            {
-                $url_deconnexion = $this->container->router->pathFor('deconnexion');
-                $content = "<a href='$url_deconnexion'>Deconnexion</a>";
-                break;
-            }
-            case 9:
-            {
-                $content = "Deconnecté";
                 break;
             }
         }

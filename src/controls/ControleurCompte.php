@@ -160,9 +160,9 @@ class ControleurCompte {
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
         session_destroy();
         $_SESSION = [];
+        $url_accueil = $this->container->router->pathFor('racine');
         $vue = new VueCompte( [], $this->container);
-        $rs->getBody()->write($vue->render(9));
-        return $rs;
+        return $rs->withRedirect($url_accueil);
 
     }
 }

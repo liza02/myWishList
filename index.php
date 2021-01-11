@@ -37,6 +37,7 @@ $app->post('/inscription', ControleurCompte::class.':enregistrerInscription')->s
 $app->get('/connexion', ControleurCompte::class.':connexion')->setName('connexion');
 $app->post('/connexion', ControleurCompte::class.':testConnexion')->setName('testConnexion');
 $app->get('/compte', ControleurCompte::class.':afficherCompte')->setName('afficherCompte');
+$app->get('/compte/modifier', ControleurCompte::class.':modifierCompte')->setName('modifierCompte');
 $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
 
 //Chemin Liste

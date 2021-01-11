@@ -64,7 +64,7 @@ FIN;
             $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
             $connected = "Mon Compte";
             $url_compte = $this->container->router->pathFor('afficherCompte');
-            $url_liste = $this->container->router->pathFor('afficherGererMesListes');
+            $url_liste = $this->container->router->pathFor('afficherMesListes');
 
         }else{
             $content = "<div id='not_connected'>Non connecté</div>";

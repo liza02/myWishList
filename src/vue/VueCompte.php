@@ -189,7 +189,7 @@ class VueCompte
                    <div class="form-group row">
                         <label for="form_login" class="col-sm-2 col-form-label">Email :</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="form_login" placeholder="Email" value="{$login}" name="login" required>
+                            <input type="text" class="form-control" id="form_login" placeholder="Email" value="{$login}" name="email" required>
                         </div>
                     </div>
                     <div class="text-center">

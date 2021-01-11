@@ -142,7 +142,21 @@ class ControleurCompte {
     }
 
     public function enregistrerModif(Request $rq, Response $rs, $args) : Response {
-        //TODO
+        $infoUser = User::where("id","=",$_SESSION['profile']['userid'])->first();
+        //$infoUser = new User();
+        //$infoUser->id = $_SESSION['profile']['userid'];
+        $post = $rq->getParsedBody();
+        $nouveauLogin = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
+        $nouveauNom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
+        $nouveauPrenom = filter_var($post['prenom'], FILTER_SANITIZE_STRING);
+        $nouveauEmail = filter_var($post['email']);
+        $infoUser->nom = $nouveauNom;
+        $infoUser->prenom = $nouveauPrenom;
+        $infoUser->login = $nouveauLogin;
+        $infoUser->email = $nouveauEmail;
+        $infoUser->save();
+        $url_afficherCompte = $this->container->router->pathFor("afficherCompte");
+        return $rs->withRedirect($url_afficherCompte);
     }
 
     public function changerMotDePasse (Request $rq, Response $rs, $args) : Response  {

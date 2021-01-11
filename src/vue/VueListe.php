@@ -14,6 +14,19 @@ class VueListe
         $this->container = $container;
     }
 
+    public function afficherMesListes() : string{
+        $html = "Mes Listes :<br>";
+        foreach($this->tab as $liste){
+            $date = date('d/m/Y',strtotime($liste['expiration']));
+            $html .= "<li class='listepublique'>{$liste['titre']} <br>
+                          Date d'expiration : $date </li>";
+            $token = $liste['token'];
+            $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+            $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+        }
+        return $html;
+    }
+
     private function formListe() : string {
         $url_new_liste = $this->container->router->pathFor( 'newListe' ) ;
         $today = getdate();
@@ -63,25 +76,37 @@ FIN;
     public function render( int $select ) : string
     {
         $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
-        $connected = "Mon Compte";
-        $url_accueil= $this->container->router->pathFor('racine') ;
-        $url_item= $this->container->router->pathFor('item') ;
+        $current_page="";
+        $url_accueil= $this->container->router->pathFor('racine');
+        $url_item= $this->container->router->pathFor('item');
         $url_gererMesListe = $this->container->router->pathFor('afficherGererMesListes') ;
-        $url_compte= $this->container->router->pathFor('afficherCompte') ;
+        $url_compte= $this->container->router->pathFor('afficherCompte');
         switch ($select) {
             case 0 :
             {
-                $content .= $this->formListe();
+                $current_page = "Mes Listes";
+                $content .= $this->afficherMesListes();
                 break;
             }
             case 1 :
             {
-                $content .= $this->uneListeItems();
+                $current_page = "Mes Listes";
                 break;
             }
             case 2 :
             {
+                $content .= $this->formListe();
+                break;
+            }
+            case 3 :
+            {
+                $content .= $this->uneListeItems();
+                break;
+            }
+            case 4 :
+            {
                 $content .= $this->uneListe();
+                break;
             }
         }
         $html = $html = <<<FIN
@@ -120,12 +145,13 @@ FIN;
     
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Home</li>
+            <li class="breadcrumb-item " aria-current="page"><a href="$url_accueil">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">$current_page</li>
         </ol>
     </nav>
 
     <div>
-        $content;
+        $content
     </div>
     
 </body>

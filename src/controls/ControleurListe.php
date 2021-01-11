@@ -24,9 +24,16 @@ class ControleurListe
     }
 
     public function afficherGererMesListes(Request $rq, Response $rs, $args) : Response{
-        $listl = Liste::all();
-        $vue = new VueListe($listl->toArray(), $this->container);
-        $rs->getBody()->write( $vue->render(0));
+        $nb = Liste::where('user_id','=',$_SESSION['profile']['userid'])->count();
+        if ($nb != 0){
+            $mesListes=Liste::where("user_id","=",$_SESSION['profile']['userid'])->get();
+            $vue = new VueListe($mesListes->toArray(), $this->container);
+            $rs->getBody()->write( $vue->render(0));
+        }else{
+            $vue = new VueListe([], $this->container);
+            $rs->getBody()->write( $vue->render(1));
+        }
+
         return $rs;
     }
 
@@ -36,14 +43,14 @@ class ControleurListe
         $listeItem = array([$liste],[$item]);
         //var_dump($listeItem[1]);
         $vue = new VueListe($listeItem, $this->container);
-        $rs->getBody()->write( $vue->render(1));
+        $rs->getBody()->write( $vue->render(3));
         return $rs;
     }
 
     public function formListe(Request $rq, Response $rs, $args) : Response {
         // pour afficher le formulaire liste
         $vue = new VueListe( [] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 0) ) ;
+        $rs->getBody()->write( $vue->render( 2) ) ;
         return $rs;
     }
 

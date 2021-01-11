@@ -41,7 +41,6 @@ class ControleurCompte {
             $rs->getBody()->write( $vue->render(4)) ;
         }
         catch (\Exception $e) {
-            $login = 'existe déjà';
             $rs->getBody()->write( $vue->render(2)) ;
         }
 //        $url_listes = $this->container->router->pathFor("compte", ['nom' => $n]);
@@ -68,9 +67,10 @@ class ControleurCompte {
             $url_compte = $this->container->router->pathFor("compte");
             return $rs->withRedirect($url_compte);
         }else{
-            $vue = new VueCompte( [ 'res' => $res ] , $this->container ) ;
-            $rs->getBody()->write( $vue->render(0));
-            return $rs;
+            $_SESSION['test']='test';
+            $_SESSION['res']=$res;
+            $url_connexion = $this->container->router->pathFor("connexion");
+            return $rs->withRedirect($url_connexion);
         }
     }
 }

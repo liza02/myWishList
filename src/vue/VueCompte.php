@@ -142,7 +142,7 @@ class VueCompte
             case 4 :
             {
                 $path = "../";
-                $content = "<div class=\"alert alert-success\" role=\"alert\">Inscription réussie ! Login <b> $this->tab['login'] </b> enregistré</div>";
+                $content = "<div class=\"alert alert-success\" role=\"alert\">Inscription réussie ! Login <b> {$this->tab['login']} </b> enregistré</div>";
             }
             //mon compte connexion
             case 5 :

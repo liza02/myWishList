@@ -39,10 +39,20 @@ class ControleurAccueil
     }
 
     public function connexion(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueCompte([], $this->container);
-        //TODO quand on s'inscrit
-        $rs->getBody()->write( $vue->render(1));
-        return $rs;
+        if (isset($_SESSION['test'])){
+            if($_SESSION['test']=='test'){
+                $vue = new VueCompte( [ 'res' => $_SESSION['res'] ] , $this->container ) ;
+                $rs->getBody()->write( $vue->render(0));
+                session_destroy();
+                $_SESSION = [];
+                return $rs;
+            }
+            //autre cas (avec les inscriptions)
+        }else{
+            $vue = new VueCompte([], $this->container);
+            $rs->getBody()->write( $vue->render(1));
+            return $rs;
+        }
     }
 
     public function item(Request $rq, Response $rs, $args) : Response {

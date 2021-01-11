@@ -15,7 +15,9 @@ class VueCompte
     }
 
     private function formInscription() : string {
+        // fonction pour enregistrer le formulaire
         $url_enregistrerInscription = $this->container->router->pathFor( 'enregistrerInscription' ) ;
+        // proposition de redirection vers une connexion si on ôn possède deja un compte
         $url_redirConnexion = $this->container->router->pathFor('connexion');
         $html = <<<FIN
         <div class="card card_form">
@@ -55,7 +57,9 @@ class VueCompte
     }
 
     private function formConnexion() : string {
+        // fonction pour envoyer le formulaire de connexion, et tester si id et mdp sont corrects
         $url_testConnexion = $this->container->router->pathFor( 'testConnexion' ) ;
+        // redirection vers le formulaire d'inscription si on ne possède pas encore de compte
         $url_redirInscription = $this->container->router->pathFor('inscription');
         $html = <<<FIN
         <div class="card card_form">
@@ -89,46 +93,48 @@ class VueCompte
     {
         $url_accueil = $this->container->router->pathFor('racine');
         $url_item = $this->container->router->pathFor('item');
-        $url_liste = $this->container->router->pathFor('liste');
         $url_deconnexion = $this->container->router->pathFor('deconnexion');
         $content = "";
 
-
+        // pas le même état si l'utilisateur est connecté ou non
         if (isset($_SESSION['profile']['username'])){
+            // l'utilisateur est connecté
+            // le bouton affiche Mon Compte
             $connected = "Mon Compte";
+            // le bouton redirige vers l'affichage du compte (cf ligne 203)
             $url_compte = $this->container->router->pathFor('afficherCompte');
+            // le bouton pour accéder aux listes mène aux listes
+            $url_liste = $this->container->router->pathFor('liste');
         }else{
+            // l'utilisateur n'est pas connecté
+            // le bouton affiche Connexion
             $connected = "Connexion";
+            // le bouton redirige vers le formulaire de connexion (cf ligne 203)
             $url_compte = $this->container->router->pathFor('connexion');
+            // le bouton pour accéder aux listes mène au formulaire de connexion, on ne peux pas accéder à ses listes si on est pas connecté
+            $url_liste = $this->container->router->pathFor('connexion');
         }
 
         switch ($select) {
-            //connexion echec
+            //connexion echec: message d'erreur + réaffichage du formulaire de connexion
             case 0 :
             {
-                $current_page = "Connexion";
-                $path = "../";
                 $content = "<div class=\"alert alert-danger\" role=\"alert\">Mot de pass incorrect !</div>";
             }
-            //connexion
+            //connexion: formulaire de connexion
             case 1 :
             {
                 $path = "";
                 $current_page = "Connexion";
-
-//                //TODO
-//                if (isset($this->tab['login'])){
-//                    $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré'."<br>";
-//                }
                 $content .= $this->formConnexion();
                 break;
             }
-            // inscription echec
+            // inscription echec: message d'erreur + réaffichage du formulaire d'inscription
             case 2 :
             {
                 $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de l'inscription ! Le login existe déjà</div>";
             }
-            //inscription
+            //inscription: formulaire d'inscription
             case 3 :
             {
                 $path = "";
@@ -136,13 +142,13 @@ class VueCompte
                 $content .= $this->formInscription();
                 break;
             }
-            //mon compte inscription
+            //accès au compte apres inscription
             case 4 :
             {
                 $path = "../";
                 $content = "<div class=\"alert alert-success\" role=\"alert\">Inscription réussie ! Login <b> {$this->tab['login']} </b> enregistré</div>";
             }
-            //mon compte connexion
+            //accès au compte apres connexion
             case 5 :
             {
                 $path = "";

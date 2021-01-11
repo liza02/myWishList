@@ -38,7 +38,7 @@ $app->get('/inscription', ControleurCompte::class.':inscription')->setName('insc
 $app->post('/inscription', ControleurCompte::class.':enregistrerInscription')->setName('enregistrerInscription');
 $app->get('/connexion', ControleurCompte::class.':connexion')->setName('connexion');
 $app->post('/connexion', ControleurCompte::class.':testConnexion')->setName('testConnexion');
-$app->get('/compte', ControleurCompte::class.':afficherCompte')->setName('compte');
+$app->get('/compte', ControleurCompte::class.':afficherCompte')->setName('afficherCompte');
 $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
 
 //Chemin Liste

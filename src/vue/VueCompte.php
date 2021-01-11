@@ -90,10 +90,17 @@ class VueCompte
     }
 
     public function afficherInformations() : string{
+        $url_modifier = $this->container->router->pathFor('modifierCompte');
         $html = "";
         $nom = $this->tab['nom'];
         $prenom = $this->tab['prenom'];
-        $login = $this->tab['nom'];
+        $login = $this->tab['login'];
+        if ($this->tab['email'] != null) {
+            $email = $this->tab['email'];
+        } else {
+            $email = "Entrez votre email !";
+        }
+//        $email = "Pas encore d'email enregistré";
         $html = <<<FIN
         <div class="card card_form">
             <div class="card-header text-center">
@@ -101,24 +108,85 @@ class VueCompte
             </div>
             <div class="card-body">
                 <form>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="form_prenom" >Prénom</label>
-                            <input readonly type="text" class="form-control" id="form_prenom" placeholder={$prenom} name="prenom" required>
+                    <div class="form-group row">
+                        <label for="form_prenom" class="col-sm-2 col-form-label">   Prénom :</label>
+                        <div class="col-sm-3">
+                            <input readonly type="text" class="form-control" id="form_prenom" placeholder="{$prenom}" name="prenom" required>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="form_nom" >Nom</label>
-                            <input readonly type="text" class="form-control" id="form_nom" placeholder={$nom} name="nom" required>
+                        <label for="form_nom" class="col-sm-2 col-form-label">   Nom :</label>
+                        <div class="col-sm-4">
+                            <input readonly type="text" class="form-control" id="form_nom" placeholder="{$nom}" name="nom" required>
                         </div>
                     </div>
                         
-                    <div class="form-group">
-                        <label for="form_login" >Login</label>
-                        <input readonly type="text" class="form-control" id="form_login" placeholder={$login} name="login" required>
+                    <div class="form-group row">
+                        <label for="form_login" class="col-sm-2 col-form-label">Login :</label>
+                        <div class="col-sm-9">
+                            <input readonly type="text" class="form-control" id="form_login" placeholder="{$login}" name="login" required>
+                        </div>
                     </div>
-                   
+                    
+                   <div class="form-group row">
+                        <label for="form_login" class="col-sm-2 col-form-label">Email :</label>
+                        <div class="col-sm-9">
+                            <input readonly type="text" class="form-control" id="form_login" placeholder="{$email}" name="login" required>
+                        </div>
+                    </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                        <a type="submit" class="btn btn-primary" href="$url_modifier" role="button">Modifier mes informations</a>
+                        <a type="submit" class="btn btn-warning" href="#" role="button">Changer mon mot de passe</a>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
+        return $html;
+    }
+
+    public function modifierInformations() {
+        $html = "";
+        $nom = $this->tab['nom'];
+        $prenom = $this->tab['prenom'];
+        $login = $this->tab['login'];
+        if ($this->tab['email'] != null) {
+            $email = $this->tab['email'];
+        } else {
+            $email = "";
+        }
+//        $email = "Pas encore d'email enregistré";
+        $html = <<<FIN
+        <div class="card card_form">
+            <div class="card-header text-center">
+                Modifiez vos informations !
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group row">
+                        <label for="form_prenom" class="col-sm-2 col-form-label">   Prénom :</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="form_prenom" placeholder="Prénom" name="prenom" value="{$prenom}" required>
+                        </div>
+                        <label for="form_nom" class="col-sm-2 col-form-label">   Nom :</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="form_nom" placeholder="Nom" value="{$nom}" name="nom" required>
+                        </div>
+                    </div>
+                        
+                    <div class="form-group row">
+                        <label for="form_login" class="col-sm-2 col-form-label">Login :</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="form_login" placeholder="Login" value="{$login}" name="login" required>
+                        </div>
+                    </div>
+                    
+                   <div class="form-group row">
+                        <label for="form_login" class="col-sm-2 col-form-label">Email :</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="form_login" placeholder="Email" value="{$login}" name="login" required>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Enregistrer mes informations</button>
                     </div>
                 </form> 
             </div>
@@ -133,6 +201,7 @@ class VueCompte
         $url_item = $this->container->router->pathFor('item');
         $url_deconnexion = $this->container->router->pathFor('deconnexion');
         $content = "";
+        $pathIntermediaire="";
 
         // pas le même état si l'utilisateur est connecté ou non
         if (isset($_SESSION['profile']['username'])){
@@ -190,18 +259,27 @@ class VueCompte
             case 5 :
             {
                 $path = "";
-                $content .= 'Connecté en tant que <b>' . $this->tab['nom'] . '</b>';
+                $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
                 $content .= $this->afficherInformations();
                 $current_page = "Espace personnel";
                 break;
             }
+            // modification des info du compte
             case 6 :
+            {
+                $path = "../";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";
+                $content .= $this->modifierInformations();
+                $current_page = "Espace personnel";
+                break;
+            }
+            case 7 :
             {
                 $url_deconnexion = $this->container->router->pathFor('deconnexion');
                 $content = "<a href='$url_deconnexion'>Deconnexion</a>";
                 break;
             }
-            case 7:
+            case 8:
             {
                 $content = "Deconnecté";
                 break;
@@ -245,6 +323,7 @@ class VueCompte
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item " aria-current="page"><a href="$url_accueil">Home</a></li>
+            $pathIntermediaire
             <li class="breadcrumb-item active" aria-current="page">$current_page</li>
         </ol>
     </nav>

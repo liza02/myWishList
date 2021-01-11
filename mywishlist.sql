@@ -123,6 +123,7 @@ CREATE TABLE `user` (
   `prenom` varchar(60) NOT NULL,
   `login` varchar(60) NOT NULL,
   `pass` varchar(60) NOT NULL,
+  `email` varchar(60)DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -130,8 +131,8 @@ CREATE TABLE `user` (
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `nom` ,`prenom` ,`login`, `pass`) VALUES
-(1, 'aless','demange','alessi','$2y$10$LvtaU0UQTKxC49/0Ter99efEboYQVoM5S/oOol1Jt91MJOaipXuZi');
+INSERT INTO `user` (`id`, `nom` ,`prenom` ,`login`, `pass`, `email`) VALUES
+(1, 'aless','demange','alessi','$2y$10$LvtaU0UQTKxC49/0Ter99efEboYQVoM5S/oOol1Jt91MJOaipXuZi', null);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées

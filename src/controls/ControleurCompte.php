@@ -133,11 +133,17 @@ class ControleurCompte {
         return $rs;
     }
 
+    public function modifierCompte(Request $rq, Response $rs, $args) : Response  {
+        $vue = new VueCompte( [] , $this->container ) ;
+        $rs->getBody()->write( $vue->render(6)) ;
+        return $rs;
+    }
+
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
         session_destroy();
         $_SESSION = [];
         $vue = new VueCompte( [], $this->container);
-        $rs->getBody()->write($vue->render(7));
+        $rs->getBody()->write($vue->render(8));
         return $rs;
 
     }

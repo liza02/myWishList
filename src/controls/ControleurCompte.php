@@ -23,13 +23,27 @@ class ControleurCompte {
         $this->container = $container;
     }
 
-    public function formlogin(Request $rq, Response $rs, $args) : Response {
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function inscription(Request $rq, Response $rs, $args) : Response {
         $vue = new VueCompte( [] , $this->container ) ;
         $rs->getBody()->write( $vue->render(3)) ;
         return $rs;
     }
 
-    public function nouveaulogin(Request $rq, Response $rs, $args) : Response {
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function enregistrerInscription(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody() ;
         $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
@@ -48,17 +62,38 @@ class ControleurCompte {
         return $rs;
     }
 
-
-    public function deconnexion(Request $rq, Response $rs, $args) : Response {
-        session_destroy();
-        $_SESSION = [];
-        $vue = new VueCompte( [], $this->container);
-        $rs->getBody()->write($vue->render(7));
-        return $rs;
-
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function connexion(Request $rq, Response $rs, $args) : Response {
+        if (isset($_SESSION['test'])){
+            if($_SESSION['test']=='test'){
+                $vue = new VueCompte( [ 'res' => $_SESSION['res'] ] , $this->container ) ;
+                $rs->getBody()->write( $vue->render(0));
+                session_destroy();
+                $_SESSION = [];
+                return $rs;
+            }
+            //autre cas (avec les inscriptions)
+        }else{
+            $vue = new VueCompte([], $this->container);
+            $rs->getBody()->write( $vue->render(1));
+            return $rs;
+        }
     }
 
-    public function testpass(Request $rq, Response $rs, $args) : Response {
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function testConnexion(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody() ;
         $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
@@ -72,5 +107,20 @@ class ControleurCompte {
             $url_connexion = $this->container->router->pathFor("connexion");
             return $rs->withRedirect($url_connexion);
         }
+    }
+
+    public function afficherCompte(Request $rq, Response $rs, $args) : Response {
+        $vue = new VueCompte( [ 'res' => true ] , $this->container ) ;
+        $rs->getBody()->write( $vue->render(5));
+        return $rs;
+    }
+
+    public function deconnexion(Request $rq, Response $rs, $args) : Response {
+        session_destroy();
+        $_SESSION = [];
+        $vue = new VueCompte( [], $this->container);
+        $rs->getBody()->write($vue->render(7));
+        return $rs;
+
     }
 }

@@ -28,16 +28,17 @@ $app = new \Slim\App($container);
 //Chemin Accueil
 
 $app->get('/', ControleurAccueil::class.':accueil')->setName('racine');
-$app->get('/compte', ControleurAccueil::class.':compte')->setName('compte');
-$app->get('/connexion', ControleurAccueil::class.':connexion')->setName('connexion');
+//$app->get('/compte', ControleurAccueil::class.':compte')->setName('compte');
+//$app->get('/connexion', ControleurAccueil::class.':connexion')->setName('connexion');
 $app->get('/item', ControleurAccueil::class.':item')->setName('item');
 $app->get('/listes/nouvelleListe', ControleurAccueil::class.':list')->setName('liste');
 
 //Chemin Compte
-$app->get('/compte/newlogin1', ControleurCompte::class.':formlogin'   )->setName('formlogin');
-$app->post('/compte/newlogin2', ControleurCompte::class.':nouveaulogin')->setName('nouveaulogin');
-$app->get('/compte/login1', ControleurCompte::class.':testform')->setName('testform');
-$app->post('/compte/login2', ControleurCompte::class.':testpass')->setName('testpass');
+$app->get('/inscription', ControleurCompte::class.':inscription')->setName('inscription');
+$app->post('/inscription', ControleurCompte::class.':enregistrerInscription')->setName('enregistrerInscription');
+$app->get('/connexion', ControleurCompte::class.':connexion')->setName('connexion');
+$app->post('/connexion', ControleurCompte::class.':testConnexion')->setName('testConnexion');
+$app->get('/compte', ControleurCompte::class.':afficherCompte')->setName('compte');
 $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
 
 //Chemin Liste

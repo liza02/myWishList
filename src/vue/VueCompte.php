@@ -14,16 +14,16 @@ class VueCompte
         $this->container = $container;
     }
 
-    private function formlogin() : string {
-        $url_nouveaulogin = $this->container->router->pathFor( 'nouveaulogin' ) ;
-        $url_compte = $this->container->router->pathFor('connexion');
+    private function formInscription() : string {
+        $url_enregistrerInscription = $this->container->router->pathFor( 'enregistrerInscription' ) ;
+        $url_redirConnexion = $this->container->router->pathFor('connexion');
         $html = <<<FIN
         <div class="card card_form">
             <div class="card-header text-center">
                 Inscrivez vous !
             </div>
             <div class="card-body">
-                <form method="POST" action="$url_nouveaulogin">
+                <form method="POST" action="$url_enregistrerInscription">
                     <div class="form-group">
                         <label for="form_nom" >Nom</label>
                         <input type="text" class="form-control" id="form_nom" placeholder="Rzepka" name="nom" required>
@@ -47,23 +47,23 @@ class VueCompte
                 </form>    
             </div>
             <div class="card-footer text-center" > 
-                Déjà un compte ? <a href="$url_compte"> Se connecter </a>
+                Déjà un compte ? <a href="$url_redirConnexion"> Se connecter </a>
             </div>
         </div>
         FIN;
         return $html;
     }
 
-    private function testform() : string {
-        $url_testpass = $this->container->router->pathFor( 'testpass' ) ;
-        $url_formlogin = $this->container->router->pathFor('formlogin');
+    private function formConnexion() : string {
+        $url_testConnexion = $this->container->router->pathFor( 'testConnexion' ) ;
+        $url_redirInscription = $this->container->router->pathFor('inscription');
         $html = <<<FIN
         <div class="card card_form">
             <div class="card-header text-center">
                 Connectez vous !
             </div>
             <div class="card-body">
-                <form method="POST" action="$url_testpass">
+                <form method="POST" action="$url_testConnexion">
                     <div class="form-group">
                         <label for="form_login" >Login</label>
                         <input type="text" class="form-control" id="form_login" placeholder="thomasRz" name="login" required>
@@ -78,7 +78,7 @@ class VueCompte
                 </form> 
             </div>
             <div class="card-footer text-center" > 
-                Pas encore de compte ? <a href="$url_formlogin"> En créer un </a>
+                Pas encore de compte ? <a href="$url_redirInscription"> En créer un </a>
             </div>
         </div>   
         FIN;
@@ -122,7 +122,7 @@ class VueCompte
 //                if (isset($this->tab['login'])){
 //                    $content = 'Login <b>' . $this->tab['login'] . '</b> enregistré'."<br>";
 //                }
-                $content .= $this->testform();
+                $content .= $this->formConnexion();
                 break;
             }
             // inscription echec
@@ -135,7 +135,7 @@ class VueCompte
             {
                 $path = "../";
                 $current_page = "Inscription";
-                $content .= $this->formlogin();
+                $content .= $this->formInscription();
                 break;
             }
             //mon compte inscription

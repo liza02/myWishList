@@ -99,8 +99,8 @@ class ControleurCompte {
         $post = $rq->getParsedBody() ;
         $login = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $pass = filter_var($post['pass'] , FILTER_SANITIZE_STRING) ;
-        $res = Authentication::authenticate($login, $pass);
-        if ($res){
+        $connexionOK = Authentication::authenticate($login, $pass);
+        if ($connexionOK){
             $url_compte = $this->container->router->pathFor("afficherCompte");
             return $rs->withRedirect($url_compte);
         }else{

@@ -143,8 +143,6 @@ class ControleurCompte {
 
     public function enregistrerModif(Request $rq, Response $rs, $args) : Response {
         $infoUser = User::where("id","=",$_SESSION['profile']['userid'])->first();
-        //$infoUser = new User();
-        //$infoUser->id = $_SESSION['profile']['userid'];
         $post = $rq->getParsedBody();
         $nouveauLogin = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
         $nouveauNom = filter_var($post['nom'], FILTER_SANITIZE_STRING);

@@ -34,6 +34,7 @@ class Authentication {
 
     private static function loadProfile($uid) {
         session_destroy();
+        $_SESSION = [];
         session_start();
         $_SESSION['profile'] = array('username' => User::where('id','=',$uid)->first()->login, 'userid' => $uid);
     }

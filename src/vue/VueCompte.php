@@ -152,9 +152,7 @@ class VueCompte
             case 5 :
             {
                 $path = "";
-                $res = ($this->tab['res']) ? 'OK' : 'KO';
-                $content .= 'Mot de passe <b>' . $res . '</b></br>';
-                if ($res == 'OK') $content .= 'Connecté en tant que <b>' . $_SESSION['profile']['username'] . '</b>';
+                $content .= 'Connecté en tant que <b>' . $_SESSION['profile']['username'] . '</b>';
                 $current_page = "Espace personnel";
                 break;
             }

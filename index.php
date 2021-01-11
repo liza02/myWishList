@@ -9,6 +9,7 @@ use mywishlist\controls\ControleurAccueil;
 use mywishlist\controls\ControleurCompte;
 use mywishlist\controls\ControleurListe;
 use mywishlist\controls\ControleurItem;
+use mywishlist\controls\ControleurParticipant;
 
 $config = ['settings' => [
     'displayErrorDetails' => true,
@@ -53,5 +54,9 @@ $app->get('/listes/{token}', ControleurListe::class.':afficherItemsListe' )->set
 //Chemin Item
 $app->get('/listes/{token}/{id_item}', ControleurItem::class.':afficherItem' )->setName('aff_item');
 $app->post('/listes/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
+
+//Chemin Participant
+$app->get('/participer', ControleurParticipant::class.':afficherListes' )->setName('participer');
+$app->post('/participer', ControleurParticipant::class.':accederListe' )->setName('accederListe');
 
 $app->run();

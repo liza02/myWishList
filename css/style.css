@@ -15,11 +15,17 @@
 .card_form {
     margin: 0 auto; /* Added */
     float: none; /* Added */
-    margin-bottom: 20px; /* Added */
+    margin-top: 50px; /* Added */
     margin-left: 300px;
     margin-right: 300px;
 }
 
 .vueListe {
     margin-left: 30px;
+}
+
+#list_form {
+    margin-top: 30px;
+    margin-left: 70px;
+    margin-right: 100px;
 }

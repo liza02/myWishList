@@ -153,8 +153,6 @@ class ControleurCompte {
         if ($nouveauLogin==$infoUser->login && $nouveauEmail==$infoUser->email){
             $infoUser->nom = $nouveauNom;
             $infoUser->prenom = $nouveauPrenom;
-            $infoUser->login = $nouveauLogin;
-            $infoUser->email = $nouveauEmail;
             $infoUser->save();
             $vue = new VueCompte( $infoUser->toArray(), $this->container ) ;
             $rs->getBody()->write( $vue->render(7));
@@ -164,7 +162,7 @@ class ControleurCompte {
                 $vue = new VueCompte($infoUser->toArray(), $this->container);
                 $rs->getBody()->write($vue->render(8));
                 return $rs;
-            } elseif ($nbNouveauEmail > 0 && $nbNouveauEmail != $infoUser->email) {
+            } elseif ($nbNouveauEmail > 0 && $nouveauEmail != $infoUser->email) {
                 $vue = new VueCompte($infoUser->toArray(), $this->container);
                 $rs->getBody()->write($vue->render(9));
                 return $rs;

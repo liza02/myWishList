@@ -8,21 +8,36 @@ class VueAccueil
 {
     private $tab;
     private $container;
+    private $today;
 
     public function __construct($tab, $container){
         $this->tab = $tab;
         $this->container = $container;
+        $today = getdate();
+        $jour = $today['mday'];
+        $mois = $today['mon'];
+        $annee = $today['year'];
+        if ($mois < 10) {
+            $mois = 0 . $mois;
+        }
+        if ($jour < 10) {
+            $jour = 0 . $jour;
+        }
+        $this->today = $annee . "-" . $mois . "-" . $jour;
     }
 
     public function listesPublique() : string{
         $html = "";
         foreach($this->tab as $liste){
-            $date = date('d/m/Y',strtotime($liste['expiration']));
-            $html .= "<li class='listepublique'>{$liste['titre']} <br>
+            $date = date('Y-m-d',strtotime($liste['expiration']));
+            if ($date >= $this->today) {
+                $date = date('d/m/Y',strtotime($liste['expiration']));
+                $html .= "<li class='listepublique'>{$liste['titre']} <br>
                           Date d'expiration : $date </li>";
-            $token = $liste['token'];
-            $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-            $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                $token = $liste['token'];
+                $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+            }
         }
         $html = "<h3>Listes Publiques</h3><ul>$html</ul>";
         return $html;

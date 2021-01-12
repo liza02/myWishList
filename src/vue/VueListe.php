@@ -27,10 +27,18 @@ class VueListe
     }
 
     public function afficherMesListes() : string{
+        // pour afficher 3 blocs par ligne, on compte les blocs
+        $count_bloc_line = 0;
         $html = "<h3>Mes Listes :</h3><br>";
-
+        $html.= "<div class=\"blocs_listes\">";
         $html .="<div class=\"card-deck blocs_listes\">";
         foreach($this->tab as $liste){
+            if ($count_bloc_line == 3) {
+                // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
+                $html .="</div>";
+                $html .="<div class=\"card-deck blocs_listes\">";
+                $count_bloc_line=0;
+            }
             $date = date('Y-m-d',strtotime($liste['expiration']));
             if ($date >= $this->today) {
                 if ($date == $this->today) {
@@ -43,21 +51,27 @@ class VueListe
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
                 $html .= <<<FIN
-                <div class="card">
-                    <div class="card-header">
-                        {$liste['titre']}
+                <div class="card border-info mb-3" >
+                    <div class="card-header text-center">
+                        <p>{$liste['titre']}</p>
                     </div>
                     <div class="card-body">
                         <p class="card-text">Description: {$liste['description']}</p>
-                        <a class=accesliste href=$url_liste>Accéder a la liste</a>
+                        <div class="text-center">
+                            <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
+                            <a type="submit" class="btn btn-warning" href="#" role="button">Modifier</a>
+                            <a type="submit" class="btn btn-danger" href="#" role="button">Supprimer</a>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">Date d'expiration : $date</small>
                     </div>
                 </div>
                 FIN;
+                $count_bloc_line++;
             }
         }
+        $html .= "</div>";
         $html .= "</div>";
         if ($html == "<h3>Mes Listes :</h3><br>") {
             $html .= "<p> Vous n'avez pas de liste pour l'instant...</p>";

@@ -30,6 +30,15 @@
     margin-right: 100px;
 }
 
-.card-deck {
+.blocs_listes {
     margin-right: 30px;
+}
+
+.card-header p {
+    color: #122b40;
+    font-variant: small-caps;
+    font-weight: bold;
+    font-size: large;
+    margin-bottom: 0;
+
 }

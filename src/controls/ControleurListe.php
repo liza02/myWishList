@@ -93,7 +93,7 @@ class ControleurListe
     }
 
     public function supprimerListe (Request $rq, Response $rs, $args) : Response {
-        $liste = Liste::where('token','=',$args['token'])->get();
+        $liste = Liste::where('token','=',$args['token'])->first();
         $liste->delete();
         $url_MesListes = $this->container->router->pathFor('afficherMesListes') ;
         return $rs->withRedirect($url_MesListes);

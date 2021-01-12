@@ -76,7 +76,7 @@ FIN;
         switch ($select) {
             case 0 :
             {
-                $content = "<div class=\"alert alert-danger\" role=\"alert\">La liste saisie n'existe pas !</div>";
+                $content = "<div class=\"alert alert-danger\" role=\"alert\">La token saisi ne correspond à aucune liste</div>";
             }
             case 1 :
             { // liste des listes

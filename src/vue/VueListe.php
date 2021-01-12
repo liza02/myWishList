@@ -8,27 +8,11 @@ class VueListe
 {
     private $tab;
     private $container;
+    private $today;
 
     public function __construct($tab, $container){
         $this->tab = $tab;
         $this->container = $container;
-    }
-
-    public function afficherMesListes() : string{
-        $html = "Mes Listes :<br>";
-        foreach($this->tab as $liste){
-            $date = date('d/m/Y',strtotime($liste['expiration']));
-            $html .= "<li class='listepublique'>{$liste['titre']} <br>
-                          Date d'expiration : $date </li>";
-            $token = $liste['token'];
-            $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-            $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
-        }
-        return $html;
-    }
-
-    private function formCreerListe() : string {
-        $url_new_liste = $this->container->router->pathFor( 'enregistrerListe' ) ;
         $today = getdate();
         $jour = $today['mday'];
         $mois = $today['mon'];
@@ -39,12 +23,57 @@ class VueListe
         if ($jour < 10) {
             $jour = 0 . $jour;
         }
+        $this->today = $annee . "-" . $mois . "-" . $jour;
+    }
+
+    public function afficherMesListes() : string{
+        $html = "Mes Listes :<br>";
+
+        foreach($this->tab as $liste){
+            $date = date('Y-m-d',strtotime($liste['expiration']));
+            if ($date > $this->today) {
+                $date = date('d/m/Y',strtotime($liste['expiration']));
+                $html .= "<li class='listepublique'>{$liste['titre']} <br>
+                          Date d'expiration : $date </li>";
+                $token = $liste['token'];
+                $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+            }
+        }
+        if ($html == "Mes Listes :<br>") {
+            $html = "<p> Vous n'avez pas de liste pour l'instant...</p>";
+        }
+        return $html;
+    }
+
+    public function afficherListesExpirees() : string{
+        $html = "Mes Listes expirées :<br>";
+
+        foreach($this->tab as $liste){
+            $date = date('Y-m-d',strtotime($liste['expiration']));
+            if ($date < $this->today) {
+                $date = date('d/m/Y',strtotime($liste['expiration']));
+                $html .= "<li class='listepublique'>{$liste['titre']} <br>
+                          Date d'expiration : $date </li>";
+                $token = $liste['token'];
+                $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+            }
+        }
+        if ($html == "Mes Listes expirées :<br>") {
+            $html = "<p> Aucune liste n'est arrivée à expiration...</p>";
+        }
+        return $html;
+    }
+
+    private function formCreerListe() : string {
+        $url_new_liste = $this->container->router->pathFor( 'enregistrerListe' ) ;
         $html = <<<FIN
 <form method="POST" action="$url_new_liste">
 	<label>Titre:<br> <input type="text" name="titre" required/></label><br>
 	<label>Description: <br><input type="text" name="description" required/></label><br>
 	<label>Date d'expiration : <br><input type="date" name="date" 
-	value="$annee-$mois-$jour" min="2020-01-01" max="2030-12-31" required></label><br>
+	value="$this->today" min="2020-01-01" max="2030-12-31" required></label><br>
 	<label>Liste publique ? <input type="checkbox" name="public"></label><br><br>
 	<button type="submit">Enregistrer la liste</button>
 </form>	
@@ -90,17 +119,19 @@ FIN;
             {
                 $current_page = "Mes Listes";
                 $content .= $this->afficherMesListes();
-                $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a>";
+                $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a><br><br>";
+                $content .= $this->afficherListesExpirees();
                 break;
             }
             // affichage des listes: pas de listes
             case 1 :
             {
                 $current_page = "Mes Listes";
-                $content .= "<p> Vous n'avez pas de liste courament...</p>";
+                $content .= "<p> Vous n'avez pas de liste pour l'instant...</p>";
                 $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a>";
                 break;
             }
+            // listes expirée
             case 2 :
             {
                 $path = "../";

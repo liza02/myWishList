@@ -50,7 +50,7 @@ class VueListe
 
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-//                $url_supprimer = $this->container->router->pathFor("supprimerListeConfirmation", ['token' => $token]);
+                $url_supprimer = $this->container->router->pathFor("supprimerListe", ['token' => $token]);
                 $html .= <<<FIN
                 <div class="card border-info mb-3" >
                     <div class="card-header text-center">
@@ -64,22 +64,22 @@ class VueListe
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
                         </div>
                         
-                        <!-- Modal -->
-                        <div class="modal fade" id="confirmationSupp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- Modal pour demander si on veut supprimer -->
+                        <div class="modal fade" id="confirmationSupp" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Etes-vous sûr de vouloir supprimer cette liste ?</h5>
+                                <h5 class="modal-title" id="confirmation">Etes-vous sûr de vouloir supprimer cette liste ?</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
-                              <div class="modal-body">
+                              <div class="modal-body text-center">
                                 {$liste['titre']}
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                <button type="button" class="btn btn-danger">Supprimer</button>
+                                <a type="button" href="$url_supprimer" class="btn btn-danger">Supprimer</a>
                               </div>
                             </div>
                           </div>
@@ -220,34 +220,6 @@ class VueListe
         return $html2;
     }
 
-    private function supprimerListeConfirmation () : string {
-        $html = <<<FIN
-        <div class="suppression">
-            <div class="modal" tabindex="-1" role="dialog">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        FIN;
-
-        return $html;
-    }
-
     public function render( int $select ) : string
     {
         $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
@@ -256,7 +228,7 @@ class VueListe
         $path = "";
         $url_accueil= $this->container->router->pathFor('racine');
         $url_item= $this->container->router->pathFor('participer');
-        $url_gererMesListe = $this->container->router->pathFor('afficherMesListes') ;
+        $url_MesListes = $this->container->router->pathFor('afficherMesListes') ;
         $url_compte= $this->container->router->pathFor('afficherCompte');
         $url_creerListe = $this->container->router->pathFor('creerListe') ;
         switch ($select) {
@@ -284,7 +256,7 @@ class VueListe
             {
                 $path = "../";
                 $current_page = "Nouvelle liste";
-                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_gererMesListe\">Mes Listes</a></li>";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
 
                 $content .= $this->formCreerListe();
                 break;
@@ -295,7 +267,7 @@ class VueListe
                 $path = "../";
                 $l = $this->tab[0][0][0];
                 $content .= $this->afficherUneListe();
-                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_gererMesListe\">Mes Listes</a></li>";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
 
                 $current_page = $l['titre'];
                 break;
@@ -305,7 +277,7 @@ class VueListe
             {
                 $path = "../../";
                 $current_page = "Suppression";
-                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_gererMesListe\">Mes Listes</a></li>";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
                 $content .= $this->supprimerListeConfirmation();
                 break;
             }
@@ -340,7 +312,7 @@ class VueListe
             <ul class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link" href="$url_accueil">Accueil</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_item">Participer à une liste</a></li>
-                <li class="nav-item"><a class="nav-link active" href="$url_gererMesListe">Gérer mes listes</a></li>
+                <li class="nav-item"><a class="nav-link active" href="$url_MesListes">Gérer mes listes</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_compte">Mon Compte</a></li>
             </ul>
         </div>

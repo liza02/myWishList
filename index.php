@@ -49,7 +49,7 @@ $app->get('/mesListes',ControleurListe::class.':afficherMesListes')->setName('af
 $app->get('/mesListes/nouvelleliste' , ControleurListe::class.':creerListe')->setName('creerListe');
 $app->post('/mesListes/nouvelleliste' , ControleurListe::class.':enregistrerListe')->setName('enregistrerListe');
 //$app->get('/mesListes/{token}/suppression' , ControleurListe::class.':supprimerListeConfirmation')->setName('supprimerListeConfirmation');
-$app->post('/mesListes' , ControleurListe::class.':supprimerListe')->setName('supprimerListe');
+$app->get('/mesListes/supprimer/{token}' , ControleurListe::class.':supprimerListe')->setName('supprimerListe');
 $app->get('/mesListes/{token}', ControleurListe::class.':afficherUneListe' )->setName('aff_liste');
 //$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
 

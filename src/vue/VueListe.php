@@ -32,8 +32,14 @@ class VueListe
         $html .="<div class=\"card-deck blocs_listes\">";
         foreach($this->tab as $liste){
             $date = date('Y-m-d',strtotime($liste['expiration']));
-            if ($date > $this->today) {
-                $date = date('d/m/Y',strtotime($liste['expiration']));
+            if ($date >= $this->today) {
+                if ($date == $this->today) {
+                    $date = "Aujourd'hui";
+                }
+                else {
+                    $date = date('d/m/Y',strtotime($liste['expiration']));
+                }
+
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
                 $html .= <<<FIN
@@ -42,7 +48,7 @@ class VueListe
                         {$liste['titre']}
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Description: </p>
+                        <p class="card-text">Description: {$liste['description']}</p>
                         <a class=accesliste href=$url_liste>Accéder a la liste</a>
                     </div>
                     <div class="card-footer">

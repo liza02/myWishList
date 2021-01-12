@@ -8,26 +8,65 @@ class VueListe
 {
     private $tab;
     private $container;
+    private $today;
 
     public function __construct($tab, $container){
         $this->tab = $tab;
         $this->container = $container;
+        $today = getdate();
+        $jour = $today['mday'];
+        $mois = $today['mon'];
+        $annee = $today['year'];
+        if ($mois < 10) {
+            $mois = 0 . $mois;
+        }
+        if ($jour < 10) {
+            $jour = 0 . $jour;
+        }
+        $this->today = $annee . "-" . $mois . "-" . $jour;
     }
 
     public function afficherMesListes() : string{
         $html = "Mes Listes :<br>";
+
         foreach($this->tab as $liste){
-            $date = date('d/m/Y',strtotime($liste['expiration']));
-            $html .= "<li class='listepublique'>{$liste['titre']} <br>
+            $date = date('Y-m-d',strtotime($liste['expiration']));
+            if ($date > $this->today) {
+                $date = date('d/m/Y',strtotime($liste['expiration']));
+                $html .= "<li class='listepublique'>{$liste['titre']} <br>
                           Date d'expiration : $date </li>";
-            $token = $liste['token'];
-            $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-            $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                $token = $liste['token'];
+                $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+            }
+        }
+        if ($html == "Mes Listes :<br>") {
+            $html = "<p> Vous n'avez pas de liste pour l'instant...</p>";
         }
         return $html;
     }
 
-    private function formCreerListe() : string {
+    public function afficherListesExpirees() : string{
+        $html = "Mes Listes expirées :<br>";
+
+        foreach($this->tab as $liste){
+            $date = date('Y-m-d',strtotime($liste['expiration']));
+            if ($date < $this->today) {
+                $date = date('d/m/Y',strtotime($liste['expiration']));
+                $html .= "<li class='listepublique'>{$liste['titre']} <br>
+                          Date d'expiration : $date </li>";
+                $token = $liste['token'];
+                $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+            }
+        }
+        if ($html == "Mes Listes expirées :<br>") {
+            $html = "<p> Aucune liste n'est arrivée à expiration...</p>";
+        }
+        return $html;
+    }
+
+    public function formCreerListe() : string {
         $url_new_liste = $this->container->router->pathFor( 'enregistrerListe' ) ;
         $today = getdate();
         $jour = $today['mday'];
@@ -39,7 +78,6 @@ class VueListe
         if ($jour < 10) {
             $jour = 0 . $jour;
         }
-
         $html = <<<FIN
         <div class="card" id="list_form">
             <div class="card-header text-center">
@@ -118,17 +156,19 @@ class VueListe
             {
                 $current_page = "Mes Listes";
                 $content .= $this->afficherMesListes();
-                $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a>";
+                $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a><br><br>";
+                $content .= $this->afficherListesExpirees();
                 break;
             }
             // affichage des listes: pas de listes
             case 1 :
             {
                 $current_page = "Mes Listes";
-                $content .= "<p> Vous n'avez pas de liste courament...</p>";
+                $content .= "<p> Vous n'avez pas de liste pour l'instant...</p>";
                 $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a>";
                 break;
             }
+            // listes expirée
             case 2 :
             {
                 $path = "../";

@@ -27,6 +27,7 @@ class ControleurListe
         $nb = Liste::where('user_id','=',$_SESSION['profile']['userid'])->count();
         if ($nb != 0){
             $mesListes=Liste::where("user_id","=",$_SESSION['profile']['userid'])->get();
+
             $vue = new VueListe($mesListes->toArray(), $this->container);
             $rs->getBody()->write( $vue->render(0));
         }else{

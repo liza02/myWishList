@@ -32,9 +32,7 @@ class VueListe
         $html = "<h3>Mes Listes :</h3><br>";
         $html.= "<div class=\"blocs_listes\">";
         $html .="<div class=\"card-deck blocs_listes\">";
-        $tableauListe = array();
         foreach($this->tab as $liste){
-            $tableauListe[] = array($liste);
             if ($count_bloc_line == 3) {
                 // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
                 $html .="</div>";
@@ -63,11 +61,11 @@ class VueListe
                         <div class="text-center">
                             <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
                             <a type="submit" class="btn btn-warning" href="#" role="button"><span class="fa fa-pencil"></span> Modifier</a>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp_{$liste['titre']}"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
                         </div>
                         
                         <!-- Modal pour demander si on veut supprimer -->
-                        <div class="modal fade" id="confirmationSupp" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+                        <div class="modal fade" id="confirmationSupp_{$liste['titre']}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">

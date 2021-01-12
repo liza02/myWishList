@@ -308,7 +308,35 @@ class VueCompte
                 $current_page = "Modifier mon compte";
                 break;
             }
+            // modification succes
             case 7 :
+            {
+                $content = "<div class=\"alert alert-success\" role=\"alert\">Modification réussie !</div>";
+                $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
+                $content .= $this->afficherInformations();
+                $current_page = "Espace personnel";
+                break;
+            }
+            // modification echec login
+            case 8 :
+            {
+                $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de modification ! Le login existe déjà</div>";
+                $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
+                $content .= $this->afficherInformations();
+                $current_page = "Espace personnel";
+                break;
+            }
+            // modication echec email
+            case 9 :
+            {
+                $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de modification ! L'/ email existe déjà</div>";
+                $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
+                $content .= $this->afficherInformations();
+                $current_page = "Espace personnel";
+                break;
+            }
+            // modification mot de passe
+            case 10 :
             {
                 $path = "../";
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";

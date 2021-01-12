@@ -144,17 +144,32 @@ class ControleurCompte {
     public function enregistrerModif(Request $rq, Response $rs, $args) : Response {
         $infoUser = User::where("id","=",$_SESSION['profile']['userid'])->first();
         $post = $rq->getParsedBody();
-        $nouveauLogin = filter_var($post['login']       , FILTER_SANITIZE_STRING) ;
+        $nouveauLogin = filter_var($post['login'], FILTER_SANITIZE_STRING);
+        $nbNouveauLogin = User::where("login","=",$nouveauLogin)->count();
+        $nouveauEmail = filter_var($post['email']);
+        $nbNouveauEmail = User::where("email","=",$nouveauEmail)->count();
         $nouveauNom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
         $nouveauPrenom = filter_var($post['prenom'], FILTER_SANITIZE_STRING);
-        $nouveauEmail = filter_var($post['email']);
-        $infoUser->nom = $nouveauNom;
-        $infoUser->prenom = $nouveauPrenom;
-        $infoUser->login = $nouveauLogin;
-        $infoUser->email = $nouveauEmail;
-        $infoUser->save();
-        $url_afficherCompte = $this->container->router->pathFor("afficherCompte");
-        return $rs->withRedirect($url_afficherCompte);
+        if ($nouveauLogin==$infoUser->login && $nouveauEmail==$infoUser->email){
+            $infoUser->nom = $nouveauNom;
+            $infoUser->prenom = $nouveauPrenom;
+            $infoUser->login = $nouveauLogin;
+            $infoUser->email = $nouveauEmail;
+            $infoUser->save();
+            $vue = new VueCompte( $infoUser->toArray(), $this->container ) ;
+            $rs->getBody()->write( $vue->render(7));
+            return $rs;
+        }else {
+            if ($nbNouveauLogin > 0 && $nouveauLogin != $infoUser->login) {
+                $vue = new VueCompte($infoUser->toArray(), $this->container);
+                $rs->getBody()->write($vue->render(8));
+                return $rs;
+            } elseif ($nbNouveauEmail > 0 && $nbNouveauEmail != $infoUser->email) {
+                $vue = new VueCompte($infoUser->toArray(), $this->container);
+                $rs->getBody()->write($vue->render(9));
+                return $rs;
+            }
+        }
     }
 
     public function changerMotDePasse (Request $rq, Response $rs, $args) : Response  {

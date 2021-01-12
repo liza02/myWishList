@@ -38,7 +38,7 @@ class ControleurListe
         return $rs;
     }
 
-    public function afficherItemsListe(Request $rq, Response $rs, $args) : Response{
+    public function afficherUneListe(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::where('token','=',$args['token'])->get();
         $item = Item::where('liste_id','=',$liste[0]['no'])->get();
         $listeItem = array([$liste],[$item]);
@@ -85,7 +85,7 @@ class ControleurListe
         $l->token = $token;
         $l->expiration = $date;
         $l->public = $public;
-
+        $l->user_id =  $_SESSION['profile']['userid'];
         $l->save();
         //redirection sur afficher
         $url_listes = $this->container->router->pathFor("aff_liste", ['token' => $token]);

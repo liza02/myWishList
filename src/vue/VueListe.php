@@ -118,7 +118,7 @@ class VueListe
         return $html;
     }
 
-    private function uneListeItems() : string {
+    private function afficherUneListe() : string {
         $l = $this->tab[0][0][0];
         $html1 = "<h2>Liste {$l['no']}</h2>";
         $html1 .= "<b>Titre:</b> {$l['titre']}<br>";
@@ -180,7 +180,12 @@ class VueListe
             }
             case 3 :
             {
-                $content .= $this->uneListeItems();
+                $path = "../";
+                $l = $this->tab[0][0][0];
+                $content .= $this->afficherUneListe();
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_gererMesListe\">Mes Listes</a></li>";
+
+                $current_page = $l['titre'];
                 break;
             }
             case 4 :

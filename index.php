@@ -45,10 +45,10 @@ $app->post('/compte/changePassword', ControleurCompte::class.':enregistrerMotDeP
 $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
 
 //Chemin Liste
-$app->get('/meslistes',ControleurListe::class.':afficherMesListes')->setName('afficherMesListes');
-$app->get('/listes/nouvelleliste' , ControleurListe::class.':creerListe')->setName('creerListe');
-$app->post('/listes/nouvelleliste' , ControleurListe::class.':enregistrerListe')->setName('enregistrerListe');
-$app->get('/listes/{token}', ControleurListe::class.':afficherItemsListe' )->setName('aff_liste');
+$app->get('/mesListes',ControleurListe::class.':afficherMesListes')->setName('afficherMesListes');
+$app->get('/mesListes/nouvelleliste' , ControleurListe::class.':creerListe')->setName('creerListe');
+$app->post('/mesListes/nouvelleliste' , ControleurListe::class.':enregistrerListe')->setName('enregistrerListe');
+$app->get('/mesListes/{token}', ControleurListe::class.':afficherUneListe' )->setName('aff_liste');
 //$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
 
 //Chemin Item

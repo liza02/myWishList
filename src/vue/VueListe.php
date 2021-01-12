@@ -39,16 +39,44 @@ class VueListe
         if ($jour < 10) {
             $jour = 0 . $jour;
         }
+
         $html = <<<FIN
-<form method="POST" action="$url_new_liste">
-	<label>Titre:<br> <input type="text" name="titre" required/></label><br>
-	<label>Description: <br><input type="text" name="description" required/></label><br>
-	<label>Date d'expiration : <br><input type="date" name="date" 
-	value="$annee-$mois-$jour" min="2020-01-01" max="2030-12-31" required></label><br>
-	<label>Liste publique ? <input type="checkbox" name="public"></label><br><br>
-	<button type="submit">Enregistrer la liste</button>
-</form>	
-FIN;
+        <div class="card" id="list_form">
+            <div class="card-header text-center">
+                Nouvelle liste
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_new_liste">
+                    <div class="form-group">
+                        <label for="form_login" >Titre</label>
+                        <input type="text" class="form-control" id="form_login" placeholder="anniversaire, noël..." name="titre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_pass" >Description</label>
+                        <input type="text" class="form-control" id="form_nom" placeholder="Pour qui est la liste, en quelle occasion... ?" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_pass" >Date d'expiration</label>
+                        <input type="date" class="form-control" id="form_nom" placeholder="Mot de passe" 
+                        name="date" value="$annee-$mois-$jour" min="2020-01-01" max="2030-12-31" required>
+                    </div>
+                    
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="public" id="inlineRadio1" value="true">
+                      <label class="form-check-label" for="inlineRadio1">Liste publique</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="public" id="inlineRadio2" value="false">
+                      <label class="form-check-label" for="inlineRadio2">Liste privée</label>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Enregistrer la liste</button>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
         return $html;
     }
 
@@ -126,7 +154,7 @@ FIN;
 <html>
 <head>
     <title>MyWishList</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{$path}css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

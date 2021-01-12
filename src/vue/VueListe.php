@@ -225,12 +225,28 @@ class VueListe
 
     private function afficherUneListe() : string {
         $l = $this->tab[0][0][0];
-        $html1 = "<h2>Liste {$l['no']}</h2>";
-        $html1 .= "<b>Titre:</b> {$l['titre']}<br>";
-        $html1 .= "<b>Description:</b> {$l['description']}<br>";
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $html1 .= "<b>Partagez votre liste : </b>$actual_link";
         $html2 = "";
+        $html1 = <<<FIN
+        <div class="jumbotron">
+            <h1 class="display-4 titre_liste">Ma liste : {$l['titre']}</h1>
+            <p class="lead">{$l['description']}</p>
+            <hr class="my-4">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Partagez votre liste</span>
+              </div>
+              <input type="text" class="form-control" aria-label="url" value="{$actual_link}" id="myInput">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" onclick="copyClipboard()">Copier</button>
+              </div>
+            </div>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Ajouter un item</a>
+            </p>
+        </div>
+        FIN;
+
         foreach ($this->tab[1] as $tableau){
             foreach ($tableau as $items){
                 $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
@@ -299,11 +315,7 @@ class VueListe
             // suppression liste
             case 4 :
             {
-                $path = "../../";
-                $current_page = "Suppression";
-                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
-                $content .= $this->supprimerListeConfirmation();
-                break;
+                //TODO
             }
         }
         $html = $html = <<<FIN

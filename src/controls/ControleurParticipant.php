@@ -40,6 +40,9 @@ class ControleurParticipant
     public function accederListe(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody() ;
         $token = filter_var($post['tokenListe']       , FILTER_SANITIZE_STRING) ;
+        $url = explode("/", $token);
+        $token = end($url);
+        var_dump($token);
         $nb = Liste::where('token','=',$token)->count();
         if ($nb != 0) {
             $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);

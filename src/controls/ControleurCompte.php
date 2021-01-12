@@ -130,26 +130,26 @@ class ControleurCompte {
             }
         }
         else if (isset($_SESSION['passwordOK'])) {
-                if ($_SESSION['passwordOK']) {
-                    $info = $_SESSION['profile'];
-                    $_SESSION = [];
-                    $_SESSION['profile'] = $info;
-                    $vue = new VueCompte($infosUser->toArray(), $this->container);
-                    $rs->getBody()->write($vue->render(7));
-                    return $rs;
-                } else {
-                    $info = $_SESSION['profile'];
-                    $_SESSION = [];
-                    $_SESSION['profile'] = $info;
-                    $vue = new VueCompte($infosUser->toArray(), $this->container);
-                    $rs->getBody()->write($vue->render(5));
-                    return $rs;
-                }
-            }
-            else{
+            if ($_SESSION['passwordOK']) {
+                $info = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $info;
+                $vue = new VueCompte($infosUser->toArray(), $this->container);
+                $rs->getBody()->write($vue->render(7));
+                return $rs;
+            } else {
+                $info = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $info;
+                $vue = new VueCompte($infosUser->toArray(), $this->container);
                 $rs->getBody()->write($vue->render(5));
                 return $rs;
             }
+        }
+        else{
+            $rs->getBody()->write($vue->render(5));
+            return $rs;
+        }
 
     }
 

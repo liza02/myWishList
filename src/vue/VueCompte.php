@@ -141,7 +141,7 @@ class VueCompte
                 </form> 
             </div>
         </div>  
-        <div class="text-center">
+        <div class="text-center deconnexion">
             <a href='$url_deconnexion' class="btn btn-danger text-center">Deconnexion</a> 
         </div>
         

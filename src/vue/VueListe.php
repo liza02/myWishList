@@ -92,6 +92,7 @@ class VueListe
                     </div>
                 </div>
                 FIN;
+                var_dump($liste['titre']);
                 $count_bloc_line++;
             }
         }
@@ -120,7 +121,7 @@ class VueListe
                 $date = date('d/m/Y',strtotime($liste['expiration']));
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-//                $url_supprimer = $this->container->router->pathFor("supprimerListeConfirmation", ['token' => $token]);
+                $url_supprimer = $this->container->router->pathFor("supprimerListe", ['token' => $token]);
                 $html .= <<<FIN
                 <div class="card border-info mb-3" >
                     <div class="card-header text-center">
@@ -130,7 +131,28 @@ class VueListe
                         <p class="card-text">Description: {$liste['description']}</p>
                         <div class="text-center">
                             <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
-                            <a type="submit" class="btn btn-danger" id="myBtn" href="#" role="button"><span class="fa fa-trash fa-lg"></span> Supprimer</a>
+                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
+                        </div>
+                        
+                        <!-- Modal pour demander si on veut supprimer -->
+                        <div class="modal fade" id="confirmationSupp" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="confirmation">Etes-vous sûr de vouloir supprimer cette liste ?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body text-center">
+                                {$liste['titre']}
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <a type="button" href="$url_supprimer" class="btn btn-danger">Supprimer</a>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                     </div>
                     <div class="card-footer">

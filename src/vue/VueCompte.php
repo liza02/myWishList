@@ -203,7 +203,7 @@ class VueCompte
         return $html;
     }
     public function changerMotDePasse() :string{
-        $url_enregistrerMdp = $this->container->router->pathFor( 'changerMotDePasse' ) ;
+        $url_enregistrerMdp = $this->container->router->pathFor( 'enregistrerMotDePasse' ) ;
         $html = <<<FIN
         <div class="card card_form">
             <div class="card-header text-center">
@@ -342,6 +342,35 @@ class VueCompte
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";
                 $content .= $this->changerMotDePasse();
                 $current_page = "Modifier mon mot de passe";
+                break;
+            }
+            // modification mot de passe echec ancienMDP incorrect
+            case 11 :
+            {
+                $path = "../";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";
+                $content.= "<div class=\"alert alert-danger\" role=\"alert\">L'ancien mot de passe est incorrect !</div>";
+                $content .= $this->changerMotDePasse();
+                $current_page = "Modifier mon mot de passe";
+                break;
+            }
+            // modification mot de passe echec confirmationMDP différent nouveauMDP
+            case 12 :
+            {
+                $path = "../";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";
+                $content.= "<div class=\"alert alert-danger\" role=\"alert\">Les deux mots de passe sont différents !</div>";
+                $content .= $this->changerMotDePasse();
+                $current_page = "Modifier mon mot de passe";
+                break;
+            }
+            // modification mot de passe réussie
+            case 13 :
+            {
+                $content = "<div class=\"alert alert-success\" role=\"alert\">Modification du mot de passe réussie !</div>";
+                $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
+                $content .= $this->afficherInformations();
+                $current_page = "Espace personnel";
                 break;
             }
         }

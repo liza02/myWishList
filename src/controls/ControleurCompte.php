@@ -175,14 +175,36 @@ class ControleurCompte {
 
     public function changerMotDePasse (Request $rq, Response $rs, $args) : Response  {
         $infosUser = User::where('login','=',$_SESSION['profile']['username'])->first();
-
         $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
-        $rs->getBody()->write( $vue->render(7)) ;
+        $rs->getBody()->write($vue->render(10));
         return $rs;
     }
 
     public function enregistrerMotDePasse(Request $rq, Response $rs, $args) : Response {
-        //TODO
+        $infosUser = User::where('login','=',$_SESSION['profile']['username'])->first();
+        $post = $rq->getParsedBody();
+        $ancienMDP = filter_var($post['ancienMDP'], FILTER_SANITIZE_STRING);
+        $nouveauMDP = filter_var($post['nouveauMDP'], FILTER_SANITIZE_STRING);
+        $confirmerMDP = filter_var($post['confirmerMDP'], FILTER_SANITIZE_STRING);
+        $mdpOK = Authentication::authenticate($_SESSION['profile']['username'], $ancienMDP);
+        if (!$mdpOK) {
+            $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
+            $rs->getBody()->write($vue->render(11)) ;
+        }
+        else {
+            if ($nouveauMDP != $confirmerMDP) {
+                $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
+                $rs->getBody()->write($vue->render(12)) ;
+            }
+            else {
+                $infosUser->pass = password_hash($nouveauMDP, PASSWORD_DEFAULT);
+                $infosUser->save();
+                $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
+                $rs->getBody()->write($vue->render(13)) ;
+            }
+        }
+
+        return $rs;
     }
 
     public function deconnexion(Request $rq, Response $rs, $args) : Response {

@@ -213,15 +213,15 @@ class VueCompte
                 <form method="POST" action="$url_enregistrerMdp">
                     <div class="form-group">
                         <label for="form_login" >Ancien mot de passe</label>
-                        <input type="password" class="form-control" id="form_login" placeholder="Ancien mot de passe" name="login" required>
+                        <input type="password" class="form-control" id="form_login" placeholder="Ancien mot de passe" name="ancienMDP" required>
                     </div>
                     <div class="form-group">
                         <label for="form_pass" >Nouveau mot de passe</label>
-                        <input type="password" class="form-control" id="form_nom" placeholder=" Nouveau mot de passe" name="pass" required>
+                        <input type="password" class="form-control" id="form_nom" placeholder=" Nouveau mot de passe" name="nouveauMDP" required>
                     </div>
                     <div class="form-group">
                         <label for="form_pass" >Confirmez le mot de passe</label>
-                        <input type="password" class="form-control" id="form_nom" placeholder="Nouveau mot de passe" name="pass" required>
+                        <input type="password" class="form-control" id="form_nom" placeholder="Nouveau mot de passe" name="confirmerMDP" required>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Enregistrer</button>

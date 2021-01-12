@@ -33,7 +33,7 @@ CREATE TABLE `item` (
   `liste_id` int(11) NOT NULL,
   `nom` text NOT NULL,
   `descr` text DEFAULT NULL,
-  `img` text DEFAULT NULL DEFAULT 'default.png',
+  `img` text DEFAULT 'default.png',
   `url` text DEFAULT NULL,
   `tarif` decimal(5,2) DEFAULT NULL,
   `cagnotte` int(1) NOT NULL DEFAULT 0,

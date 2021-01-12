@@ -130,7 +130,7 @@ class VueListe
                 $date = date('d/m/Y',strtotime($liste['expiration']));
                 $token = $liste['token'];
                 if ($liste['public'] == true){
-                    $public = "<span class=\"badge badge-success\">PUBLIC</span>";
+                    $public = "<span class=\"badge badge-success\">PUBLIQUE</span>";
                 } else {
                     $public = "<span class=\"badge badge-secondary\">PRIVÉE</span>";
                 }
@@ -150,11 +150,11 @@ class VueListe
                         <p class="card-text">Description: {$description}</p>
                         <div class="text-center">
                             <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
-                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
+                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp_{$liste['titre']}"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
                         </div>
                         
                         <!-- Modal pour demander si on veut supprimer -->
-                        <div class="modal fade" id="confirmationSupp" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+                        <div class="modal fade" id="confirmationSupp_{$liste['titre']}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">

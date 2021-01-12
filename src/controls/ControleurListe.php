@@ -93,7 +93,13 @@ class ControleurListe
     }
 
     public function supprimerListeConfirmation (Request $rq, Response $rs, $args) : Response {
-        //TODO
+        $liste = Liste::where('token','=',$args['token'])->get();
+        $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+        $listeItem = array([$liste],[$item]);
+        //var_dump($listeItem[1]);
+        $vue = new VueListe($listeItem, $this->container);
+        $rs->getBody()->write( $vue->render(4));
+        return $rs;
     }
 
     public function supprimerListe (Request $rq, Response $rs, $args) : Response {

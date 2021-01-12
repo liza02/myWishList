@@ -50,7 +50,7 @@ class VueListe
 
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-                $url_supprimer = $this->container->router->pathFor("supprimerListeConfirmation", ['token' => $token]);
+//                $url_supprimer = $this->container->router->pathFor("supprimerListeConfirmation", ['token' => $token]);
                 $html .= <<<FIN
                 <div class="card border-info mb-3" >
                     <div class="card-header text-center">
@@ -61,8 +61,31 @@ class VueListe
                         <div class="text-center">
                             <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
                             <a type="submit" class="btn btn-warning" href="#" role="button"><span class="fa fa-pencil"></span> Modifier</a>
-                            <a type="submit" class="btn btn-danger" href="$url_supprimer" role="button"><span class="fa fa-trash fa-lg"></span> Supprimer</a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
                         </div>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="confirmationSupp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Etes-vous sûr de vouloir supprimer cette liste ?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                {$liste['titre']}
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <button type="button" class="btn btn-danger">Supprimer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">Date d'expiration : $date</small>
@@ -97,7 +120,7 @@ class VueListe
                 $date = date('d/m/Y',strtotime($liste['expiration']));
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-                $url_supprimer = $this->container->router->pathFor("supprimerListeConfirmation", ['token' => $token]);
+//                $url_supprimer = $this->container->router->pathFor("supprimerListeConfirmation", ['token' => $token]);
                 $html .= <<<FIN
                 <div class="card border-info mb-3" >
                     <div class="card-header text-center">
@@ -107,7 +130,7 @@ class VueListe
                         <p class="card-text">Description: {$liste['description']}</p>
                         <div class="text-center">
                             <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
-                            <a type="submit" class="btn btn-danger" href="$url_supprimer" role="button"><span class="fa fa-trash fa-lg"></span> Supprimer</a>
+                            <a type="submit" class="btn btn-danger" id="myBtn" href="#" role="button"><span class="fa fa-trash fa-lg"></span> Supprimer</a>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -198,7 +221,30 @@ class VueListe
     }
 
     private function supprimerListeConfirmation () : string {
-        $html = "";
+        $html = <<<FIN
+        <div class="suppression">
+            <div class="modal" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        FIN;
+
         return $html;
     }
 
@@ -257,6 +303,9 @@ class VueListe
             // suppression liste
             case 4 :
             {
+                $path = "../../";
+                $current_page = "Suppression";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_gererMesListe\">Mes Listes</a></li>";
                 $content .= $this->supprimerListeConfirmation();
                 break;
             }
@@ -267,12 +316,13 @@ class VueListe
 <head>
     <title>MyWishList</title>
     <link rel="stylesheet" href="{$path}css/style.css">
+    <script src="{$path}js/main.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 

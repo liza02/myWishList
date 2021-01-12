@@ -50,9 +50,14 @@ class VueListe
                     $date = date('d/m/Y',strtotime($liste['expiration']));
                 }
                 if ($liste['public'] == true){
-                    $public = "<span class=\"badge badge-success\">PUBLIC</span>";
+                    $public = "<span class=\"badge badge-success\">PUBLIQUE</span>";
                 } else {
                     $public = "<span class=\"badge badge-secondary\">PRIVÉE</span>";
+                }
+                if (strlen($liste['description']) >= 120) {
+                    $description = substr($liste['description'], 0, 120) . "...";
+                } else {
+                    $description = $liste['description'];
                 }
 
                 $token = $liste['token'];
@@ -64,7 +69,7 @@ class VueListe
                         <p>{$liste['titre']}  {$public}</p>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Description: {$liste['description']}</p>
+                        <p class="card-text">Description: $description</p>
                         <div class="text-center">
                             <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
                             <a type="submit" class="btn btn-warning" href="#" role="button"><span class="fa fa-pencil"></span> Modifier</a>
@@ -131,6 +136,11 @@ class VueListe
                 } else {
                     $public = "<span class=\"badge badge-secondary\">PRIVÉE</span>";
                 }
+                if (strlen($liste['description']) >= 120) {
+                    $description = substr($liste['description'], 0, 120) . "...";
+                } else {
+                    $description = $liste['description'];
+                }
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
                 $url_supprimer = $this->container->router->pathFor("supprimerListe", ['token' => $token]);
                 $html .= <<<FIN
@@ -139,7 +149,7 @@ class VueListe
                         <p>{$liste['titre']}  {$public}</p>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Description: {$liste['description']}</p>
+                        <p class="card-text">Description: {$description}</p>
                         <div class="text-center">
                             <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
@@ -259,22 +269,27 @@ class VueListe
         foreach ($this->tab[1] as $tableau){
             $count_bloc_line = 0;
             $html_items .= "<div>";
-            $html_items .="<div class=\"card-deck \">"; //card-deck
+            $html_items .="<div class=\"card-columns \">"; //card-deck
             foreach ($tableau as $items){
-                if ($count_bloc_line == 3) {
-                    // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
-                    $html_items .="</div>";
-                    $html_items .="<div class=\"card-deck\">"; //card-deck
-                    $count_bloc_line=0;
-                }
+//                if ($count_bloc_line == 3) {
+//                    // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
+//                    $html_items .="</div>";
+//                    $html_items .="<div class=\"card-deck\">"; //card-deck
+//                    $count_bloc_line=0;
+//                }
                 $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $image = "../img/" . $items['img'];
+                if (strlen($items['descr']) >= 120) {
+                    $description = substr($items['descr'], 0, 120) . "...";
+                } else {
+                    $description = $items['descr'];
+                }
                 $html_items .= <<<FIN
                 <div class="card border-secondary" style="width: 18rem;">
                   <img class="card-img-top" src="$image" alt="{../img/default.png}">
                   <div class="card-body">
                     <h5 class="card-title">{$items['nom']}</h5>
-                    <p class="card-text">{$items['descr']}</p>
+                    <p class="card-text">{$description}</p>
                     <a href="$url_item" class="btn btn-primary">Voir item</a>
                   </div>
                 </div>

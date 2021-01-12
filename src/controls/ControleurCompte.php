@@ -128,6 +128,7 @@ class ControleurCompte {
         }
         else {
             // on clique sur le bouton "Mon compte"
+            var_dump($_SESSION);
             $rs->getBody()->write( $vue->render(5));
         }
         return $rs;
@@ -150,26 +151,44 @@ class ControleurCompte {
         $nbNouveauEmail = User::where("email","=",$nouveauEmail)->count();
         $nouveauNom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
         $nouveauPrenom = filter_var($post['prenom'], FILTER_SANITIZE_STRING);
-        if ($nbNouveauLogin > 0 && $nouveauLogin != $infoUser->login) {
-            $vue = new VueCompte($infoUser->toArray(), $this->container);
-            $rs->getBody()->write($vue->render(8));
-            return $rs;
-        }
-        elseif ($nbNouveauEmail > 0 && $nouveauEmail != $infoUser->email) {
-            $vue = new VueCompte($infoUser->toArray(), $this->container);
-            $rs->getBody()->write($vue->render(9));
-            return $rs;
-        }
-        else {
-            $infoUser->nom = $nouveauNom;
-            $infoUser->prenom = $nouveauPrenom;
-            $infoUser->login = $nouveauLogin;
-            $infoUser->email = $nouveauEmail;
-            $infoUser->save();
-            $vue = new VueCompte( $infoUser->toArray(), $this->container ) ;
-            $_SESSION['profile']['username'] = $nouveauLogin;
-            $rs->getBody()->write( $vue->render(7));
-            return $rs;
+        if (isset($_SESSION['passwordOK'])){
+            if ($_SESSION['passwordOK']){
+                $info = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $info;
+                $vue = new VueCompte($infoUser->toArray(), $this->container);
+                $rs->getBody()->write( $vue->render(7));
+                return $rs;
+            }else{
+                $info = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $info;
+                $vue = new VueCompte($infoUser->toArray(), $this->container);
+                $rs->getBody()->write( $vue->render(7));
+                return $rs;
+            }
+        }else{
+            if ($nbNouveauLogin > 0 && $nouveauLogin != $infoUser->login) {
+                $vue = new VueCompte($infoUser->toArray(), $this->container);
+                $rs->getBody()->write($vue->render(8));
+                return $rs;
+            }
+            elseif ($nbNouveauEmail > 0 && $nouveauEmail != $infoUser->email) {
+                $vue = new VueCompte($infoUser->toArray(), $this->container);
+                $rs->getBody()->write($vue->render(9));
+                return $rs;
+            }
+            else {
+                $infoUser->nom = $nouveauNom;
+                $infoUser->prenom = $nouveauPrenom;
+                $infoUser->login = $nouveauLogin;
+                $infoUser->email = $nouveauEmail;
+                $infoUser->save();
+                $vue = new VueCompte( $infoUser->toArray(), $this->container ) ;
+                $_SESSION['profile']['username'] = $nouveauLogin;
+                $rs->getBody()->write( $vue->render(7));
+                return $rs;
+            }
         }
     }
 
@@ -190,21 +209,22 @@ class ControleurCompte {
         if (!$mdpOK) {
             $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
             $rs->getBody()->write($vue->render(11)) ;
+            return $rs;
         }
         else {
             if ($nouveauMDP != $confirmerMDP) {
                 $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
                 $rs->getBody()->write($vue->render(12)) ;
+                return $rs;
             }
             else {
                 $infosUser->pass = password_hash($nouveauMDP, PASSWORD_DEFAULT);
                 $infosUser->save();
-                $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
-                $rs->getBody()->write($vue->render(13)) ;
+                $_SESSION['passwordOK'] = true;
+                $url_enregisterModif = $this->container->router->pathFor('enregistrerModif');
+                return $rs->withRedirect($url_enregisterModif);
             }
         }
-
-        return $rs;
     }
 
     public function deconnexion(Request $rq, Response $rs, $args) : Response {

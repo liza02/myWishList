@@ -364,15 +364,6 @@ class VueCompte
                 $current_page = "Modifier mon mot de passe";
                 break;
             }
-            // modification mot de passe réussie
-            case 13 :
-            {
-                $content = "<div class=\"alert alert-success\" role=\"alert\">Modification du mot de passe réussie !</div>";
-                $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
-                $content .= $this->afficherInformations();
-                $current_page = "Espace personnel";
-                break;
-            }
         }
                 $html = <<<FIN
 <!DOCTYPE html>

@@ -34,6 +34,7 @@ class VueListe
         $html .="<div class=\"card-deck blocs_listes\">";
         $tableauListe = array();
         foreach($this->tab as $liste){
+            $tableauListe[] = array($liste);
             if ($count_bloc_line == 3) {
                 // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
                 $html .="</div>";

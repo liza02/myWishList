@@ -6,23 +6,37 @@ class VueParticipant
 
     private $tab; // tab array PHP
     private $container;
+    private $today;
 
-    public function __construct($tab, $container)
-    {
+    public function __construct($tab, $container){
         $this->tab = $tab;
         $this->container = $container;
+        $today = getdate();
+        $jour = $today['mday'];
+        $mois = $today['mon'];
+        $annee = $today['year'];
+        if ($mois < 10) {
+            $mois = 0 . $mois;
+        }
+        if ($jour < 10) {
+            $jour = 0 . $jour;
+        }
+        $this->today = $annee . "-" . $mois . "-" . $jour;
     }
 
     private function lesListes()
     {
         $html = "";
         foreach ($this->tab as $liste) {
-            $date = date('d/m/Y', strtotime($liste['expiration']));
-            $html .= "<li class='listepublique'>{$liste['titre']} <br>
+            $date = date('Y-m-d',strtotime($liste['expiration']));
+            if ($date >= $this->today) {
+                $date = date('d/m/Y', strtotime($liste['expiration']));
+                $html .= "<li class='listepublique'>{$liste['titre']} <br>
                           Date d'expiration : $date </li>";
-            $token = $liste['token'];
-            $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-            $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                $token = $liste['token'];
+                $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+            }
 
         }
         $url_accederListe = $this->container->router->pathFor("accederListe");
@@ -37,7 +51,7 @@ class VueParticipant
             <div class="card-body">
                 <form method="POST" action="$url_accederListe">
                     <div class="form-group">
-                        <label for="form_token" >Token de la liste :</label>
+                        <label for="form_token" >URL de la liste :</label>
                         <input type="text" class="form-control" id="form_token" placeholder="nosecure1" name="tokenListe" required>
                     </div>
                     <div class="text-center">

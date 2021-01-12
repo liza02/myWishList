@@ -105,7 +105,7 @@ class VueAccueil
     </nav>
 
     <div>
-        $content;
+        $content
     </div>
     
 </body>

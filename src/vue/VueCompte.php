@@ -189,7 +189,7 @@ class VueCompte
                    <div class="form-group row">
                         <label for="form_login" class="col-sm-2 col-form-label">Email :</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="form_login" placeholder="Email" value="{$login}" name="email" required>
+                            <input type="text" class="form-control" id="form_login" placeholder="Email" value="{$email}" name="email" required>
                         </div>
                     </div>
                     <div class="text-center">
@@ -329,7 +329,7 @@ class VueCompte
             // modication echec email
             case 9 :
             {
-                $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de modification ! L'/ email existe déjà</div>";
+                $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de modification ! L'email existe déjà</div>";
                 $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
                 $content .= $this->afficherInformations();
                 $current_page = "Espace personnel";

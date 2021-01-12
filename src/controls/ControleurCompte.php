@@ -119,19 +119,38 @@ class ControleurCompte {
             if ($_SESSION['inscriptionOK']) {
                 // on vient de s'inscrire
                 $rs->getBody()->write( $vue->render(4));
-                $_SESSION['inscriptionOK'] = false;
+                $info = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $info;
+                return $rs;
             }
             else {
-                // on vient de se connecter
                 $rs->getBody()->write( $vue->render(5));
+                return $rs;
             }
         }
-        else {
-            // on clique sur le bouton "Mon compte"
-            var_dump($_SESSION);
-            $rs->getBody()->write( $vue->render(5));
+        else if (isset($_SESSION['passwordOK'])) {
+            if ($_SESSION['passwordOK']) {
+                $info = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $info;
+                $vue = new VueCompte($infosUser->toArray(), $this->container);
+                $rs->getBody()->write($vue->render(7));
+                return $rs;
+            } else {
+                $info = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $info;
+                $vue = new VueCompte($infosUser->toArray(), $this->container);
+                $rs->getBody()->write($vue->render(5));
+                return $rs;
+            }
         }
-        return $rs;
+        else{
+            $rs->getBody()->write($vue->render(5));
+            return $rs;
+        }
+
     }
 
     public function modifierCompte(Request $rq, Response $rs, $args) : Response  {
@@ -151,45 +170,26 @@ class ControleurCompte {
         $nbNouveauEmail = User::where("email","=",$nouveauEmail)->count();
         $nouveauNom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
         $nouveauPrenom = filter_var($post['prenom'], FILTER_SANITIZE_STRING);
-        if (isset($_SESSION['passwordOK'])){
-            if ($_SESSION['passwordOK']){
-                $info = $_SESSION['profile'];
-                $_SESSION = [];
-                $_SESSION['profile'] = $info;
-                $vue = new VueCompte($infoUser->toArray(), $this->container);
-                $rs->getBody()->write( $vue->render(7));
-                return $rs;
-            }else{
-                $info = $_SESSION['profile'];
-                $_SESSION = [];
-                $_SESSION['profile'] = $info;
-                $vue = new VueCompte($infoUser->toArray(), $this->container);
-                $rs->getBody()->write( $vue->render(7));
-                return $rs;
-            }
-        }else{
-            if ($nbNouveauLogin > 0 && $nouveauLogin != $infoUser->login) {
-                $vue = new VueCompte($infoUser->toArray(), $this->container);
-                $rs->getBody()->write($vue->render(8));
-                $rs->getBody()->write($vue->render(8));
-                return $rs;
-            }
-            elseif ($nbNouveauEmail > 0 && $nouveauEmail != $infoUser->email) {
-                $vue = new VueCompte($infoUser->toArray(), $this->container);
-                $rs->getBody()->write($vue->render(9));
-                return $rs;
-            }
-            else {
-                $infoUser->nom = $nouveauNom;
-                $infoUser->prenom = $nouveauPrenom;
-                $infoUser->login = $nouveauLogin;
-                $infoUser->email = $nouveauEmail;
-                $infoUser->save();
-                $vue = new VueCompte( $infoUser->toArray(), $this->container ) ;
-                $_SESSION['profile']['username'] = $nouveauLogin;
-                $rs->getBody()->write( $vue->render(7));
-                return $rs;
-            }
+        if ($nbNouveauLogin > 0 && $nouveauLogin != $infoUser->login) {
+            $vue = new VueCompte($infoUser->toArray(), $this->container);
+            $rs->getBody()->write($vue->render(8));
+            return $rs;
+        }
+        elseif ($nbNouveauEmail > 0 && $nouveauEmail != $infoUser->email) {
+            $vue = new VueCompte($infoUser->toArray(), $this->container);
+            $rs->getBody()->write($vue->render(9));
+            return $rs;
+        }
+        else {
+            $infoUser->nom = $nouveauNom;
+            $infoUser->prenom = $nouveauPrenom;
+            $infoUser->login = $nouveauLogin;
+            $infoUser->email = $nouveauEmail;
+            $infoUser->save();
+            $vue = new VueCompte( $infoUser->toArray(), $this->container ) ;
+            $_SESSION['profile']['username'] = $nouveauLogin;
+            $rs->getBody()->write( $vue->render(7));
+            return $rs;
         }
     }
 

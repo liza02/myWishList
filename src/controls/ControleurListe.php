@@ -91,4 +91,12 @@ class ControleurListe
         $url_listes = $this->container->router->pathFor("aff_liste", ['token' => $token]);
         return $rs->withRedirect($url_listes);
     }
+
+    public function supprimerListeConfirmation (Request $rq, Response $rs, $args) : Response {
+        //TODO
+    }
+
+    public function supprimerListe (Request $rq, Response $rs, $args) : Response {
+        //TODO
+    }
 }

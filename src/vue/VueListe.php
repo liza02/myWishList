@@ -50,6 +50,7 @@ class VueListe
 
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $url_supprimer = $this->container->router->pathFor("supprimerListeConfirmation", ['token' => $token]);
                 $html .= <<<FIN
                 <div class="card border-info mb-3" >
                     <div class="card-header text-center">
@@ -59,8 +60,8 @@ class VueListe
                         <p class="card-text">Description: {$liste['description']}</p>
                         <div class="text-center">
                             <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
-                            <a type="submit" class="btn btn-warning" href="#" role="button">Modifier</a>
-                            <a type="submit" class="btn btn-danger" href="#" role="button">Supprimer</a>
+                            <a type="submit" class="btn btn-warning" href="#" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+                            <a type="submit" class="btn btn-danger" href="$url_supprimer" role="button"><span class="fa fa-trash fa-lg"></span> Supprimer</a>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -73,24 +74,48 @@ class VueListe
         }
         $html .= "</div>";
         $html .= "</div>";
-        if ($html == "<h3>Mes Listes :</h3><br>") {
+        if ($html == "<h3>Mes Listes :</h3><br><div class=\"blocs_listes\"><div class=\"card-deck blocs_listes\"></div></div>") {
             $html .= "<p> Vous n'avez pas de liste pour l'instant...</p>";
         }
         return $html;
     }
 
     public function afficherListesExpirees() : string{
+        $count_bloc_line = 0;
         $html = "<h3>Mes Listes expirées :</h3><br>";
-
+        $html.= "<div class=\"blocs_listes\">";
+        $html .="<div class=\"card-deck blocs_listes\">";
         foreach($this->tab as $liste){
+            if ($count_bloc_line == 3) {
+                // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
+                $html .="</div>";
+                $html .="<div class=\"card-deck blocs_listes\">";
+                $count_bloc_line=0;
+            }
             $date = date('Y-m-d',strtotime($liste['expiration']));
             if ($date < $this->today) {
                 $date = date('d/m/Y',strtotime($liste['expiration']));
-                $html .= "<li class='listepublique'>{$liste['titre']} <br>
-                          Date d'expiration : $date </li>";
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                $url_supprimer = $this->container->router->pathFor("supprimerListeConfirmation", ['token' => $token]);
+                $html .= <<<FIN
+                <div class="card border-info mb-3" >
+                    <div class="card-header text-center">
+                        <p>{$liste['titre']}</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Description: {$liste['description']}</p>
+                        <div class="text-center">
+                            <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
+                            <a type="submit" class="btn btn-danger" href="$url_supprimer" role="button"><span class="fa fa-trash fa-lg"></span> Supprimer</a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Date d'expiration : $date</small>
+                    </div>
+                </div>
+                FIN;
+                $count_bloc_line++;
             }
         }
         if ($html == "<h3>Mes Listes expirées :</h3><br>") {
@@ -172,6 +197,11 @@ class VueListe
         return $html2;
     }
 
+    private function supprimerListeConfirmation () : string {
+        $html = "";
+        return $html;
+    }
+
     public function render( int $select ) : string
     {
         $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
@@ -197,6 +227,8 @@ class VueListe
             case 1 :
             {
                 $current_page = "Mes Listes";
+                $content .= "<h3>Mes Listes :</h3><br>";
+
                 $content .= "<p> Vous n'avez pas de liste pour l'instant...</p>";
                 $content .= "<br><a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a>";
                 break;
@@ -211,6 +243,7 @@ class VueListe
                 $content .= $this->formCreerListe();
                 break;
             }
+            // affichage d'une liste
             case 3 :
             {
                 $path = "../";
@@ -221,9 +254,10 @@ class VueListe
                 $current_page = $l['titre'];
                 break;
             }
+            // suppression liste
             case 4 :
             {
-                $content .= $this->uneListe();
+                $content .= $this->supprimerListeConfirmation();
                 break;
             }
         }
@@ -233,6 +267,7 @@ class VueListe
 <head>
     <title>MyWishList</title>
     <link rel="stylesheet" href="{$path}css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

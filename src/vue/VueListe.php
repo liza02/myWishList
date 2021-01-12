@@ -27,7 +27,7 @@ class VueListe
     }
 
     public function afficherMesListes() : string{
-        $html = "Mes Listes :<br>";
+        $html = "<h3>Mes Listes :</h3><br>";
 
         foreach($this->tab as $liste){
             $date = date('Y-m-d',strtotime($liste['expiration']));
@@ -40,14 +40,14 @@ class VueListe
                 $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
             }
         }
-        if ($html == "Mes Listes :<br>") {
+        if ($html == "<h3>Mes Listes :</h3><br>") {
             $html = "<p> Vous n'avez pas de liste pour l'instant...</p>";
         }
         return $html;
     }
 
     public function afficherListesExpirees() : string{
-        $html = "Mes Listes expirées :<br>";
+        $html = "<h3>Mes Listes expirées :</h3><br>";
 
         foreach($this->tab as $liste){
             $date = date('Y-m-d',strtotime($liste['expiration']));
@@ -60,7 +60,7 @@ class VueListe
                 $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
             }
         }
-        if ($html == "Mes Listes expirées :<br>") {
+        if ($html == "<h3>Mes Listes expirées :</h3><br>") {
             $html = "<p> Aucune liste n'est arrivée à expiration...</p>";
         }
         return $html;

@@ -84,12 +84,8 @@ class ControleurListe
         $token = bin2hex(random_bytes(10));
         $l->token = $token;
         $l->expiration = $date;
-        if ($public) {
-            $l->public = "true";
-        }
-        else {
-            $l->public = "false";
-        }
+        $l->public = $public;
+
         $l->save();
         //redirection sur afficher
         $url_listes = $this->container->router->pathFor("aff_liste", ['token' => $token]);

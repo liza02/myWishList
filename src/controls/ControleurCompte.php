@@ -171,6 +171,7 @@ class ControleurCompte {
             if ($nbNouveauLogin > 0 && $nouveauLogin != $infoUser->login) {
                 $vue = new VueCompte($infoUser->toArray(), $this->container);
                 $rs->getBody()->write($vue->render(8));
+                $rs->getBody()->write($vue->render(8));
                 return $rs;
             }
             elseif ($nbNouveauEmail > 0 && $nouveauEmail != $infoUser->email) {

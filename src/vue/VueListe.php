@@ -49,6 +49,11 @@ class VueListe
                 else {
                     $date = date('d/m/Y',strtotime($liste['expiration']));
                 }
+                if ($liste['public'] == true){
+                    $public = "<span class=\"badge badge-success\">PUBLIC</span>";
+                } else {
+                    $public = "<span class=\"badge badge-secondary\">PRIVÉE</span>";
+                }
 
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
@@ -56,7 +61,7 @@ class VueListe
                 $html .= <<<FIN
                 <div class="card border-info mb-3" >
                     <div class="card-header text-center">
-                        <p>{$liste['titre']}</p>
+                        <p>{$liste['titre']}  {$public}</p>
                     </div>
                     <div class="card-body">
                         <p class="card-text">Description: {$liste['description']}</p>
@@ -94,7 +99,6 @@ class VueListe
                     </div>
                 </div>
                 FIN;
-                var_dump($liste['titre']);
                 $count_bloc_line++;
             }
         }
@@ -122,12 +126,17 @@ class VueListe
             if ($date < $this->today) {
                 $date = date('d/m/Y',strtotime($liste['expiration']));
                 $token = $liste['token'];
+                if ($liste['public'] == true){
+                    $public = "<span class=\"badge badge-success\">PUBLIC</span>";
+                } else {
+                    $public = "<span class=\"badge badge-secondary\">PRIVÉE</span>";
+                }
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
                 $url_supprimer = $this->container->router->pathFor("supprimerListe", ['token' => $token]);
                 $html .= <<<FIN
                 <div class="card border-info mb-3" >
                     <div class="card-header text-center">
-                        <p>{$liste['titre']}</p>
+                        <p>{$liste['titre']}  {$public}</p>
                     </div>
                     <div class="card-body">
                         <p class="card-text">Description: {$liste['description']}</p>
@@ -226,8 +235,8 @@ class VueListe
     private function afficherUneListe() : string {
         $l = $this->tab[0][0][0];
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $html2 = "";
-        $html1 = <<<FIN
+        $html_items = "";
+        $html_infosListe = <<<FIN
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Ma liste : {$l['titre']}</h1>
             <p class="lead">{$l['description']}</p>
@@ -248,16 +257,35 @@ class VueListe
         FIN;
 
         foreach ($this->tab[1] as $tableau){
+            $count_bloc_line = 0;
+            $html_items .= "<div>";
+            $html_items .="<div class=\"card-deck \">"; //card-deck
             foreach ($tableau as $items){
+                if ($count_bloc_line == 3) {
+                    // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
+                    $html_items .="</div>";
+                    $html_items .="<div class=\"card-deck\">"; //card-deck
+                    $count_bloc_line=0;
+                }
                 $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $image = "../img/" . $items['img'];
-                $html2 .= "<li> <a href='$url_item' <h3> Item </h3> </a>id: {$items['id']} | titre: {$items['nom']} | descr: {$items['descr']} | Image: <br> <img src=$image></li>";
-                $html2 .= "<br>";
+                $html_items .= <<<FIN
+                <div class="card border-secondary" style="width: 18rem;">
+                  <img class="card-img-top" src="$image" alt="{../img/default.png}">
+                  <div class="card-body">
+                    <h5 class="card-title">{$items['nom']}</h5>
+                    <p class="card-text">{$items['descr']}</p>
+                    <a href="$url_item" class="btn btn-primary">Voir item</a>
+                  </div>
+                </div>
+                FIN;
+                $count_bloc_line++;
             }
+            $html_items .= "</div>";
+            $html_items .= "</div>";
         }
-        //$html2 .= "<h4>Partager la liste ici :</h4> /{$items['token']}";
-        $html2 = $html1 . "<ul> $html2 </ul>";
-        return $html2;
+        $html_items = $html_infosListe .  $html_items;
+        return $html_items;
     }
 
     public function render( int $select ) : string

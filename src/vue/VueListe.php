@@ -29,19 +29,32 @@ class VueListe
     public function afficherMesListes() : string{
         $html = "<h3>Mes Listes :</h3><br>";
 
+        $html .="<div class=\"card-deck blocs_listes\">";
         foreach($this->tab as $liste){
             $date = date('Y-m-d',strtotime($liste['expiration']));
             if ($date > $this->today) {
                 $date = date('d/m/Y',strtotime($liste['expiration']));
-                $html .= "<li class='listepublique'>{$liste['titre']} <br>
-                          Date d'expiration : $date </li>";
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
-                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                $html .= <<<FIN
+                <div class="card">
+                    <div class="card-header">
+                        {$liste['titre']}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Description: </p>
+                        <a class=accesliste href=$url_liste>Accéder a la liste</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Date d'expiration : $date</small>
+                    </div>
+                </div>
+                FIN;
             }
         }
+        $html .= "</div>";
         if ($html == "<h3>Mes Listes :</h3><br>") {
-            $html = "<p> Vous n'avez pas de liste pour l'instant...</p>";
+            $html .= "<p> Vous n'avez pas de liste pour l'instant...</p>";
         }
         return $html;
     }
@@ -61,7 +74,7 @@ class VueListe
             }
         }
         if ($html == "<h3>Mes Listes expirées :</h3><br>") {
-            $html = "<p> Aucune liste n'est arrivée à expiration...</p>";
+            $html .= "<p> Aucune liste n'est arrivée à expiration...</p>";
         }
         return $html;
     }
@@ -156,7 +169,7 @@ class VueListe
             {
                 $current_page = "Mes Listes";
                 $content .= $this->afficherMesListes();
-                $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a><br><br>";
+                $content .= "<br><a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a><br><br>";
                 $content .= $this->afficherListesExpirees();
                 break;
             }
@@ -165,7 +178,7 @@ class VueListe
             {
                 $current_page = "Mes Listes";
                 $content .= "<p> Vous n'avez pas de liste pour l'instant...</p>";
-                $content .= "<a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a>";
+                $content .= "<br><a href='$url_creerListe' class=\"btn btn-info \">Créer une liste</a>";
                 break;
             }
             // listes expirée

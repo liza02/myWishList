@@ -3,7 +3,6 @@ namespace mywishlist\vue;
 
 class VueParticipant
 {
-
     private $tab; // tab array PHP
     private $container;
     private $today;

@@ -60,8 +60,17 @@ class ControleurParticipant
         $token = end($url);
         var_dump($token);
         $nb = Liste::where('token','=',$token)->count();
+        $liste = Liste::where('token','=',$token)->first();
         if ($nb != 0) {
-            $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
+            if (isset($_SESSION['profile'])){
+                if ($_SESSION['profile']['userid'] == $liste['user_id']){
+                    $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
+                }else{
+                    $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
+                }
+            }else{
+                $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
+            }
             return $rs->withRedirect($url_liste);
         }
         else {

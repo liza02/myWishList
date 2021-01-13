@@ -163,7 +163,7 @@ FIN;
             {
                 $path ="../";
                 $content .= $this->afficherListeParticipant();
-
+                break;
             }
         }
         $html = <<<FIN

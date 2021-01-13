@@ -59,7 +59,7 @@ class VueListe
                 }
 
                 $token = $liste['token'];
-                $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
                 $url_supprimer = $this->container->router->pathFor("supprimerListe", ['token' => $token]);
                 $url_mofifier = $this->container->router->pathFor("modifierListe", ['token' => $token]);
                 $html .= <<<FIN
@@ -140,7 +140,7 @@ class VueListe
                 } else {
                     $description = $liste['description'];
                 }
-                $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
                 $url_supprimer = $this->container->router->pathFor("supprimerListe", ['token' => $token]);
                 $html .= <<<FIN
                 <div class="card border-info mb-3" >
@@ -214,7 +214,7 @@ class VueListe
                     </div>
                     <div class="form-group">
                         <label for="form_pass" >Description</label>
-                        <input type="text" class="form-control" id="form_nom" placeholder="Pour qui est la liste, en quelle occasion... ?" name="description" required>
+                        <input type="text" class="form-control" id="form_nom" placeholder="Pour qui est la liste, en quelle occasion... ?" name="description">
                     </div>
                     <div class="form-group">
                         <label for="form_pass" >Date d'expiration</label>
@@ -313,7 +313,7 @@ class VueListe
         </div>
         <div class="form-group">
             <label for="form_login" >Nouvelle description</label>
-            <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description :" value="{$this->tab['description']}" name="description" required>
+            <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description :" value="{$this->tab['description']}" name="description">
         </div>
         <div class="form-group">
             <label for="form_pass" >Nouvelle date d'expiration</label>
@@ -338,11 +338,11 @@ class VueListe
     <form method="POST" action="$url_enregistrerModificationListe">
         <div class="form-group">
             <label for="form_login" >Nouveau titre</label>
-            <input type="text" class="form-control" id="form_login" placeholder="Nouveau titre :" value="{$this->tab['titre']}" name="titre" required>
+            <input type="text" class="form-control" id="form_login" placeholder="Nouveau titre" value="{$this->tab['titre']}" name="titre" required>
         </div>
         <div class="form-group">
             <label for="form_login" >Nouvelle description</label>
-            <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description :" value="{$this->tab['description']}" name="description" required>
+            <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description" value="{$this->tab['description']}" name="description">
         </div>
         <div class="form-group">
             <label for="form_pass" >Nouvelle date d'expiration</label>
@@ -429,7 +429,7 @@ class VueListe
                 $l = $this->tab['titre'];
                 $content .= $this->modifierListe();
                 $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
-                $url_liste =$this->container->router->pathFor('aff_liste', ['token' => $this->tab['token']]);
+                $url_liste =$this->container->router->pathFor('aff_maliste', ['token' => $this->tab['token']]);
                 $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_liste\">{$this->tab['titre']}</a></li>";
                 $current_page = "Modification";
                 break;

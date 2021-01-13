@@ -3,12 +3,18 @@
 
 namespace mywishlist\controls;
 
-
-use mywishlist\models\Liste;
-use mywishlist\vue\VueParticipant;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+use mywishlist\vue\MaVue;
+use mywishlist\vue\VueAccueil;
+use mywishlist\vue\VueCompte;
+use mywishlist\vue\VueItem;
+use mywishlist\vue\VueListe;
+use mywishlist\vue\VueParticipant;
+
+use \mywishlist\models\Liste;
+use \mywishlist\models\Item;
 class ControleurParticipant
 {
     private $container;
@@ -37,6 +43,16 @@ class ControleurParticipant
 
     }
 
+    public function afficherListeParticipant(Request $rq, Response $rs, $args) : Response{
+        $liste = Liste::where('token','=',$args['token'])->get();
+        $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+        $listeItem = array([$liste],[$item]);
+        //var_dump($listeItem[1]);
+        $vue = new VueParticipant($listeItem, $this->container);
+        $rs->getBody()->write( $vue->render(2));
+        return $rs;
+    }
+
     public function accederListe(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody() ;
         $token = filter_var($post['tokenListe']       , FILTER_SANITIZE_STRING) ;
@@ -45,7 +61,7 @@ class ControleurParticipant
         var_dump($token);
         $nb = Liste::where('token','=',$token)->count();
         if ($nb != 0) {
-            $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+            $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
             return $rs->withRedirect($url_liste);
         }
         else {

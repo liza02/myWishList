@@ -34,7 +34,7 @@ class VueParticipant
                 $html .= "<li class='listepublique'>{$liste['titre']} <br>
                           Date d'expiration : $date </li>";
                 $token = $liste['token'];
-                $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+                $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
                 $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
             }
 
@@ -65,6 +65,64 @@ FIN;
         return $html;
     }
 
+    private function afficherListeParticipant() : string{
+        $l = $this->tab[0][0][0];
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $html_items = "";
+        $html_infosListe = <<<FIN
+        <div class="jumbotron">
+            <h1 class="display-4 titre_liste">Nom de la liste : {$l['titre']}</h1>
+            <p class="lead">{$l['description']}</p>
+            <hr class="my-4">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Partagez la liste</span>
+              </div>
+              <input type="text" class="form-control" aria-label="url" value="{$actual_link}" id="myInput">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" onclick="copyClipboard()">Copier</button>
+              </div>
+            </div>
+        </div>
+        FIN;
+
+        foreach ($this->tab[1] as $tableau){
+            $count_bloc_line = 0;
+            $html_items .= "<div>";
+            $html_items .="<div class=\"card-columns \">"; //card-deck
+            foreach ($tableau as $items){
+//                if ($count_bloc_line == 3) {
+//                    // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
+//                    $html_items .="</div>";
+//                    $html_items .="<div class=\"card-deck\">"; //card-deck
+//                    $count_bloc_line=0;
+//                }
+                $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
+                $image = "../img/" . $items['img'];
+                if (strlen($items['descr']) >= 120) {
+                    $description = substr($items['descr'], 0, 120) . "...";
+                } else {
+                    $description = $items['descr'];
+                }
+                $html_items .= <<<FIN
+                <div class="card border-secondary" style="width: 18rem;">
+                  <img class="card-img-top" src="$image" alt="{../img/default.png}">
+                  <div class="card-body">
+                    <h5 class="card-title">{$items['nom']}</h5>
+                    <p class="card-text">{$description}</p>
+                    <a href="$url_item" class="btn btn-primary">Voir item</a>
+                  </div>
+                </div>
+                FIN;
+                $count_bloc_line++;
+            }
+            $html_items .= "</div>";
+            $html_items .= "</div>";
+        }
+        $html_items = $html_infosListe .  $html_items;
+        return $html_items;
+    }
+
     private function unItem()
     {
         var_dump($this->tab);
@@ -86,23 +144,33 @@ FIN;
             $url_compte = $this->container->router->pathFor('connexion');
             $url_liste = $this->container->router->pathFor('connexion');
         }
-        $html = "";
+        $path="";
+        $url_accueil = $this->container->router->pathFor('racine');
+        $url_participer = $this->container->router->pathFor('participer');
         switch ($select) {
             case 0 :
             {
                 $content = "<div class=\"alert alert-danger\" role=\"alert\">La token saisi ne correspond à aucune liste</div>";
             }
+            // affichage des listes
             case 1 :
-            { // liste des listes
+            {
                 $content .= $this->lesListes();
-                $url_accueil = $this->container->router->pathFor('racine');
-                $url_participer = $this->container->router->pathFor('participer');
-                $html = <<<FIN
+            }
+            // affichage d'une liste en tant que participant
+            case 2 :
+            {
+                $path ="../";
+                $content .= $this->afficherListeParticipant();
+
+            }
+        }
+        $html = <<<FIN
 <!DOCTYPE html>
 <html>
 <head>
     <title>MyWishList</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{$path}css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -113,7 +181,7 @@ FIN;
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="$url_accueil">
-        <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="{$path}img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
         MYWISHLIST
         </a>
         
@@ -145,8 +213,6 @@ FIN;
 </body>
 </html>
 FIN;
-            }
-        }
         return $html;
     }
 }

@@ -96,7 +96,7 @@ class ControleurListe
         $l->user_id =  $_SESSION['profile']['userid'];
         $l->save();
         //redirection sur afficher
-        $url_listes = $this->container->router->pathFor("aff_liste", ['token' => $token]);
+        $url_listes = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
         return $rs->withRedirect($url_listes);
     }
 

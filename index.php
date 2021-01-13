@@ -49,7 +49,7 @@ $app->get('/mesListes',ControleurListe::class.':afficherMesListes')->setName('af
 $app->get('/mesListes/nouvelleliste' , ControleurListe::class.':creerListe')->setName('creerListe');
 $app->post('/mesListes/nouvelleliste' , ControleurListe::class.':enregistrerListe')->setName('enregistrerListe');
 $app->get('/mesListes/supprimer/{token}' , ControleurListe::class.':supprimerListe')->setName('supprimerListe');
-$app->get('/mesListes/{token}', ControleurListe::class.':afficherUneListe' )->setName('aff_liste');
+$app->get('/mesListes/{token}', ControleurListe::class.':afficherUneListe' )->setName('aff_maliste');
 $app->get('/mesListes/modifier/{token}', ControleurListe::class.':modifierListe' )->setName('modifierListe');
 $app->post('/mesListes/{token}', ControleurListe::class.':enregistrerModificationListe' )->setName('enregistrerModificationListe');
 //$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
@@ -61,5 +61,7 @@ $app->post('/listes/{token}/{id_item}/reserverItem', ControleurItem::class.':res
 //Chemin Participant
 $app->get('/participer', ControleurParticipant::class.':afficherListes' )->setName('participer');
 $app->post('/participer', ControleurParticipant::class.':accederListe' )->setName('accederListe');
+$app->get('/participer/{token}', ControleurParticipant::class.':afficherListeParticipant' )->setName('afficherListeParticipant');
+
 
 $app->run();

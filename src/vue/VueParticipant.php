@@ -33,8 +33,18 @@ class VueParticipant
                 $html .= "<li class='listepublique'>{$liste['titre']} <br>
                           Date d'expiration : $date </li>";
                 $token = $liste['token'];
-                $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
-                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                if (isset($_SESSION['profile'])){
+                    if ($_SESSION['profile']['userid'] == $liste['user_id']){
+                        $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
+                        $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                    }else{
+                        $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
+                        $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                    }
+                }else{
+                    $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
+                    $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                }
             }
 
         }
@@ -70,7 +80,7 @@ FIN;
         $html_items = "";
         $html_infosListe = <<<FIN
         <div class="jumbotron">
-            <h1 class="display-4 titre_liste">Nom de la liste : {$l['titre']}</h1>
+            <h1 class="display-4 titre_liste">Liste : {$l['titre']}</h1>
             <p class="lead">{$l['description']}</p>
             <hr class="my-4">
             <div class="input-group mb-3">

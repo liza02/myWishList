@@ -51,6 +51,7 @@ $app->post('/mesListes/nouvelleliste' , ControleurListe::class.':enregistrerList
 $app->get('/mesListes/supprimer/{token}' , ControleurListe::class.':supprimerListe')->setName('supprimerListe');
 $app->get('/mesListes/{token}', ControleurListe::class.':afficherUneListe' )->setName('aff_liste');
 $app->get('/mesListes/modifier/{token}', ControleurListe::class.':modifierListe' )->setName('modifierListe');
+$app->post('/mesListes/{token}', ControleurListe::class.':enregistrerModificationListe' )->setName('enregistrerModificationListe');
 //$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
 
 //Chemin Item

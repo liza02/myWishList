@@ -26,13 +26,21 @@ class ControleurListe
     public function afficherMesListes(Request $rq, Response $rs, $args) : Response{
         $nb = Liste::where('user_id','=',$_SESSION['profile']['userid'])->count();
         if ($nb != 0){
-            $mesListes=Liste::where("user_id","=",$_SESSION['profile']['userid'])->get();
-
-            $vue = new VueListe($mesListes->toArray(), $this->container);
-            $rs->getBody()->write( $vue->render(0));
+            if (isset($_SESSION['modificationOK'])){
+                $info = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $info;
+                $mesListes=Liste::where("user_id","=",$_SESSION['profile']['userid'])->get();
+                $vue = new VueListe($mesListes->toArray(), $this->container);
+                $rs->getBody()->write( $vue->render(0));
+            }else{
+                $mesListes=Liste::where("user_id","=",$_SESSION['profile']['userid'])->get();
+                $vue = new VueListe($mesListes->toArray(), $this->container);
+                $rs->getBody()->write( $vue->render(1));
+            }
         }else{
             $vue = new VueListe([], $this->container);
-            $rs->getBody()->write( $vue->render(1));
+            $rs->getBody()->write( $vue->render(2));
         }
 
         return $rs;
@@ -44,7 +52,7 @@ class ControleurListe
         $listeItem = array([$liste],[$item]);
         //var_dump($listeItem[1]);
         $vue = new VueListe($listeItem, $this->container);
-        $rs->getBody()->write( $vue->render(3));
+        $rs->getBody()->write( $vue->render(4));
         return $rs;
     }
 
@@ -58,7 +66,7 @@ class ControleurListe
     public function creerListe(Request $rq, Response $rs, $args) : Response {
         // pour afficher le formulaire liste
         $vue = new VueListe( [] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 2) ) ;
+        $rs->getBody()->write( $vue->render(3) ) ;
         return $rs;
     }
 
@@ -92,8 +100,42 @@ class ControleurListe
         return $rs->withRedirect($url_listes);
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function modifierListe(Request $rq, Response $rs, $args) : Response {
+        $liste = Liste::where('token','=',$args['token'])->first();
+        $vue = new VueListe($liste->toArray(), $this->container);
+        $rs->getBody()->write( $vue->render(5));
+        return $rs;
+    }
 
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function enregistrerModificationListe(Request $rq, Response $rs, $args) : Response {
+        $post = $rq->getParsedBody() ;
+        $liste = Liste::where('token','=',$args['token'])->first();
+        $titre       = filter_var($post['titre']       , FILTER_SANITIZE_STRING) ;
+        $description = filter_var($post['description'] , FILTER_SANITIZE_STRING) ;
+        $date = filter_var($post['date'], FILTER_SANITIZE_STRING);
+        $public = filter_var($post['public'], FILTER_SANITIZE_STRING);
+        $liste->titre = $titre;
+        $liste->description = $description;
+        $liste->expiration = $date;
+        $liste->public = $public;
+        $liste->save();
+        $_SESSION['modificationOK'] = true;
+        $url_MesListes = $this->container->router->pathFor('afficherMesListes') ;
+        return $rs->withRedirect($url_MesListes);
     }
 
     public function supprimerListe (Request $rq, Response $rs, $args) : Response {

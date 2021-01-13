@@ -302,6 +302,71 @@ class VueListe
         return $html_items;
     }
 
+    public function modifierListe() : string{
+        $url_enregistrerModificationListe = $this->container->router->pathFor("enregistrerModificationListe", ['token' => $this->tab['token']]);
+        if ($this->tab['public'] == "true"){
+            $html = <<<FIN
+    <form method="POST" action="$url_enregistrerModificationListe">
+        <div class="form-group">
+            <label for="form_login" >Nouveau titre</label>
+            <input type="text" class="form-control" id="form_login" placeholder="Nouveau titre :" value="{$this->tab['titre']}" name="titre" required>
+        </div>
+        <div class="form-group">
+            <label for="form_login" >Nouvelle description</label>
+            <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description :" value="{$this->tab['description']}" name="description" required>
+        </div>
+        <div class="form-group">
+            <label for="form_pass" >Nouvelle date d'expiration</label>
+            <input type="date" class="form-control" id="form_nom" placeholder="Mot de passe" 
+            name="date" value="{$this->tab['expiration']}" min="2020-01-01" max="2030-12-31" required>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="public" id="inlineRadio1" value="true" checked>
+          <label class="form-check-label" for="inlineRadio1">Liste publique</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="public" id="inlineRadio2" value="false">
+          <label class="form-check-label" for="inlineRadio2">Liste privée</label>
+        </div>
+        <div class="text-center">
+           <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    </form>	
+    FIN;
+        }else{
+            $html = <<<FIN
+    <form method="POST" action="$url_enregistrerModificationListe">
+        <div class="form-group">
+            <label for="form_login" >Nouveau titre</label>
+            <input type="text" class="form-control" id="form_login" placeholder="Nouveau titre :" value="{$this->tab['titre']}" name="titre" required>
+        </div>
+        <div class="form-group">
+            <label for="form_login" >Nouvelle description</label>
+            <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description :" value="{$this->tab['description']}" name="description" required>
+        </div>
+        <div class="form-group">
+            <label for="form_pass" >Nouvelle date d'expiration</label>
+            <input type="date" class="form-control" id="form_nom" placeholder="Mot de passe" 
+            name="date" value="{$this->tab['expiration']}" min="2020-01-01" max="2030-12-31" required>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="public" id="inlineRadio1" value="true">
+          <label class="form-check-label" for="inlineRadio1">Liste publique</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="public" id="inlineRadio2" value="false" checked>
+          <label class="form-check-label" for="inlineRadio2">Liste privée</label>
+        </div>
+        <div class="text-center">
+           <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    </form>	
+    FIN;
+        }
+
+        return $html;
+    }
+
     public function render( int $select ) : string
     {
         $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
@@ -314,8 +379,12 @@ class VueListe
         $url_compte= $this->container->router->pathFor('afficherCompte');
         $url_creerListe = $this->container->router->pathFor('creerListe') ;
         switch ($select) {
-            // affichage des listes
             case 0 :
+            {
+                $content .= "<div class=\"alert alert-success\" role=\"alert\">Modification réussie !</div>";
+            }
+            // affichage des listes
+            case 1 :
             {
                 $current_page = "Mes Listes";
                 $content .= $this->afficherMesListes();
@@ -324,7 +393,7 @@ class VueListe
                 break;
             }
             // affichage des listes: pas de listes
-            case 1 :
+            case 2 :
             {
                 $current_page = "Mes Listes";
                 $content .= "<h3>Mes Listes :</h3><br>";
@@ -334,7 +403,7 @@ class VueListe
                 break;
             }
             // listes expirée
-            case 2 :
+            case 3 :
             {
                 $path = "../";
                 $current_page = "Nouvelle liste";
@@ -344,20 +413,26 @@ class VueListe
                 break;
             }
             // affichage d'une liste
-            case 3 :
+            case 4 :
             {
                 $path = "../";
                 $l = $this->tab[0][0][0];
                 $content .= $this->afficherUneListe();
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
-
                 $current_page = $l['titre'];
                 break;
             }
-            // suppression liste
-            case 4 :
+            // modifier la liste
+            case 5 :
             {
-                //TODO
+                $path = "../../";
+                $l = $this->tab['titre'];
+                $content .= $this->modifierListe();
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
+                $url_liste =$this->container->router->pathFor('aff_liste', ['token' => $this->tab['token']]);
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_liste\">{$this->tab['titre']}</a></li>";
+                $current_page = "Modification";
+                break;
             }
         }
         $html = $html = <<<FIN

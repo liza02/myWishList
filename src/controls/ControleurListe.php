@@ -92,6 +92,10 @@ class ControleurListe
         return $rs->withRedirect($url_listes);
     }
 
+    public function modifierListe(Request $rq, Response $rs, $args) : Response {
+
+    }
+
     public function supprimerListe (Request $rq, Response $rs, $args) : Response {
         $liste = Liste::where('token','=',$args['token'])->first();
         $liste->delete();

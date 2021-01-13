@@ -47,7 +47,7 @@ class VueListe
                 else {
                     $date = date('d/m/Y',strtotime($liste['expiration']));
                 }
-                if ($liste['public'] == true){
+                if ($liste['public'] == "true"){
                     $public = "<span class=\"badge badge-success\">PUBLIQUE</span>";
                 } else {
                     $public = "<span class=\"badge badge-secondary\">PRIVÉE</span>";
@@ -61,6 +61,7 @@ class VueListe
                 $token = $liste['token'];
                 $url_liste = $this->container->router->pathFor("aff_liste", ['token' => $token]);
                 $url_supprimer = $this->container->router->pathFor("supprimerListe", ['token' => $token]);
+                $url_mofifier = $this->container->router->pathFor("modifierListe", ['token' => $token]);
                 $html .= <<<FIN
                 <div class="card border-info mb-3" >
                     <div class="card-header text-center">
@@ -70,7 +71,7 @@ class VueListe
                         <p class="card-text">Description: $description</p>
                         <div class="text-center">
                             <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
-                            <a type="submit" class="btn btn-warning" href="#" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+                            <a type="submit" class="btn btn-warning" href="$url_mofifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp_{$liste['titre']}"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
                         </div>
                         
@@ -129,7 +130,7 @@ class VueListe
             if ($date < $this->today) {
                 $date = date('d/m/Y',strtotime($liste['expiration']));
                 $token = $liste['token'];
-                if ($liste['public'] == true){
+                if ($liste['public'] == "true"){
                     $public = "<span class=\"badge badge-success\">PUBLIQUE</span>";
                 } else {
                     $public = "<span class=\"badge badge-secondary\">PRIVÉE</span>";

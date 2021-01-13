@@ -48,9 +48,9 @@ $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deco
 $app->get('/mesListes',ControleurListe::class.':afficherMesListes')->setName('afficherMesListes');
 $app->get('/mesListes/nouvelleliste' , ControleurListe::class.':creerListe')->setName('creerListe');
 $app->post('/mesListes/nouvelleliste' , ControleurListe::class.':enregistrerListe')->setName('enregistrerListe');
-//$app->get('/mesListes/{token}/suppression' , ControleurListe::class.':supprimerListeConfirmation')->setName('supprimerListeConfirmation');
 $app->get('/mesListes/supprimer/{token}' , ControleurListe::class.':supprimerListe')->setName('supprimerListe');
 $app->get('/mesListes/{token}', ControleurListe::class.':afficherUneListe' )->setName('aff_liste');
+$app->get('/mesListes/modifier/{token}', ControleurListe::class.':modifierListe' )->setName('modifierListe');
 //$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
 
 //Chemin Item

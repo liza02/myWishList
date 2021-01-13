@@ -156,6 +156,7 @@ FIN;
             case 1 :
             {
                 $content .= $this->lesListes();
+                break;
             }
             // affichage d'une liste en tant que participant
             case 2 :

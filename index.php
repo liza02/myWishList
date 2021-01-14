@@ -52,7 +52,10 @@ $app->get('/mesListes/supprimer/{token}' , ControleurListe::class.':supprimerLis
 $app->get('/mesListes/{token}', ControleurListe::class.':afficherUneListe' )->setName('aff_maliste');
 $app->get('/mesListes/modifier/{token}', ControleurListe::class.':modifierListe' )->setName('modifierListe');
 $app->post('/mesListes/{token}', ControleurListe::class.':enregistrerModificationListe' )->setName('enregistrerModificationListe');
-//$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
+$app->get('/meslistes/ajoutItem/{token}',ControleurListe::class.':ajoutItem')->setName('ajoutItem');
+$app->post('/meslistes/ajoutItem/{token}',ControleurListe::class.':enregistrerNouveauItemListe')->setName('enregistrerNouveauItemListe');
+
+
 
 //Chemin Item Participant
 $app->get('/participant/{token}/{id_item}', ControleurItem::class.':afficherItemParticipant' )->setName('aff_item');

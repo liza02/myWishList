@@ -64,13 +64,24 @@ class ControleurListe
      * @return Response
      */
     public function afficherUneListe(Request $rq, Response $rs, $args) : Response{
-        $liste = Liste::where('token','=',$args['token'])->get();
-        $item = Item::where('liste_id','=',$liste[0]['no'])->get();
-        $listeItem = array([$liste],[$item]);
-        //var_dump($listeItem[1]);
-        $vue = new VueListe($listeItem, $this->container);
-        $rs->getBody()->write( $vue->render(4));
-        return $rs;
+        if (isset($_SESSION['modificationOK'])){
+            $infoUser = $_SESSION['profile'];
+            $_SESSION = [];
+            $_SESSION['profile'] = $infoUser;
+            $liste = Liste::where('token','=',$args['token'])->get();
+            $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+            $listeItem = array([$liste],[$item]);
+            $vue = new VueListe($listeItem, $this->container);
+            $rs->getBody()->write( $vue->render(4));
+            return $rs;
+        }else{
+            $liste = Liste::where('token','=',$args['token'])->get();
+            $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+            $listeItem = array([$liste],[$item]);
+            $vue = new VueListe($listeItem, $this->container);
+            $rs->getBody()->write( $vue->render(5));
+            return $rs;
+        }
     }
 
     /**
@@ -127,7 +138,7 @@ class ControleurListe
     public function modifierListe(Request $rq, Response $rs, $args) : Response {
         $liste = Liste::where('token','=',$args['token'])->first();
         $vue = new VueListe($liste->toArray(), $this->container);
-        $rs->getBody()->write( $vue->render(5));
+        $rs->getBody()->write( $vue->render(6));
         return $rs;
     }
 
@@ -153,6 +164,44 @@ class ControleurListe
         $_SESSION['modificationOK'] = true;
         $url_MesListes = $this->container->router->pathFor('afficherMesListes') ;
         return $rs->withRedirect($url_MesListes);
+    }
+
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function ajoutItem(Request $rq, Response $rs, $args) : Response {
+        $liste = Liste::where('token','=',$args['token'])->first();
+        $vue = new VueListe($liste->toArray(), $this->container);
+        $rs->getBody()->write( $vue->render(7));
+        return $rs;
+    }
+
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function enregistrerNouveauItemListe(Request $rq, Response $rs, $args) : Response {
+        $post = $rq->getParsedBody();
+        $nom       = filter_var($post['nom']       , FILTER_SANITIZE_STRING) ;
+        $descr = filter_var($post['descr'] , FILTER_SANITIZE_STRING) ;
+        $tarif = filter_var($post['tarif'], FILTER_SANITIZE_STRING);
+        $liste = Liste::where('token','=',$args['token'])->first();
+        $item = new Item();
+        $item->liste_id = $liste['no'];
+        $item->nom = $nom;
+        $item->descr = $descr;
+        $item->tarif = $tarif;
+        $item->save();
+        $_SESSION['creationItemOK'] = true;
+        $url_listes = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
+        return $rs->withRedirect($url_listes);
     }
 
     /**

@@ -266,12 +266,15 @@ class VueListe
         $l = $this->tab[0][0][0];
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $html_items = "";
+
         // affichage des infos générales de la liste: titre, description, boutons
+
+        $url_mofifier = $this->container->router->pathFor("modifierListe", ['token' => $l['token']]);
+
         $html_infosListe = <<<FIN
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Ma liste : {$l['titre']}</h1>
             <p class="lead">{$l['description']}</p>
-            <p class="lead">Propriétaire : moi</p>
             <hr class="my-4">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -284,6 +287,7 @@ class VueListe
             </div>
             <p class="lead">
                 <a class="btn btn-primary btn-lg" href="#" role="button">Ajouter un item</a>
+                <a type="submit" class="btn btn-warning" href="$url_mofifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
             </p>
         </div>
         FIN;
@@ -323,62 +327,62 @@ class VueListe
         $url_enregistrerModificationListe = $this->container->router->pathFor("enregistrerModificationListe", ['token' => $this->tab['token']]);
         if ($this->tab['public'] == "true"){
             $html = <<<FIN
-    <form method="POST" action="$url_enregistrerModificationListe">
-        <div class="form-group">
-            <label for="form_login" >Nouveau titre</label>
-            <input type="text" class="form-control" id="form_login" placeholder="Nouveau titre :" value="{$this->tab['titre']}" name="titre" required>
-        </div>
-        <div class="form-group">
-            <label for="form_login" >Nouvelle description</label>
-            <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description :" value="{$this->tab['description']}" name="description">
-        </div>
-        <div class="form-group">
-            <label for="form_pass" >Nouvelle date d'expiration</label>
-            <input type="date" class="form-control" id="form_nom" placeholder="Mot de passe" 
-            name="date" value="{$this->tab['expiration']}" min="2020-01-01" max="2030-12-31" required>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="public" id="inlineRadio1" value="true" checked>
-          <label class="form-check-label" for="inlineRadio1">Liste publique</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="public" id="inlineRadio2" value="false">
-          <label class="form-check-label" for="inlineRadio2">Liste privée</label>
-        </div>
-        <div class="text-center">
-           <button type="submit" class="btn btn-primary">Enregistrer</button>
-        </div>
-    </form>	
-    FIN;
+        <form method="POST" action="$url_enregistrerModificationListe">
+            <div class="form-group">
+                <label for="form_login" >Nouveau titre</label>
+                <input type="text" class="form-control" id="form_login" placeholder="Nouveau titre :" value="{$this->tab['titre']}" name="titre" required>
+            </div>
+            <div class="form-group">
+                <label for="form_login" >Nouvelle description</label>
+                <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description :" value="{$this->tab['description']}" name="description">
+            </div>
+            <div class="form-group">
+                <label for="form_pass" >Nouvelle date d'expiration</label>
+                <input type="date" class="form-control" id="form_nom" placeholder="Mot de passe" 
+                name="date" value="{$this->tab['expiration']}" min="2020-01-01" max="2030-12-31" required>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="public" id="inlineRadio1" value="true" checked>
+              <label class="form-check-label" for="inlineRadio1">Liste publique</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="public" id="inlineRadio2" value="false">
+              <label class="form-check-label" for="inlineRadio2">Liste privée</label>
+            </div>
+            <div class="text-center">
+               <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </form>	
+        FIN;
         }else{
             $html = <<<FIN
-    <form method="POST" action="$url_enregistrerModificationListe">
-        <div class="form-group">
-            <label for="form_login" >Nouveau titre</label>
-            <input type="text" class="form-control" id="form_login" placeholder="Nouveau titre" value="{$this->tab['titre']}" name="titre" required>
-        </div>
-        <div class="form-group">
-            <label for="form_login" >Nouvelle description</label>
-            <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description" value="{$this->tab['description']}" name="description">
-        </div>
-        <div class="form-group">
-            <label for="form_pass" >Nouvelle date d'expiration</label>
-            <input type="date" class="form-control" id="form_nom" placeholder="Mot de passe" 
-            name="date" value="{$this->tab['expiration']}" min="2020-01-01" max="2030-12-31" required>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="public" id="inlineRadio1" value="true">
-          <label class="form-check-label" for="inlineRadio1">Liste publique</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="public" id="inlineRadio2" value="false" checked>
-          <label class="form-check-label" for="inlineRadio2">Liste privée</label>
-        </div>
-        <div class="text-center">
-           <button type="submit" class="btn btn-primary">Enregistrer</button>
-        </div>
-    </form>	
-    FIN;
+        <form method="POST" action="$url_enregistrerModificationListe">
+            <div class="form-group">
+                <label for="form_login" >Nouveau titre</label>
+                <input type="text" class="form-control" id="form_login" placeholder="Nouveau titre" value="{$this->tab['titre']}" name="titre" required>
+            </div>
+            <div class="form-group">
+                <label for="form_login" >Nouvelle description</label>
+                <input type="text" class="form-control" id="form_login" placeholder="Nouvelle description" value="{$this->tab['description']}" name="description">
+            </div>
+            <div class="form-group">
+                <label for="form_pass" >Nouvelle date d'expiration</label>
+                <input type="date" class="form-control" id="form_nom" placeholder="Mot de passe" 
+                name="date" value="{$this->tab['expiration']}" min="2020-01-01" max="2030-12-31" required>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="public" id="inlineRadio1" value="true">
+              <label class="form-check-label" for="inlineRadio1">Liste publique</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="public" id="inlineRadio2" value="false" checked>
+              <label class="form-check-label" for="inlineRadio2">Liste privée</label>
+            </div>
+            <div class="text-center">
+               <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </form>	
+        FIN;
         }
 
         return $html;

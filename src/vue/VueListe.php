@@ -283,7 +283,7 @@ class VueListe
             </div>
             <p class="lead">
                 <a class="btn btn-primary btn-lg" href="#" role="button">Ajouter un item</a>
-                <a class="btn btn-primary btn-lg" href="$url_mofifier" role="button">Modifier</a>
+                <a type="submit" class="btn btn-warning" href="$url_mofifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
             </p>
         </div>
         FIN;

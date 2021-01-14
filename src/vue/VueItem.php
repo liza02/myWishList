@@ -147,10 +147,10 @@ class VueItem
                         <label for="form_description" >Description</label>
                         <input type="text" class="form-control" id="form_description" placeholder="description de l'item... ?" name="description">
                     </div>
-                    <div class="form-group">
-                        <label for="form_prix" >Description</label>
-                        <input type="text" class="form-control" id="form_prix" placeholder="15.00" name="prix">
-                    </div>      
+                    <div class="form-group"> 
+                        <label for="form_prix" >Prix</label>
+                        <input type="text" class="form-control" id="form_prix" aria-label="Amount (to the nearest dollar)" placeholder="15.50" name="prix">
+                    </div>    
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
                     </div>

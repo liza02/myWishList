@@ -84,8 +84,8 @@ class ControleurItem
         $item->tarif = $prixItem;
         $item->save();
 
-        $url_reservation = $this->container->router->pathFor("aff_item", ['token' => $args['token'], 'id_item' => $args['id_item']]);
-        return $rs->withRedirect($url_reservation);
+        $url_modif = $this->container->router->pathFor("aff_item_admin", ['token' => $args['token'], 'id_item' => $args['id_item']]);
+        return $rs->withRedirect($url_modif);
     }
 
     /**

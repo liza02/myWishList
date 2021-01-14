@@ -109,7 +109,36 @@ class VueItem
      * @return string
      */
     public function formModification() : string{
-        return "modification";
+        $i = $this->tab[0][0];
+        $l = $this->tab[1][0];
+        $url_modif_item = $url_modification = $this->container->router->pathFor("formModifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $html = <<<FIN
+        <div class="card" id="list_form">
+            <div class="card-header text-center">
+                Modifier l'item '{$i['nom']}'
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_modif_item">
+                    <div class="form-group">
+                        <label for="form_nom" >Titre</label>
+                        <input type="text" class="form-control" id="form_login" placeholder="eau, chips..." name="nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_description" >Description</label>
+                        <input type="text" class="form-control" id="form_description" placeholder="description de l'item... ?" name="description">
+                    </div>
+                    <div class="form-group">
+                        <label for="form_prix" >Description</label>
+                        <input type="text" class="form-control" id="form_prix" placeholder="15.00" name="prix">
+                    </div>      
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
+        return $html;
     }
 
     /**

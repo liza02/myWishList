@@ -45,7 +45,7 @@ class VueAccueil
                     }
                 }else{
                     $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
-                    $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                    $html .= "<a class=accesliste href=$url_liste>Accéder a la liste </a>";
                 }
             }
         }

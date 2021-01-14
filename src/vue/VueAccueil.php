@@ -30,7 +30,7 @@ class VueAccueil
         $user = $this->tab[1][0];
         $html = "<h3>Listes Publiques</h3><div class=\"row\">";
         $increment_user = 0;
-        foreach($this->tab[0] as $liste){
+        foreach($this->tab[0][0] as $liste){
             $user = $this->tab[1][0][$increment_user];
             $date = date('Y-m-d',strtotime($liste['expiration']));
             if ($date >= $this->today) {

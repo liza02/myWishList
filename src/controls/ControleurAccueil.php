@@ -40,13 +40,12 @@ class ControleurAccueil
      */
     public function accueil(Request $rq, Response $rs, $args) : Response {
         $ensListes = Liste::where('public','=','true')->get();
-//        $vue = new VueAccueil( $ensListes->toArray() , $this->container ) ;
-//        $rs->getBody()->write($vue->render(0));
+        $lesListes = $ensListes->toArray();
         $arrayUser = array();
-        foreach ($ensListes as $liste) {
+        foreach ($lesListes as $liste) {
             $arrayUser[] = User::where('id','=',$liste['user_id'])->first();
         }
-        $listeItem = array([$liste],[$arrayUser]);
+        $listeItem = array([$lesListes],[$arrayUser]);
 
         $vue = new VueAccueil($listeItem, $this->container);
         $rs->getBody()->write($vue->render(0));

@@ -45,3 +45,13 @@
 .deconnexion {
     margin-top: 10px;
 }
+
+.card-img-top {
+    height: 15vw;
+    object-fit: cover;
+}
+
+.Itembox {
+    margin-bottom: 15px;
+}
+

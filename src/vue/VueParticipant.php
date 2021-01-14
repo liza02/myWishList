@@ -101,36 +101,30 @@ FIN;
 
         foreach ($this->tab[1] as $tableau){
             $count_bloc_line = 0;
-            $html_items .= "<div>";
-            $html_items .="<div class=\"card-columns \">"; //card-deck
+            $html_items .= "<div class=\"container\"> <div class=\"row\">";
             foreach ($tableau as $items){
-//                if ($count_bloc_line == 3) {
-//                    // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
-//                    $html_items .="</div>";
-//                    $html_items .="<div class=\"card-deck\">"; //card-deck
-//                    $count_bloc_line=0;
-//                }
-                $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
+                $url_item = $this->container->router->pathFor("aff_item_admin", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $image = "../img/" . $items['img'];
-                if (strlen($items['descr']) >= 120) {
-                    $description = substr($items['descr'], 0, 120) . "...";
+                if (strlen($items['descr']) >= 100) {
+                    $description = substr($items['descr'], 0, 100) . "...";
                 } else {
                     $description = $items['descr'];
                 }
                 $html_items .= <<<FIN
-                <div class="card border-secondary" style="width: 18rem;">
-                  <img class="card-img-top" src="$image" alt="{../img/default.png}">
-                  <div class="card-body">
-                    <h5 class="card-title">{$items['nom']}</h5>
-                    <p class="card-text">{$description}</p>
-                    <a href="$url_item" class="btn btn-primary">Voir item</a>
-                  </div>
+                <div class="col-3 Itembox">
+                    <div class="card h-100 mb-3 border-secondary">
+                      <img class="card-img-top" src="$image" onError="this.onerror=null;this.src='../img/default.png';">
+                      <div class="card-body">
+                        <h5 class="card-title">{$items['nom']}</h5>
+                        <p class="card-text">{$description}</p>
+                        <a href="$url_item" class="btn btn-primary">Voir item</a>
+                      </div>
+                    </div>
                 </div>
                 FIN;
                 $count_bloc_line++;
             }
-            $html_items .= "</div>";
-            $html_items .= "</div>";
+            $html_items .= "</div></div>";
         }
         $html_items = $html_infosListe .  $html_items;
         return $html_items;

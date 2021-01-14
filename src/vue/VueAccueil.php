@@ -27,19 +27,46 @@ class VueAccueil
     }
 
     public function listesPublique() : string{
-        $html = "";
-        foreach($this->tab as $liste){
+        $user = $this->tab[1][0];
+        $html = "<h3>Listes Publiques</h3><div class=\"row\">";
+        $increment_user = 0;
+        foreach($this->tab[0][0] as $liste){
+            $user = $this->tab[1][0][$increment_user];
             $date = date('Y-m-d',strtotime($liste['expiration']));
             if ($date >= $this->today) {
                 $date = date('d/m/Y',strtotime($liste['expiration']));
-                $html .= "<li class='listepublique'>{$liste['titre']} <br>
-                          Date d'expiration : $date </li>";
                 $token = $liste['token'];
+
+                if (strlen($liste['description']) >= 80) {
+                    $description = substr($liste['description'], 0, 80) . "...";
+                } else {
+                    $description = $liste['description'];
+                }
+
                 $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
-                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
+                $html .= <<<FIN
+                <div class="col-3 ">
+                    <div class="card border-light mb-3" >
+                        <div class="card-header text-center">
+                            <p>{$liste['titre']} </p>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Créateur :  {$user['prenom']}</h6>
+                            <p class="card-text">{$description}</p>
+                            <div class="text-center">
+                                <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Date d'expiration : $date</small>
+                        </div>
+                    </div>
+                </div>
+                FIN;
+                $increment_user++;
             }
         }
-        $html = "<h3>Listes Publiques</h3><ul>$html</ul>";
+        $html .= "</div>";
         return $html;
     }
 
@@ -104,7 +131,7 @@ class VueAccueil
         </ol>
     </nav>
 
-    <div>
+    <div class="vueAccueil">
         $content
     </div>
     

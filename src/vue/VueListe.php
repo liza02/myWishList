@@ -196,7 +196,9 @@ class VueListe
                 $count_bloc_line++;
             }
         }
-        if ($html == "<h3>Mes Listes expirées :</h3><br>") {
+        $html .= "</div>";
+        $html .= "</div>";
+        if ($html == "<h3>Mes Listes expirées :</h3><br><div class=\"blocs_listes\"><div class=\"card-deck blocs_listes\"></div></div>") {
             $html .= "<p> Aucune liste n'est arrivée à expiration...</p>";
         }
         return $html;
@@ -305,6 +307,16 @@ class VueListe
                 } else {
                     $description = $items['descr'];
                 }
+                if ($items['reserve'] == "false"){
+                    $boutonmodification = <<<FIN
+<a type="submit" class="btn btn-warning" href="$url_modifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+FIN;
+                }else{
+                    $boutonmodification = <<<FIN
+<a class="btn btn-secondary disabled" href="$url_modifier" role="button" aria-disabled="true"><span class="fa fa-pencil" ></span> Modifier</a>
+FIN;
+                }
+
                 $html_items .= <<<FIN
                 <div class="col-3 Itembox">
                     <div class="card h-100 mb-3 border-secondary">
@@ -315,7 +327,7 @@ class VueListe
                         </div>
                       <footer class="bouton_item text-center">
                            <a href="$url_item" class="btn btn-primary">Voir item</a>
-                           <a type="submit" class="btn btn-warning" href="$url_modifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+                           $boutonmodification
                       </footer>
                     </div>
                 </div>
@@ -328,6 +340,10 @@ class VueListe
         return $html_items;
     }
 
+    /**
+     * Modification de liste
+     * @return string
+     */
     public function modifierListe() : string{
         $url_enregistrerModificationListe = $this->container->router->pathFor("enregistrerModificationListe", ['token' => $this->tab['token']]);
         if ($this->tab['public'] == "true"){
@@ -451,6 +467,7 @@ class VueListe
         $url_compte= $this->container->router->pathFor('afficherCompte');
         $url_creerListe = $this->container->router->pathFor('creerListe') ;
         switch ($select) {
+            // modification reussi
             case 0 :
             {
                 $content .= "<div class=\"alert alert-success\" role=\"alert\">Modification réussie !</div>";

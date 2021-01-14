@@ -110,6 +110,15 @@ FIN;
                 } else {
                     $description = $items['descr'];
                 }
+                if ($items['reserve'] == "false"){
+                    $bouton = <<<FIN
+                    <a type="submit" class="btn btn-warning" href="$url_item" role="button"> Réserver</a>
+                    FIN;
+                }else{
+                    $bouton = <<<FIN
+                    <a class="btn btn-secondary disabled" href="$url_item" role="button" aria-disabled="true">Reserver</a>
+                    FIN;
+                }
                 $html_items .= <<<FIN
                 <div class="col-3 Itembox">
                     <div class="card h-100 mb-3 border-secondary">
@@ -120,7 +129,7 @@ FIN;
                       </div>
                       <footer class="bouton_item text-center">
                            <a href="$url_item" class="btn btn-primary">Voir item</a>
-                           <a type="submit" class="btn btn-warning" href="$url_item" role="button"> Réserver</a>
+                           $bouton    
                       </footer>
                     </div>
                 </div>

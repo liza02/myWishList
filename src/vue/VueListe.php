@@ -430,6 +430,10 @@ FIN;
                         <label for="form_pass" >Description</label>
                         <input type="text" class="form-control" id="form_nom" placeholder="A quoi correspond cette item ?" name="descr">
                     </div>
+                    <div class="form-group">
+                        <label for="form_url" >URL</label>
+                        <input type="text" class="form-control" id="form_url" placeholder="où trouver mon item ?" name="url">
+                    </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Prix</span>

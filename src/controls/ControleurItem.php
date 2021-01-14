@@ -73,15 +73,12 @@ class ControleurItem
      */
     public function modifierUnItem(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody();
-        $nomItem = filter_var($post['nom'], FILTER_SANITIZE_STRING);
-        $descriptionItem = filter_var($post['description'], FILTER_SANITIZE_STRING);
-        $prixItem = filter_var($post['prix'], FILTER_SANITIZE_NUMBER_FLOAT);
-
         $item = Item::find( $args['id_item']) ;
 
-        $item->nom = $nomItem;
-        $item->descr = $descriptionItem;
-        $item->tarif = $prixItem;
+        $item->nom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
+        $item->descr = filter_var($post['description'], FILTER_SANITIZE_STRING);
+        $item->tarif = filter_var($post['prix'], FILTER_SANITIZE_NUMBER_FLOAT);
+        $item->url = filter_var($post['url'], FILTER_SANITIZE_STRING);
         $item->save();
 
         $url_modif = $this->container->router->pathFor("aff_item_admin", ['token' => $args['token'], 'id_item' => $args['id_item']]);

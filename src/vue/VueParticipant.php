@@ -100,10 +100,10 @@ FIN;
         FIN;
 
         foreach ($this->tab[1] as $tableau){
-            $count_bloc_line = 0;
             $html_items .= "<div class=\"container\"> <div class=\"row\">";
             foreach ($tableau as $items){
                 $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
+                $url_reservationItem = $this->container->router->pathFor("reserve_item", ['token' => $l['token'], 'id_item' => $items['id']]);
                 $image = "../img/" . $items['img'];
                 if (strlen($items['descr']) >= 80) {
                     $description = substr($items['descr'], 0, 80) . "...";
@@ -120,12 +120,11 @@ FIN;
                       </div>
                       <footer class="bouton_item text-center">
                            <a href="$url_item" class="btn btn-primary">Voir item</a>
-                           <a type="submit" class="btn btn-warning" href="$url_item" role="button"> Réserver</a>
+                           <a type="submit" class="btn btn-warning" href="$url_reservationItem" role="button"> Réserver</a>
                       </footer>
                     </div>
                 </div>
                 FIN;
-                $count_bloc_line++;
             }
             $html_items .= "</div></div>";
         }

@@ -196,7 +196,9 @@ class VueListe
                 $count_bloc_line++;
             }
         }
-        if ($html == "<h3>Mes Listes expirées :</h3><br>") {
+        $html .= "</div>";
+        $html .= "</div>";
+        if ($html == "<h3>Mes Listes expirées :</h3><br><div class=\"blocs_listes\"><div class=\"card-deck blocs_listes\"></div></div>") {
             $html .= "<p> Aucune liste n'est arrivée à expiration...</p>";
         }
         return $html;

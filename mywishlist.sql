@@ -103,12 +103,12 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 
 DROP TABLE IF EXISTS message;
 CREATE TABLE `message` (
-  `id` int(4) NOT NULL,
-  `message` varchar(120) NOT NULL,
-  `no_liste` int(4) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `id_item` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `id_message` int(4) NOT NULL AUTO_INCREMENT,
+  `id_parent` int(4) NOT NULL,
+  `type_parent` varchar(50) NOT NULL,
+  `message` varchar(500) NOT NULL,
+  `auteur` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_message`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

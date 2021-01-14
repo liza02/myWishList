@@ -14,6 +14,7 @@ use mywishlist\vue\VueListe;
 
 use \mywishlist\models\Liste;
 use \mywishlist\models\Item;
+use mywishlist\models\Message;
 
 class ControleurItem
 {
@@ -111,9 +112,17 @@ class ControleurItem
     public function reserverUnItem(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody();
         $nomReservant = filter_var($post['nom'], FILTER_SANITIZE_STRING);
+        $message = filter_var($post['message'], FILTER_SANITIZE_STRING);
 
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
+
+        $m = new Message();
+        $m->id_parent = $args['token'];
+        $m->type_parent = 'item';
+        $m->message = $message;
+        $m->auteur = $nomReservant;
+        $m->save();
 
         $item->reserve = $nomReservant;
         $item->save();

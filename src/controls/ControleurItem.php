@@ -34,21 +34,31 @@ class ControleurItem
      * @param $args
      * @return Response
      */
-    public function afficherItem(Request $rq, Response $rs, $args) : Response {
+    public function afficherItemParticipant(Request $rq, Response $rs, $args) : Response {
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
         $itemEtListe = array([$item],[$liste],[$args['token']]);
         $vue = new VueItem($itemEtListe, $this->container);
-        if (isset($_SESSION['profile'])){
-            if ($_SESSION['profile']['userid'] == $liste['user_id']){
-                $rs->getBody()->write( $vue->render(1)) ;
-            }else{
-                $rs->getBody()->write( $vue->render(0));
-            }
-        }else{
-            $rs->getBody()->write( $vue->render(0));
-        }
+        $rs->getBody()->write( $vue->render(1));
+        return $rs;
+        //3
+    }
 
+    public function afficherItemCreateur(Request $rq, Response $rs, $args) : Response {
+        $item = Item::find( $args['id_item']) ;
+        $liste = Liste::where('token','=',$args['token'])->first();
+        $itemEtListe = array([$item],[$liste],[$args['token']]);
+        $vue = new VueItem($itemEtListe, $this->container);
+        $rs->getBody()->write( $vue->render(3));
+        return $rs;
+    }
+
+    public function modifierItem(Request $rq, Response $rs, $args) : Response{
+        $item = Item::find( $args['id_item']) ;
+        $liste = Liste::where('token','=',$args['token'])->first();
+        $itemEtListe = array([$item],[$liste],[$args['token']]);
+        $vue = new VueItem($itemEtListe, $this->container);
+        $rs->getBody()->write( $vue->render(5));
         return $rs;
     }
 
@@ -60,6 +70,11 @@ class ControleurItem
      * @return Response
      */
     public function reserverItem(Request $rq, Response $rs, $args) : Response {
-        //TODO
+        $item = Item::find( $args['id_item']) ;
+        $liste = Liste::where('token','=',$args['token'])->first();
+        $itemEtListe = array([$item],[$liste],[$args['token']]);
+        $vue = new VueItem($itemEtListe, $this->container);
+        $rs->getBody()->write( $vue->render(4));
+        return $rs;
     }
 }

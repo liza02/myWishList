@@ -35,6 +35,7 @@ class ControleurItem
      * @return Response
      */
     public function afficherItemParticipant(Request $rq, Response $rs, $args) : Response {
+        //isset($_Session['reservationOK']
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
         $itemEtListe = array([$item],[$liste],[$args['token']]);
@@ -45,6 +46,7 @@ class ControleurItem
     }
 
     public function afficherItemCreateur(Request $rq, Response $rs, $args) : Response {
+        //isset($_SESSION['modificatio']
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
         $itemEtListe = array([$item],[$liste],[$args['token']]);

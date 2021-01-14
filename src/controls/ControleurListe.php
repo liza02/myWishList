@@ -53,7 +53,6 @@ class ControleurListe
             $vue = new VueListe([], $this->container);
             $rs->getBody()->write( $vue->render(2));
         }
-
         return $rs;
     }
 

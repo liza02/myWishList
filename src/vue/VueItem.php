@@ -66,7 +66,7 @@ class VueItem
         $l = $this->tab[1][0];
         $image = "../../img/" . $i['img'];
         if ($i['reserve'] == "false"){
-            $url_modification = $this->container->router->pathFor("reserve_item", ['token' => $l['token'], 'id_item' => $i['id']]);
+            $url_modification = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
             $html = <<<FIN
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">{$i['nom']}</h1>
@@ -100,6 +100,7 @@ class VueItem
      * @return string
      */
     public function formReservation() : string{
+
         return "reservation";
     }
 

@@ -133,7 +133,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `nom` ,`prenom` ,`login`, `pass`, `email`) VALUES
-(1, 'aless','demange','alessi','$2y$10$LvtaU0UQTKxC49/0Ter99efEboYQVoM5S/oOol1Jt91MJOaipXuZi', null);
+(1, 'Demange','Alessi','alessi','$2y$10$LvtaU0UQTKxC49/0Ter99efEboYQVoM5S/oOol1Jt91MJOaipXuZi', null),
+(2, 'Slimani','Theo','theo','$2y$10$YkfC182KMsMGndDJOKbobeoHUOyschln8302plXqgYfmDQFjrTiHi', null),
+(3, 'Carrier','Lisa','lisa','$2y$10$Jo/zMM/TB6CwjyVnRjZoWOdj9p1fTK.NKGFJSbEf.9na.sMqa6pAO', null);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées

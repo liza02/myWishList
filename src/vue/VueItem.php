@@ -115,6 +115,10 @@ class VueItem
                         <label for="form_nom" >Votre nom :</label>
                         <input type="text" class="form-control" id="form_login" placeholder="Jean, Paul, Gauthier..." name="nom" required>
                     </div>   
+                    <div class="form-group">
+                        <label for="form_message" >Votre message (optionnel) :</label>
+                        <input type="text" class="form-control" id="form_message" placeholder="Remarques éventuelles" name="message">
+                    </div> 
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Réserver l'item</button>
                     </div>

@@ -71,6 +71,7 @@ $app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modi
 $app->get('/participer', ControleurParticipant::class.':afficherListes' )->setName('participer');
 $app->post('/participer', ControleurParticipant::class.':accederListe' )->setName('accederListe');
 $app->get('/participer/{token}', ControleurParticipant::class.':afficherListeParticipant' )->setName('afficherListeParticipant');
-
+$app->get('/participer/{token}/message', ControleurParticipant::class.':ajouterMessage' )->setName('afficherFormMessage');
+$app->post('/participer/{token}/message', ControleurParticipant::class.':ajouterUnMessage' )->setName('formMessageListe');
 
 $app->run();

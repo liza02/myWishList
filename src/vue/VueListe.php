@@ -432,6 +432,8 @@ class VueListe
         FIN;
         return "$html";
     }
+
+
     /**
      * Render
      * @param int $select
@@ -518,6 +520,7 @@ class VueListe
                 $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_liste\">{$this->tab['titre']}</a></li>";
                 $current_page = "Ajout d'item";
             }
+
         }
         $html = $html = <<<FIN
 <!DOCTYPE html>

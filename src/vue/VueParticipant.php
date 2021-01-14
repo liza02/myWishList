@@ -48,9 +48,7 @@ class VueParticipant
         }
         $url_accederListe = $this->container->router->pathFor("accederListe");
         $html = <<<FIN
-<h3>Participer à une liste publique :</h3><ul>$html</ul>
 <h3>Participer à une liste privée :</h3>
-<br>
 <div class="card card_form">
             <div class="card-header text-center">
                 Participer à une liste privée !
@@ -68,6 +66,8 @@ class VueParticipant
                 </form>    
             </div>
         </div>
+<br>
+<h3>Participer à une liste publique :</h3><ul>$html</ul>
 FIN;
         return $html;
     }

@@ -15,6 +15,7 @@ use mywishlist\vue\VueParticipant;
 
 use \mywishlist\models\Liste;
 use \mywishlist\models\Item;
+use \mywishlist\models\User;
 class ControleurParticipant
 {
     private $container;
@@ -23,6 +24,13 @@ class ControleurParticipant
         $this->container = $container;
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function afficherListes(Request $rq, Response $rs, $args) : Response {
         $ensListes = Liste::where('public','=','true')->get();
         $vue = new VueParticipant( $ensListes->toArray() , $this->container ) ;
@@ -43,16 +51,30 @@ class ControleurParticipant
 
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function afficherListeParticipant(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::where('token','=',$args['token'])->get();
         $item = Item::where('liste_id','=',$liste[0]['no'])->get();
-        $listeItem = array([$liste],[$item]);
-        //var_dump($listeItem[1]);
+        $user = User::where('id','=',$liste[0]['user_id'])->get();
+        $listeItem = array([$liste],[$item],[$user]);
         $vue = new VueParticipant($listeItem, $this->container);
         $rs->getBody()->write( $vue->render(2));
         return $rs;
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function accederListe(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody() ;
         $token = filter_var($post['tokenListe']       , FILTER_SANITIZE_STRING) ;

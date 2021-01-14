@@ -10,6 +10,11 @@ class VueListe
     private $container;
     private $today;
 
+    /**
+     * VueListe constructor.
+     * @param $tab
+     * @param $container
+     */
     public function __construct($tab, $container){
         $this->tab = $tab;
         $this->container = $container;
@@ -26,6 +31,10 @@ class VueListe
         $this->today = $annee . "-" . $mois . "-" . $jour;
     }
 
+    /**
+     * Methode qui retourne nos listes non expirées
+     * @return string
+     */
     public function afficherMesListes() : string{
         // pour afficher 3 blocs par ligne, on compte les blocs
         $count_bloc_line = 0;
@@ -114,6 +123,10 @@ class VueListe
         return $html;
     }
 
+    /**
+     * Méthode qui affiche non listes expirées
+     * @return string
+     */
     public function afficherListesExpirees() : string{
         $count_bloc_line = 0;
         $html = "<h3>Mes Listes expirées :</h3><br>";
@@ -189,6 +202,10 @@ class VueListe
         return $html;
     }
 
+    /**
+     * Méthode qui affiche le formulaire de création de liste
+     * @return string
+     */
     public function formCreerListe() : string {
         $url_new_liste = $this->container->router->pathFor( 'enregistrerListe' ) ;
         $today = getdate();
@@ -241,6 +258,10 @@ class VueListe
         return $html;
     }
 
+    /**
+     * Méthode qui affiche une liste en tant qu'admin de celle-ci
+     * @return string
+     */
     private function afficherUneListe() : string {
         $l = $this->tab[0][0][0];
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -249,6 +270,7 @@ class VueListe
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Ma liste : {$l['titre']}</h1>
             <p class="lead">{$l['description']}</p>
+            <p class="lead">Propriétaire : moi</p>
             <hr class="my-4">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -367,6 +389,11 @@ class VueListe
         return $html;
     }
 
+    /**
+     * Render
+     * @param int $select
+     * @return string
+     */
     public function render( int $select ) : string
     {
         $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
@@ -408,7 +435,6 @@ class VueListe
                 $path = "../";
                 $current_page = "Nouvelle liste";
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
-
                 $content .= $this->formCreerListe();
                 break;
             }

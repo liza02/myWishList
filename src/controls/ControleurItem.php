@@ -19,29 +19,47 @@ class ControleurItem
 {
     private $container;
 
+    /**
+     * ControleurItem constructor.
+     * @param $container
+     */
     public function __construct($container) {
         $this->container = $container;
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function afficherItem(Request $rq, Response $rs, $args) : Response {
-        $item = Item::find( $args['id_item'] ) ;
-        $liste = Liste::where('token','=',$args['token'])->get();
-        $aray = array([$item],[$liste],$args['token']);
-        $vue = new VueItem( [ $aray ] , $this->container ) ;
-        $rs->getBody()->write( $vue->render( 0 ) ) ;
+        $item = Item::find( $args['id_item']) ;
+        $liste = Liste::where('token','=',$args['token'])->first();
+        $itemEtListe = array([$item],[$liste],[$args['token']]);
+        $vue = new VueItem($itemEtListe, $this->container);
+        if (isset($_SESSION['profile'])){
+            if ($_SESSION['profile']['userid'] == $liste['user_id']){
+                $rs->getBody()->write( $vue->render(1)) ;
+            }else{
+                $rs->getBody()->write( $vue->render(0));
+            }
+        }else{
+            $rs->getBody()->write( $vue->render(0));
+        }
+
         return $rs;
     }
 
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function reserverItem(Request $rq, Response $rs, $args) : Response {
         //TODO
-    }
-
-    public function deconnexion(Request $rq, Response $rs, $args) : Response {
-        session_destroy();
-        $_SESSION = [];
-        $vue = new MaVue( [], $this->container);
-        $rs->getBody()->write($vue->render((8)));
-        return $rs;
-
     }
 }

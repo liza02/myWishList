@@ -110,6 +110,13 @@ class ControleurCompte {
         }
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function afficherCompte(Request $rq, Response $rs, $args) : Response {
         // isset pour inscriptionOK et redirection sur compte
         //TODO where fonctionnel ? -> récupération des listes de l'utilisateur connecté
@@ -153,14 +160,27 @@ class ControleurCompte {
 
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function modifierCompte(Request $rq, Response $rs, $args) : Response  {
         $infosUser = User::where('login','=',$_SESSION['profile']['username'])->first();
-
         $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
         $rs->getBody()->write( $vue->render(6)) ;
         return $rs;
     }
 
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function enregistrerModif(Request $rq, Response $rs, $args) : Response {
         $infoUser = User::where("id","=",$_SESSION['profile']['userid'])->first();
         $post = $rq->getParsedBody();
@@ -200,6 +220,13 @@ class ControleurCompte {
         return $rs;
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function enregistrerMotDePasse(Request $rq, Response $rs, $args) : Response {
         $infosUser = User::where('login','=',$_SESSION['profile']['username'])->first();
         $post = $rq->getParsedBody();
@@ -228,6 +255,13 @@ class ControleurCompte {
         }
     }
 
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
         session_destroy();
         $_SESSION = [];

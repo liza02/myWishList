@@ -19,10 +19,21 @@ class ControleurListe
 {
     private $container;
 
+    /**
+     * ControleurListe constructor.
+     * @param $container
+     */
     public function __construct($container) {
         $this->container = $container;
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function afficherMesListes(Request $rq, Response $rs, $args) : Response{
         $nb = Liste::where('user_id','=',$_SESSION['profile']['userid'])->count();
         if ($nb != 0){
@@ -46,6 +57,13 @@ class ControleurListe
         return $rs;
     }
 
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function afficherUneListe(Request $rq, Response $rs, $args) : Response{
         $liste = Liste::where('token','=',$args['token'])->get();
         $item = Item::where('liste_id','=',$liste[0]['no'])->get();
@@ -138,6 +156,13 @@ class ControleurListe
         return $rs->withRedirect($url_MesListes);
     }
 
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function supprimerListe (Request $rq, Response $rs, $args) : Response {
         $liste = Liste::where('token','=',$args['token'])->first();
         $liste->delete();

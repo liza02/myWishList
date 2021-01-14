@@ -54,9 +54,11 @@ $app->get('/mesListes/modifier/{token}', ControleurListe::class.':modifierListe'
 $app->post('/mesListes/{token}', ControleurListe::class.':enregistrerModificationListe' )->setName('enregistrerModificationListe');
 //$app->get('/liste/{token}',ControleurListe::class.':afficherItemsListe')->setName('aff_item_liste');
 
-//Chemin Item
-$app->get('/listes/{token}/{id_item}', ControleurItem::class.':afficherItem' )->setName('aff_item');
-$app->post('/listes/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
+//Chemin Item Participant
+$app->get('/participant/{token}/{id_item}', ControleurItem::class.':afficherItem' )->setName('aff_item');
+$app->post('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
+
+//Chemin Item Admin
 
 //Chemin Participant
 $app->get('/participer', ControleurParticipant::class.':afficherListes' )->setName('participer');

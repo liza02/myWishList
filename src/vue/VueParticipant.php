@@ -7,6 +7,11 @@ class VueParticipant
     private $container;
     private $today;
 
+    /**
+     * VueParticipant constructor
+     * @param $tab
+     * @param $container
+     */
     public function __construct($tab, $container){
         $this->tab = $tab;
         $this->container = $container;
@@ -23,6 +28,10 @@ class VueParticipant
         $this->today = $annee . "-" . $mois . "-" . $jour;
     }
 
+    /**
+     * Methode qui retourne les listes publiques non expirées
+     * @return string
+     */
     private function lesListes()
     {
         $html = "";
@@ -74,14 +83,20 @@ FIN;
         return $html;
     }
 
+    /**
+     * Méthode qui affiche une liste en tant que participant
+     * @return string
+     */
     private function afficherListeParticipant() : string{
         $l = $this->tab[0][0][0];
+        $u = $this->tab[2][0][0];
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $html_items = "";
         $html_infosListe = <<<FIN
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Liste : {$l['titre']}</h1>
             <p class="lead">{$l['description']}</p>
+            <p class="lead">Propriétaire : {$u['nom']}</p>
             <hr class="my-4">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -132,13 +147,11 @@ FIN;
         return $html_items;
     }
 
-    private function unItem()
-    {
-        var_dump($this->tab);
-        $html = '';
-
-    }
-
+    /**
+     * Render
+     * @param $select
+     * @return string
+     */
     public function render($select)
     {
         if (isset($_SESSION['profile']['username'])){
@@ -154,6 +167,8 @@ FIN;
             $url_liste = $this->container->router->pathFor('connexion');
         }
         $path="";
+        $current_page="";
+        $pathIntermediaire ="";
         $url_accueil = $this->container->router->pathFor('racine');
         $url_participer = $this->container->router->pathFor('participer');
         switch ($select) {
@@ -171,6 +186,8 @@ FIN;
             case 2 :
             {
                 $path ="../";
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
+                $current_page = $this->tab[0][0][0]['titre'];
                 $content .= $this->afficherListeParticipant();
                 break;
             }
@@ -211,8 +228,9 @@ FIN;
     
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page"><a href=$url_accueil>Home</a> </li>
-            <li class="breadcrumb-item active" aria-current="page">Participer</li>
+            <li class="breadcrumb-item " aria-current="page"><a href="$url_accueil">Home</a></li>
+            $pathIntermediaire
+            <li class="breadcrumb-item active" aria-current="page">$current_page</li>
         </ol>
     </nav>
 

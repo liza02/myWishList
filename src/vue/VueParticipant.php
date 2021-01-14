@@ -42,20 +42,9 @@ class VueParticipant
                 $html .= "<li class='listepublique'>{$liste['titre']} <br>
                           Date d'expiration : $date </li>";
                 $token = $liste['token'];
-                if (isset($_SESSION['profile'])){
-                    if ($_SESSION['profile']['userid'] == $liste['user_id']){
-                        $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
-                        $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
-                    }else{
-                        $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
-                        $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
-                    }
-                }else{
-                    $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
-                    $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
-                }
+                $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
+                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
             }
-
         }
         $url_accederListe = $this->container->router->pathFor("accederListe");
         $html = <<<FIN
@@ -96,7 +85,7 @@ FIN;
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Liste : {$l['titre']}</h1>
             <p class="lead">{$l['description']}</p>
-            <p class="lead">Propriétaire : {$u['nom']}</p>
+            <p class="lead">Propriétaire : {$u['nom']} {$u['prenom']}</p>
             <hr class="my-4">
             <div class="input-group mb-3">
               <div class="input-group-prepend">

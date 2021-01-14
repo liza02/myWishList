@@ -297,7 +297,7 @@ class VueListe
 //                    $html_items .="<div class=\"card-deck\">"; //card-deck
 //                    $count_bloc_line=0;
 //                }
-                $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
+                $url_item = $this->container->router->pathFor("aff_item_admin", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $image = "../img/" . $items['img'];
                 if (strlen($items['descr']) >= 100) {
                     $description = substr($items['descr'], 0, 100) . "...";

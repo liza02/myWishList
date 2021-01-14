@@ -1,6 +1,7 @@
 .idea/
 
 vendor/
+/vendor
 composer.json
 composer.lock
 /test

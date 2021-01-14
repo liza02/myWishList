@@ -59,13 +59,29 @@ class ControleurParticipant
      * @return Response
      */
     public function afficherListeParticipant(Request $rq, Response $rs, $args) : Response{
-        $liste = Liste::where('token','=',$args['token'])->get();
-        $item = Item::where('liste_id','=',$liste[0]['no'])->get();
-        $user = User::where('id','=',$liste[0]['user_id'])->get();
-        $listeItem = array([$liste],[$item],[$user]);
-        $vue = new VueParticipant($listeItem, $this->container);
-        $rs->getBody()->write( $vue->render(2));
-        return $rs;
+        $liste = Liste::where('token','=',$args['token'])->first();
+        if (isset($_SESSION['profile'])){
+            if ($_SESSION['profile']['userid'] == $liste['user_id']){
+                $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
+                return $rs->withRedirect($url_liste);
+            }else{
+                $liste = Liste::where('token','=',$args['token'])->get();
+                $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+                $user = User::where('id','=',$liste[0]['user_id'])->get();
+                $listeItem = array([$liste],[$item],[$user]);
+                $vue = new VueParticipant($listeItem, $this->container);
+                $rs->getBody()->write( $vue->render(2));
+                return $rs;
+            }
+        }else{
+            $liste = Liste::where('token','=',$args['token'])->get();
+            $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+            $user = User::where('id','=',$liste[0]['user_id'])->get();
+            $listeItem = array([$liste],[$item],[$user]);
+            $vue = new VueParticipant($listeItem, $this->container);
+            $rs->getBody()->write( $vue->render(2));
+            return $rs;
+        }
     }
 
     /**

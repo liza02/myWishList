@@ -66,7 +66,7 @@ class VueItem
         $l = $this->tab[1][0];
         $image = "../../img/" . $i['img'];
         if ($i['reserve'] == "false"){
-            $url_reservationItem = $this->container->router->pathFor("reserve_item", ['token' => $l['token'], 'id_item' => $i['id']]);
+            $url_modification = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
             $html = <<<FIN
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">{$i['nom']}</h1>
@@ -74,6 +74,9 @@ class VueItem
             <p class="lead">Liste de référence : {$l['titre']}</p>
             <img src="$image" class="rounded mx-auto d-block" alt="{../../img/default.png}">
             <hr class="my-4">
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="$url_modification" role="button">Modifier l'item</a>
+            </p>
              <div class="alert alert-success" role=\"alert\">L'item n'est pas reservé</div>
         </div>
         FIN;
@@ -90,6 +93,23 @@ class VueItem
         FIN;
         }
         return $html;
+    }
+
+    /**
+     * Formulaire de réservation
+     * @return string
+     */
+    public function formReservation() : string{
+
+        return "reservation";
+    }
+
+    /**
+     * Formulaire de modification
+     * @return string
+     */
+    public function formModification() : string{
+        return "modification";
     }
 
     /**
@@ -116,8 +136,13 @@ class VueItem
             $url_liste = $this->container->router->pathFor('connexion');
         }
         switch ($select) {
-            // afficher l'item en tant que participant
+            // message de reservation en plus
             case 0 :
+            {
+
+            }
+            // afficher l'item en tant que participant
+            case 1 :
             {
                 $path = "../../";
                 $token = $this->tab[1][0]['token'];
@@ -129,8 +154,13 @@ class VueItem
                 $content .= $this->affichageItemParticipant();
                 break;
             }
+            // message de mofification de liste
+            case 2 :
+            {
+
+            }
             // afficher l'item en tant que createur
-            case 1 :
+            case 3 :
             {
                 $path = "../../";
                 $token = $this->tab[1][0]['token'];
@@ -140,6 +170,36 @@ class VueItem
                 $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_listeActive\">{$this->tab[1][0]['titre']}</a></li>";
                 $current_page = $this->tab[0][0]['nom'];
                 $content .= $this->affichageItemCreateur();
+                break;
+            }
+            // affichage reservation item
+            case 4 :
+            {
+                $path = "../../../";
+                $token = $this->tab[1][0]['token'];
+                $url_participer = $this->container->router->pathFor('participer');
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
+                $url_listeActive = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_listeActive\">{$this->tab[1][0]['titre']}</a></li>";
+                $url_participationItem = $this->container->router->pathFor("aff_item", ['id_item' => $this->tab[0][0]['id'], 'token' => $token]);
+                $pathIntermediaire .="<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participationItem\">{$this->tab[0][0]['nom']}</a></li>";
+                $current_page = "Reservation";
+                $content .= $this->formReservation();
+                break;
+
+            }
+            // affichage modification item
+            case 5 :{
+                $path = "../../../";
+                $token = $this->tab[1][0]['token'];
+                $url_meslistes = $this->container->router->pathFor('afficherMesListes');
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistes\">Mes Listes</a></li>";
+                $url_listeActive = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_listeActive\">{$this->tab[1][0]['titre']}</a></li>";
+                $url_meslistesItem = $this->container->router->pathFor("aff_item_admin", ['id_item' => $this->tab[0][0]['id'], 'token' => $token]);
+                $pathIntermediaire .="<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistesItem\">{$this->tab[0][0]['nom']}</a></li>";
+                $current_page = "Modification";
+                $content .= $this->formModification();
                 break;
             }
         }
@@ -188,7 +248,7 @@ class VueItem
     </nav>
 
     <div>
-        $content;
+        $content
     </div>
     
 </body>

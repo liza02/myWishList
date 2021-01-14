@@ -35,18 +35,8 @@ class VueAccueil
                 $html .= "<li class='listepublique'>{$liste['titre']} <br>
                           Date d'expiration : $date </li>";
                 $token = $liste['token'];
-                if (isset($_SESSION['profile'])){
-                    if ($_SESSION['profile']['userid'] == $liste['user_id']){
-                        $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
-                        $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
-                    }else{
-                        $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
-                        $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
-                    }
-                }else{
-                    $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
-                    $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
-                }
+                $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
+                $html .= "<a class=accesliste href=$url_liste>Accéder a la liste</a>";
             }
         }
         $html = "<h3>Listes Publiques</h3><ul>$html</ul>";

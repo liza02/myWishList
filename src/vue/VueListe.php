@@ -266,6 +266,7 @@ class VueListe
         $l = $this->tab[0][0][0];
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $html_items = "";
+        // affichage des infos générales de la liste: titre, description, boutons
         $html_infosListe = <<<FIN
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Ma liste : {$l['titre']}</h1>
@@ -286,17 +287,11 @@ class VueListe
             </p>
         </div>
         FIN;
-
+        // affichage des items dans des cards dans un grid
         foreach ($this->tab[1] as $tableau){
             $count_bloc_line = 0;
             $html_items .= "<div class=\"container\"> <div class=\"row\">";
             foreach ($tableau as $items){
-//                if ($count_bloc_line == 3) {
-//                    // si 3 blocs sont deja affichés, ou fait une nouvelle ligne
-//                    $html_items .="</div>";
-//                    $html_items .="<div class=\"card-deck\">"; //card-deck
-//                    $count_bloc_line=0;
-//                }
                 $url_item = $this->container->router->pathFor("aff_item_admin", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $image = "../img/" . $items['img'];
                 if (strlen($items['descr']) >= 100) {
@@ -305,9 +300,9 @@ class VueListe
                     $description = $items['descr'];
                 }
                 $html_items .= <<<FIN
-                <div class="col-3">
+                <div class="col-3 Itembox">
                     <div class="card h-100 mb-3 border-secondary">
-                      <img class="card-img-top" src="$image" alt="{../img/default.png}">
+                      <img class="card-img-top" src="$image" onError="this.onerror=null;this.src='../img/default.png';">
                       <div class="card-body">
                         <h5 class="card-title">{$items['nom']}</h5>
                         <p class="card-text">{$description}</p>
@@ -318,8 +313,7 @@ class VueListe
                 FIN;
                 $count_bloc_line++;
             }
-            $html_items .= "</div>";
-            $html_items .= "</div>";
+            $html_items .= "</div></div>";
         }
         $html_items = $html_infosListe .  $html_items;
         return $html_items;

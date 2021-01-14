@@ -38,7 +38,6 @@ CREATE TABLE `item` (
   `tarif` decimal(5,2) DEFAULT NULL,
   `cagnotte` int(1) NOT NULL DEFAULT 0,
   `id_utilisateur` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `token` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `message` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `reserve` varchar(30) default 'false',
   PRIMARY KEY (`id`)

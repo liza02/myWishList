@@ -325,7 +325,7 @@ FIN;
                         <h5 class="card-title">{$items['nom']}</h5>
                         <p class="card-text">{$description}</p>
                         </div>
-                      <footer class="bouton_item text-center">
+                      <footer class="bouton_footer text-center">
                            <a href="$url_item" class="btn btn-primary">Voir item</a>
                            $boutonmodification
                       </footer>
@@ -429,6 +429,10 @@ FIN;
                     <div class="form-group">
                         <label for="form_pass" >Description</label>
                         <input type="text" class="form-control" id="form_nom" placeholder="A quoi correspond cette item ?" name="descr">
+                    </div>
+                    <div class="form-group">
+                        <label for="form_url" >URL</label>
+                        <input type="text" class="form-control" id="form_url" placeholder="où trouver mon item ?" name="url">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">

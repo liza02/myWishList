@@ -85,7 +85,7 @@ FIN;
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Liste : {$l['titre']}</h1>
             <p class="lead">{$l['description']}</p>
-            <p class="lead">Propriétaire : {$u['nom']} {$u['prenom']}</p>
+            <p class="lead">Propriétaire : {$u['prenom']} {$u['nom']} </p>
             <hr class="my-4">
             <div class="input-group mb-3">
               <div class="input-group-prepend">

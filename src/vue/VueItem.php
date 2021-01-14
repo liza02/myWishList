@@ -297,13 +297,14 @@ class VueItem
         </ol>
     </nav>
 
-    <div>
+    <div class="">
         $content
     </div>
     
 </body>
 </html>
 FIN;
+
         return $html;
     }
 }

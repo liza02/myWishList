@@ -23,7 +23,11 @@
 .vueListe {
     margin-left: 30px;
     margin-right: 30px;
+}
 
+.vueAccueil {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 #list_form {
@@ -31,8 +35,6 @@
     margin-left: 70px;
     margin-right: 70px;
 }
-
-
 
 .card-header p {
     color: #122b40;

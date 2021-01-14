@@ -71,6 +71,30 @@ class ControleurItem
      * @param $args
      * @return Response
      */
+    public function modifierUnItem(Request $rq, Response $rs, $args) : Response {
+        $post = $rq->getParsedBody();
+        $nomItem = filter_var($post['nom'], FILTER_SANITIZE_STRING);
+        $descriptionItem = filter_var($post['description'], FILTER_SANITIZE_STRING);
+        $prixItem = filter_var($post['prix'], FILTER_SANITIZE_NUMBER_FLOAT);
+
+        $item = Item::find( $args['id_item']) ;
+
+        $item->nom = $nomItem;
+        $item->descr = $descriptionItem;
+        $item->tarif = $prixItem;
+        $item->save();
+
+        $url_modif = $this->container->router->pathFor("aff_item_admin", ['token' => $args['token'], 'id_item' => $args['id_item']]);
+        return $rs->withRedirect($url_modif);
+    }
+
+    /**
+     * GET
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function reserverItem(Request $rq, Response $rs, $args) : Response {
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
@@ -78,5 +102,26 @@ class ControleurItem
         $vue = new VueItem($itemEtListe, $this->container);
         $rs->getBody()->write( $vue->render(4));
         return $rs;
+    }
+
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function reserverUnItem(Request $rq, Response $rs, $args) : Response {
+        $post = $rq->getParsedBody();
+        $nomReservant = filter_var($post['nom'], FILTER_SANITIZE_STRING);
+
+        $item = Item::find( $args['id_item']) ;
+        $liste = Liste::where('token','=',$args['token'])->first();
+
+        $item->reserve = $nomReservant;
+        $item->save();
+
+        $url_reservation = $this->container->router->pathFor("aff_item", ['token' => $args['token'], 'id_item' => $args['id_item']]);
+        return $rs->withRedirect($url_reservation);
     }
 }

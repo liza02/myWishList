@@ -103,7 +103,7 @@ FIN;
             $count_bloc_line = 0;
             $html_items .= "<div class=\"container\"> <div class=\"row\">";
             foreach ($tableau as $items){
-                $url_item = $this->container->router->pathFor("aff_item_admin", ['id_item' => $items['id'], 'token' => $l['token']]);
+                $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $image = "../img/" . $items['img'];
                 if (strlen($items['descr']) >= 80) {
                     $description = substr($items['descr'], 0, 80) . "...";

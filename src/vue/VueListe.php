@@ -266,11 +266,11 @@ class VueListe
         $l = $this->tab[0][0][0];
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $html_items = "";
+        $url_mofifier = $this->container->router->pathFor("modifierListe", ['token' => $l['token']]);
         $html_infosListe = <<<FIN
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Ma liste : {$l['titre']}</h1>
             <p class="lead">{$l['description']}</p>
-            <p class="lead">Propriétaire : moi</p>
             <hr class="my-4">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -283,6 +283,7 @@ class VueListe
             </div>
             <p class="lead">
                 <a class="btn btn-primary btn-lg" href="#" role="button">Ajouter un item</a>
+                <a class="btn btn-primary btn-lg" href="$url_mofifier" role="button">Modifier</a>
             </p>
         </div>
         FIN;

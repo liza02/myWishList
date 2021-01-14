@@ -325,7 +325,7 @@ FIN;
                         <h5 class="card-title">{$items['nom']}</h5>
                         <p class="card-text">{$description}</p>
                         </div>
-                      <footer class="bouton_item text-center">
+                      <footer class="bouton_footer text-center">
                            <a href="$url_item" class="btn btn-primary">Voir item</a>
                            $boutonmodification
                       </footer>

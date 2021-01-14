@@ -46,17 +46,17 @@ class VueAccueil
                 $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
                 $html .= <<<FIN
                 <div class="col-3 ">
-                    <div class="card border-light mb-3" >
+                    <div class="card h-100 border-light mb-3" >
                         <div class="card-header text-center">
                             <p>{$liste['titre']} </p>
                         </div>
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-muted">Créateur :  {$user['prenom']}</h6>
                             <p class="card-text">{$description}</p>
-                            <div class="text-center">
-                                <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
-                            </div>
                         </div>
+                        <footer class="bouton_footer text-center">
+                                <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
+                        </footer>
                         <div class="card-footer">
                             <small class="text-muted">Date d'expiration : $date</small>
                         </div>

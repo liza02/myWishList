@@ -189,15 +189,13 @@ class ControleurListe
      */
     public function enregistrerNouveauItemListe(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody();
-        $nom       = filter_var($post['nom']       , FILTER_SANITIZE_STRING) ;
-        $descr = filter_var($post['descr'] , FILTER_SANITIZE_STRING) ;
-        $tarif = filter_var($post['tarif'], FILTER_SANITIZE_STRING);
         $liste = Liste::where('token','=',$args['token'])->first();
         $item = new Item();
         $item->liste_id = $liste['no'];
-        $item->nom = $nom;
-        $item->descr = $descr;
-        $item->tarif = $tarif;
+        $item->nom = filter_var($post['nom']       , FILTER_SANITIZE_STRING) ;
+        $item->descr = filter_var($post['descr'] , FILTER_SANITIZE_STRING) ;
+        $item->tarif = filter_var($post['tarif'], FILTER_SANITIZE_STRING);
+        $item->url = filter_var($post['url'], FILTER_SANITIZE_STRING);
         $item->save();
         $_SESSION['creationItemOK'] = true;
         $url_listes = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);

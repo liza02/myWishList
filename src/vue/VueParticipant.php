@@ -113,10 +113,16 @@ FIN;
                 if ($items['reserve'] == "false"){
                     $bouton = <<<FIN
                     <a type="submit" class="btn btn-warning" href="$url_item" role="button"> Réserver</a>
+                    <div class="card-header text-center">
+                        Etat : <span class=\"badge badge-success\">DISPONIBLE</span>
+                    </div>
                     FIN;
                 }else{
                     $bouton = <<<FIN
                     <a class="btn btn-secondary disabled" href="$url_item" role="button" aria-disabled="true">Reserver</a>
+                    <div class="card-header text-center">
+                        <span class=\"badge badge-secondary\">RESERVE PAR {$items['reserve']}</span>
+                    </div>
                     FIN;
                 }
                 $html_items .= <<<FIN
@@ -127,9 +133,10 @@ FIN;
                         <h5 class="card-title">{$items['nom']}</h5>
                         <p class="card-text">{$description}</p>
                       </div>
-                      <footer class="bouton_item text-center">
+                      <footer class="bouton_footer text-center">
                            <a href="$url_item" class="btn btn-primary">Voir item</a>
                            $bouton    
+                           
                       </footer>
                     </div>
                 </div>

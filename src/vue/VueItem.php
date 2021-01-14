@@ -25,6 +25,7 @@ class VueItem
      */
     private function affichageItemParticipant() : string {
         $i = $this->tab[0][0];
+        $i = $this->tab[0][0];
         $l = $this->tab[1][0];
         $image = "../../img/" . $i['img'];
         if ($i['reserve'] == "false"){
@@ -100,8 +101,28 @@ class VueItem
      * @return string
      */
     public function formReservation() : string{
-
-        return "reservation";
+        $i = $this->tab[0][0];
+        $l = $this->tab[1][0];
+        $url_reserv_item = $url_modification = $this->container->router->pathFor("formReserveItem", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $html = <<<FIN
+        <div class="card" id="list_form">
+            <div class="card-header text-center">
+                Réserver l'item '{$i['nom']}'
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_reserv_item">
+                    <div class="form-group">
+                        <label for="form_nom" >Votre nom :</label>
+                        <input type="text" class="form-control" id="form_login" placeholder="Jean, Paul, Gauthier..." name="nom" required>
+                    </div>   
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Réserver l'item</button>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
+        return $html;
     }
 
     /**
@@ -109,7 +130,36 @@ class VueItem
      * @return string
      */
     public function formModification() : string{
-        return "modification";
+        $i = $this->tab[0][0];
+        $l = $this->tab[1][0];
+        $url_modif_item = $url_modification = $this->container->router->pathFor("formModifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $html = <<<FIN
+        <div class="card" id="list_form">
+            <div class="card-header text-center">
+                Modifier l'item '{$i['nom']}'
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_modif_item">
+                    <div class="form-group">
+                        <label for="form_nom" >Titre</label>
+                        <input type="text" class="form-control" id="form_login" placeholder="eau, chips..." name="nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_description" >Description</label>
+                        <input type="text" class="form-control" id="form_description" placeholder="description de l'item... ?" name="description">
+                    </div>
+                    <div class="form-group"> 
+                        <label for="form_prix" >Prix</label>
+                        <input type="text" class="form-control" id="form_prix" aria-label="Amount (to the nearest dollar)" placeholder="15.50" name="prix">
+                    </div>    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
+        return $html;
     }
 
     /**

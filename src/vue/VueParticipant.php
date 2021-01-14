@@ -103,22 +103,25 @@ FIN;
             $count_bloc_line = 0;
             $html_items .= "<div class=\"container\"> <div class=\"row\">";
             foreach ($tableau as $items){
-                $url_item = $this->container->router->pathFor("aff_item_admin", ['id_item' => $items['id'], 'token' => $l['token']]);
+                $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $image = "../img/" . $items['img'];
-                if (strlen($items['descr']) >= 100) {
-                    $description = substr($items['descr'], 0, 100) . "...";
+                if (strlen($items['descr']) >= 80) {
+                    $description = substr($items['descr'], 0, 80) . "...";
                 } else {
                     $description = $items['descr'];
                 }
                 $html_items .= <<<FIN
                 <div class="col-3 Itembox">
                     <div class="card h-100 mb-3 border-secondary">
-                      <img class="card-img-top" src="$image" onError="this.onerror=null;this.src='../img/default.png';">
+                      <img class="card-img-top image_item" src="$image" onError="this.onerror=null;this.src='../img/default.png';">
                       <div class="card-body">
                         <h5 class="card-title">{$items['nom']}</h5>
                         <p class="card-text">{$description}</p>
-                        <a href="$url_item" class="btn btn-primary">Voir item</a>
                       </div>
+                      <footer class="bouton_item text-center">
+                           <a href="$url_item" class="btn btn-primary">Voir item</a>
+                           <a type="submit" class="btn btn-warning" href="$url_item" role="button"> Réserver</a>
+                      </footer>
                     </div>
                 </div>
                 FIN;

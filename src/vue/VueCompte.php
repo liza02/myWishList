@@ -289,7 +289,7 @@ class VueCompte
             //accès au compte apres inscription
             case 4 :
             {
-                $content = "<div class=\"alert alert-success\" role=\"alert\">Inscription réussie ! Login <b> {$this->tab['login']} </b> enregistré</div>";
+                $content = "<div class=\"alert alert-success\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i>Inscription réussie ! Login <b> {$this->tab['login']} </b> enregistré</div>";
             }
             //accès au compte apres connexion
             case 5 :

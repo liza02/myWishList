@@ -60,10 +60,12 @@ $app->post('/meslistes/ajoutItem/{token}',ControleurListe::class.':enregistrerNo
 //Chemin Item Participant
 $app->get('/participant/{token}/{id_item}', ControleurItem::class.':afficherItemParticipant' )->setName('aff_item');
 $app->get('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
+$app->post('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverUnItem')->setName('formReserveItem');
 
 //Chemin Item Admin
 $app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCreateur' )->setName('aff_item_admin');
 $app->get('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('modifierItem');
+$app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierUnItem' )->setName('formModifierItem');
 
 //Chemin Participant
 $app->get('/participer', ControleurParticipant::class.':afficherListes' )->setName('participer');

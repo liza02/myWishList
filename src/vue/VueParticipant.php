@@ -140,14 +140,14 @@ FIN;
                     $bouton = <<<FIN
                     <a type="submit" class="btn btn-warning" href="$url_item" role="button"> Réserver</a>
                     <div class="card-header text-center">
-                        Etat : <span class=\"badge badge-success\">DISPONIBLE</span>
+                        <p><span class=\"badge badge-success\">DISPONIBLE</span></p>
                     </div>
                     FIN;
                 }else{
                     $bouton = <<<FIN
-                    <a class="btn btn-secondary disabled" href="$url_item" role="button" aria-disabled="true">Reserver</a>
+                    <a class="btn btn-secondary disabled" href="$url_item" role="button" aria-disabled="true">Réserver</a>
                     <div class="card-header text-center">
-                        <span class=\"badge badge-secondary\">RESERVE PAR {$items['reserve']}</span>
+                        <p><span class=\"badge badge-secondary\">RESERVE PAR {$items['reserve']}</span></p>
                     </div>
                     FIN;
                 }
@@ -173,7 +173,7 @@ FIN;
         }
         $url_reservationItem = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
         $html_items = $html_infosListe .  $html_items . <<<FIN
-<a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Ajouter un message</a>
+<div class="d-flex justify-content-center"><a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Ajouter un message</a></div>
 FIN;
         return $html_items;
     }
@@ -306,7 +306,7 @@ FIN;
     </nav>
 
     <div>
-        $content;
+        $content
     </div>
     
 </body>

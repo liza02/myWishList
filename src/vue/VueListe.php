@@ -79,7 +79,7 @@ class VueListe
                     <div class="card-body">
                         <p class="card-text">Description: $description</p>
                         <div class="text-center">
-                            <a type="submit" class="btn btn-primary" href="$url_liste" role="button">Accéder</a>
+                            <a type="submit" class="btn btn-primary" href="$url_liste" role="button"> Accéder</a>
                             <a type="submit" class="btn btn-warning" href="$url_mofifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp_{$liste['titre']}"><span class="fa fa-trash fa-lg"></span> Supprimer</button>
                         </div>
@@ -269,7 +269,7 @@ class VueListe
 
         // affichage des infos générales de la liste: titre, description, boutons
 
-        $url_mofifier = $this->container->router->pathFor("modifierListe", ['token' => $l['token']]);
+        $url_modifier = $this->container->router->pathFor("modifierListe", ['token' => $l['token']]);
 
         $html_infosListe = <<<FIN
         <div class="jumbotron">
@@ -286,8 +286,8 @@ class VueListe
               </div>
             </div>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Ajouter un item</a>
-                <a type="submit" class="btn btn-warning" href="$url_mofifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un item</a>
+                <a type="submit" class="btn btn-warning" href="$url_modifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
             </p>
         </div>
         FIN;
@@ -297,21 +297,25 @@ class VueListe
             $html_items .= "<div class=\"container\"> <div class=\"row\">";
             foreach ($tableau as $items){
                 $url_item = $this->container->router->pathFor("aff_item_admin", ['id_item' => $items['id'], 'token' => $l['token']]);
+                $url_modifier = $this->container->router->pathFor("modifierListe", ['token' => $l['token']]);
                 $image = "../img/" . $items['img'];
-                if (strlen($items['descr']) >= 100) {
-                    $description = substr($items['descr'], 0, 100) . "...";
+                if (strlen($items['descr']) >= 80) {
+                    $description = substr($items['descr'], 0, 80) . "...";
                 } else {
                     $description = $items['descr'];
                 }
                 $html_items .= <<<FIN
                 <div class="col-3 Itembox">
                     <div class="card h-100 mb-3 border-secondary">
-                      <img class="card-img-top" src="$image" onError="this.onerror=null;this.src='../img/default.png';">
+                      <img class="card-img-top image_item" src="$image" onError="this.onerror=null;this.src='../img/default.png';">
                       <div class="card-body">
                         <h5 class="card-title">{$items['nom']}</h5>
                         <p class="card-text">{$description}</p>
-                        <a href="$url_item" class="btn btn-primary">Voir item</a>
-                      </div>
+                        </div>
+                      <footer class="bouton_item text-center">
+                           <a href="$url_item" class="btn btn-primary">Voir item</a>
+                           <a type="submit" class="btn btn-warning" href="$url_modifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+                      </footer>
                     </div>
                 </div>
                 FIN;

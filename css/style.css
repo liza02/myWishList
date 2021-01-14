@@ -46,7 +46,7 @@
     margin-top: 10px;
 }
 
-.card-img-top {
+.image_item {
     height: 15vw;
     object-fit: cover;
 }
@@ -55,3 +55,6 @@
     margin-bottom: 15px;
 }
 
+.bouton_item {
+    margin-bottom: 15px;
+}

@@ -25,6 +25,7 @@ class VueItem
      */
     private function affichageItemParticipant() : string {
         $i = $this->tab[0][0];
+        $i = $this->tab[0][0];
         $l = $this->tab[1][0];
         $image = "../../img/" . $i['img'];
         if ($i['reserve'] == "false"){

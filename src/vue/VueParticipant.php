@@ -104,6 +104,7 @@ FIN;
             $html_items .= "<div class=\"container\"> <div class=\"row\">";
             foreach ($tableau as $items){
                 $url_item = $this->container->router->pathFor("aff_item", ['id_item' => $items['id'], 'token' => $l['token']]);
+                $url_reservationItem = $this->container->router->pathFor("reserve_item", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $image = "../img/" . $items['img'];
                 if (strlen($items['descr']) >= 80) {
                     $description = substr($items['descr'], 0, 80) . "...";
@@ -112,17 +113,13 @@ FIN;
                 }
                 if ($items['reserve'] == "false"){
                     $bouton = <<<FIN
-                    <a type="submit" class="btn btn-warning" href="$url_item" role="button"> Réserver</a>
-                    <div class="card-header text-center">
-                        <p><span class=\"badge badge-success\">DISPONIBLE</span></p>
-                    </div>
+                    <a type="submit" class="btn btn-warning" href="$url_reservationItem" role="button"> Réserver</a>
+                        <p><span class="badge badge-success">DISPONIBLE</span></p>
                     FIN;
                 }else{
                     $bouton = <<<FIN
-                    <a class="btn btn-secondary disabled" href="$url_item" role="button" aria-disabled="true">Réserver</a>
-                    <div class="card-header text-center">
-                        <p><span class=\"badge badge-secondary\">RESERVE PAR {$items['reserve']}</span></p>
-                    </div>
+                    <a class="btn btn-secondary disabled" href="$url_reservationItem" role="button" aria-disabled="true">Réserver</a>
+                        <p><span class="badge badge-secondary">RESERVÉ PAR {$items['reserve']}</span></p>
                     FIN;
                 }
                 $html_items .= <<<FIN

@@ -146,19 +146,19 @@ class VueItem
                 <form method="POST" action="$url_modif_item">
                     <div class="form-group">
                         <label for="form_nom" >Titre</label>
-                        <input type="text" class="form-control" id="form_login" placeholder="eau, chips..." name="nom" required>
+                        <input type="text" class="form-control" id="form_login" placeholder="{$i['nom']}" name="nom" required>
                     </div>
                     <div class="form-group">
                         <label for="form_description" >Description</label>
-                        <input type="text" class="form-control" id="form_description" placeholder="description de l'item... ?" name="description">
+                        <input type="text" class="form-control" id="form_description" placeholder="{$i['descr']}" name="description">
                     </div>
                     <div class="form-group">
                         <label for="form_url" >URL</label>
-                        <input type="text" class="form-control" id="form_url" placeholder="où trouver mon item ?" name="url">
+                        <input type="text" class="form-control" id="form_url" placeholder="{$i['url']}" name="url">
                     </div>
                     <div class="form-group"> 
                         <label for="form_prix" >Prix</label>
-                        <input type="text" class="form-control" id="form_prix" aria-label="Amount (to the nearest dollar)" placeholder="15.50" name="prix">
+                        <input type="text" class="form-control" id="form_prix" aria-label="Amount (to the nearest dollar)" placeholder="{$i['tarif']}" name="prix">
                     </div>
                         
                     <div class="text-center">
@@ -182,6 +182,8 @@ class VueItem
         $path="";
         $current_page="";
         $pathIntermediaire ="";
+        $url_accueil = $this->container->router->pathFor('racine');
+        $url_participer = $this->container->router->pathFor('participer');
         if (isset($_SESSION['profile']['username'])){
             $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
             $connected = "Mon Compte";
@@ -204,6 +206,10 @@ class VueItem
             case 1 :
             {
                 $path = "../../";
+                $linkactif = <<<FIN
+<li class="nav-item"><a class="nav-link active" href="$url_participer">Participer à une liste</a></li>
+<li class="nav-item"><a class="nav-link" href="$url_liste">Gérer mes listes</a></li>
+FIN;
                 $token = $this->tab[1][0]['token'];
                 $url_participer = $this->container->router->pathFor('participer');
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
@@ -222,6 +228,11 @@ class VueItem
             case 3 :
             {
                 $path = "../../";
+                $linkactif = <<<FIN
+<li class="nav-item"><a class="nav-link" href="$url_participer">Participer à une liste</a></li>
+<li class="nav-item"><a class="nav-link active" href="$url_liste">Gérer mes listes</a></li>
+FIN;
+
                 $token = $this->tab[1][0]['token'];
                 $url_meslistes = $this->container->router->pathFor('afficherMesListes');
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistes\">Mes Listes</a></li>";
@@ -236,6 +247,10 @@ class VueItem
             {
                 $path = "../../../";
                 $token = $this->tab[1][0]['token'];
+                $linkactif = <<<FIN
+<li class="nav-item"><a class="nav-link active" href="$url_participer">Participer à une liste</a></li>
+<li class="nav-item"><a class="nav-link" href="$url_liste">Gérer mes listes</a></li>
+FIN;
                 $url_participer = $this->container->router->pathFor('participer');
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
                 $url_listeActive = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
@@ -251,6 +266,10 @@ class VueItem
             case 5 :{
                 $path = "../../../";
                 $token = $this->tab[1][0]['token'];
+                $linkactif = <<<FIN
+<li class="nav-item"><a class="nav-link" href="$url_participer">Participer à une liste</a></li>
+<li class="nav-item"><a class="nav-link active" href="$url_liste">Gérer mes listes</a></li>
+FIN;
                 $url_meslistes = $this->container->router->pathFor('afficherMesListes');
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistes\">Mes Listes</a></li>";
                 $url_listeActive = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
@@ -262,8 +281,6 @@ class VueItem
                 break;
             }
         }
-        $url_accueil = $this->container->router->pathFor('racine');
-        $url_participer = $this->container->router->pathFor('participer');
         $html = <<<FIN
 <!DOCTYPE html>
 <html>
@@ -291,8 +308,7 @@ class VueItem
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link" href="$url_accueil">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link active" href="$url_participer">Participer à une liste</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_liste">Gérer mes listes</a></li>
+                $linkactif
                 <li class="nav-item"><a class="nav-link" href="$url_compte">$connected</a></li>
             </ul>
         </div>

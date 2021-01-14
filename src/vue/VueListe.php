@@ -310,13 +310,14 @@ class VueListe
                 if ($items['reserve'] == "false"){
                     $boutonmodification = <<<FIN
 <a type="submit" class="btn btn-warning" href="$url_modifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+<p><span class="badge badge-success">DISPONIBLE</span></p>
 FIN;
-                }else{
+                }else {
                     $boutonmodification = <<<FIN
 <a class="btn btn-secondary disabled" href="$url_modifier" role="button" aria-disabled="true"><span class="fa fa-pencil" ></span> Modifier</a>
+<p><span class="badge badge-secondary">RESERVÉ</span></p>
 FIN;
                 }
-
                 $html_items .= <<<FIN
                 <div class="col-3 Itembox">
                     <div class="card h-100 mb-3 border-secondary">

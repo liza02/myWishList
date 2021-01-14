@@ -145,8 +145,39 @@ FIN;
             }
             $html_items .= "</div></div>";
         }
-        $html_items = $html_infosListe .  $html_items;
+        $url_reservationItem = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
+        $html_items = $html_infosListe .  $html_items . <<<FIN
+<a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Ajouter un message</a>
+FIN;
         return $html_items;
+    }
+
+    public function formMessage() : string{
+        $l = $this->tab[0];
+        $url_messageListe = $url_modification = $this->container->router->pathFor("formMessageListe", ['token' => $l['token']]);
+        $html = <<<FIN
+        <div class="card" id="list_form">
+            <div class="card-header text-center">
+                Ajouter un message sur '{$l['titre']}'
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_messageListe">
+                    <div class="form-group">
+                        <label for="form_nom" >Votre nom :</label>
+                        <input type="text" class="form-control" id="form_login" placeholder="Jean, Paul, Gauthier..." name="nom" required>
+                    </div>   
+                    <div class="form-group">
+                        <label for="form_message" >Votre message :</label>
+                        <input type="text" class="form-control" id="form_message" placeholder="Message à ajouter.." name="message">
+                    </div> 
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Publier le message</button>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
+        return $html;
     }
 
     /**
@@ -191,6 +222,18 @@ FIN;
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
                 $current_page = $this->tab[0][0][0]['titre'];
                 $content .= $this->afficherListeParticipant();
+                break;
+            }
+            case 3 :
+            {
+                $path = "../../";
+                $listeTitre = $this->tab[0]['titre'];
+                $listeToken = $this->tab[1];
+                $content .= $this->formMessage();
+                $url_listeActive = $this->container->router->pathFor("afficherListeParticipant", ['token' => $listeToken]);
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_listeActive\">$listeTitre</a></li>";
+                $current_page = "Message";
                 break;
             }
         }

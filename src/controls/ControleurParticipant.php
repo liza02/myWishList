@@ -36,8 +36,17 @@ class ControleurParticipant
      */
     public function afficherListes(Request $rq, Response $rs, $args): Response
     {
-        $ensListes = Liste::where('public', '=', 'true')->get();
-        $vue = new VueParticipant($ensListes->toArray(), $this->container);
+//        $ensListes = Liste::where('public', '=', 'true')->get();
+//        $vue = new VueParticipant($ensListes->toArray(), $this->container);
+        $ensListes = Liste::where('public','=','true')->get();
+        $lesListes = $ensListes->toArray();
+        $arrayUser = array();
+        foreach ($lesListes as $liste) {
+            $arrayUser[] = User::where('id','=',$liste['user_id'])->first();
+        }
+        $listeItem = array([$lesListes],[$arrayUser]);
+
+        $vue = new VueParticipant($listeItem, $this->container);
         if (isset($_SESSION['listeExiste'])) {
             if (!$_SESSION['listeExiste']) {
                 $rs->getBody()->write($vue->render(0));

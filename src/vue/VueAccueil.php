@@ -27,7 +27,6 @@ class VueAccueil
     }
 
     public function listesPublique() : string{
-        $user = $this->tab[1][0];
         $html = "<h3>Listes Publiques</h3><div class=\"row\">";
         $increment_user = 0;
         foreach($this->tab[0][0] as $liste){

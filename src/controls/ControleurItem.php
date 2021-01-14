@@ -79,4 +79,25 @@ class ControleurItem
         $rs->getBody()->write( $vue->render(4));
         return $rs;
     }
+
+    /**
+     * POST
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function reserverUnItem(Request $rq, Response $rs, $args) : Response {
+        $post = $rq->getParsedBody();
+        $nomReservant = filter_var($post['nom'], FILTER_SANITIZE_STRING);
+
+        $item = Item::find( $args['id_item']) ;
+        $liste = Liste::where('token','=',$args['token'])->first();
+
+        $item->reserve = $nomReservant;
+        $item->save();
+
+        $url_reservation = $this->container->router->pathFor("aff_item", ['token' => $args['token'], 'id_item' => $args['id_item']]);
+        return $rs->withRedirect($url_reservation);
+    }
 }

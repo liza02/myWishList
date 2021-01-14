@@ -57,6 +57,7 @@ $app->post('/mesListes/{token}', ControleurListe::class.':enregistrerModificatio
 //Chemin Item Participant
 $app->get('/participant/{token}/{id_item}', ControleurItem::class.':afficherItemParticipant' )->setName('aff_item');
 $app->get('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
+$app->post('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverUnItem')->setName('formReserveItem');
 
 //Chemin Item Admin
 $app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCreateur' )->setName('aff_item_admin');

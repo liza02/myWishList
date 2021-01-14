@@ -102,14 +102,14 @@ class VueItem
     public function formReservation() : string{
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
-        $url_modif_item = $url_modification = $this->container->router->pathFor("formModifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $url_reserv_item = $url_modification = $this->container->router->pathFor("formReserveItem", ['token' => $l['token'], 'id_item' => $i['id']]);
         $html = <<<FIN
         <div class="card" id="list_form">
             <div class="card-header text-center">
                 Réserver l'item '{$i['nom']}'
             </div>
             <div class="card-body">
-                <form method="POST" action="$url_modif_item">
+                <form method="POST" action="$url_reserv_item">
                     <div class="form-group">
                         <label for="form_nom" >Votre nom :</label>
                         <input type="text" class="form-control" id="form_login" placeholder="Jean, Paul, Gauthier..." name="nom" required>

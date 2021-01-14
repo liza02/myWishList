@@ -147,7 +147,7 @@ FIN;
         }
         $url_reservationItem = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
         $html_items = $html_infosListe .  $html_items . <<<FIN
-<a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Ajouter un message</a>
+<div class="d-flex justify-content-center"><a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Ajouter un message</a></div>
 FIN;
         return $html_items;
     }
@@ -280,7 +280,7 @@ FIN;
     </nav>
 
     <div>
-        $content;
+        $content
     </div>
     
 </body>

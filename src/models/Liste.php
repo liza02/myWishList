@@ -14,8 +14,4 @@ class Liste extends Model {
         return $this->hasMany('mywishlist\models\Item','liste_id');
     }
 
-    public function Message(){
-        return $this->hasMany('\mywishlist\models\Message','no_liste');
-    }
-
 }

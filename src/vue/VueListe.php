@@ -272,6 +272,7 @@ class VueListe
         // affichage des infos générales de la liste: titre, description, boutons
 
         $url_modifier = $this->container->router->pathFor("modifierListe", ['token' => $l['token']]);
+        $url_ajoutItem = $this->container->router->pathFor("ajoutItem", ['token' => $l['token']]);
 
         $html_infosListe = <<<FIN
         <div class="jumbotron">
@@ -288,7 +289,7 @@ class VueListe
               </div>
             </div>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un item</a>
+                <a class="btn btn-primary btn-lg" href="$url_ajoutItem" role="button"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un item</a>
                 <a type="submit" class="btn btn-warning" href="$url_modifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
             </p>
         </div>
@@ -299,13 +300,23 @@ class VueListe
             $html_items .= "<div class=\"container\"> <div class=\"row\">";
             foreach ($tableau as $items){
                 $url_item = $this->container->router->pathFor("aff_item_admin", ['id_item' => $items['id'], 'token' => $l['token']]);
-                $url_modifier = $this->container->router->pathFor("modifierListe", ['token' => $l['token']]);
+                $url_modifier = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $items['id']]);
                 $image = "../img/" . $items['img'];
                 if (strlen($items['descr']) >= 80) {
                     $description = substr($items['descr'], 0, 80) . "...";
                 } else {
                     $description = $items['descr'];
                 }
+                if ($items['reserve'] == "false"){
+                    $boutonmodification = <<<FIN
+<a type="submit" class="btn btn-warning" href="$url_modifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+FIN;
+                }else{
+                    $boutonmodification = <<<FIN
+<a class="btn btn-secondary disabled" href="$url_modifier" role="button" aria-disabled="true"><span class="fa fa-pencil" ></span> Modifier</a>
+FIN;
+                }
+
                 $html_items .= <<<FIN
                 <div class="col-3 Itembox">
                     <div class="card h-100 mb-3 border-secondary">
@@ -316,7 +327,7 @@ class VueListe
                         </div>
                       <footer class="bouton_item text-center">
                            <a href="$url_item" class="btn btn-primary">Voir item</a>
-                           <a type="submit" class="btn btn-warning" href="$url_modifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+                           $boutonmodification
                       </footer>
                     </div>
                 </div>
@@ -329,6 +340,10 @@ class VueListe
         return $html_items;
     }
 
+    /**
+     * Modification de liste
+     * @return string
+     */
     public function modifierListe() : string{
         $url_enregistrerModificationListe = $this->container->router->pathFor("enregistrerModificationListe", ['token' => $this->tab['token']]);
         if ($this->tab['public'] == "true"){
@@ -395,6 +410,45 @@ class VueListe
     }
 
     /**
+     * Ajouter un item
+     * @return string
+     */
+    public function ajouterUnItem() : string{
+        $url_new_liste = $this->container->router->pathFor('enregistrerNouveauItemListe', ['token' => $this->tab['token']]);
+        $html = <<<FIN
+        <div class="card" id="list_form">
+            <div class="card-header text-center">
+                Nouvel Item
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_new_liste">
+                    <div class="form-group">
+                        <label for="form_login" >Titre</label>
+                        <input type="text" class="form-control" id="form_login" placeholder="bouteille d'eau, cerf volant..." name="nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_pass" >Description</label>
+                        <input type="text" class="form-control" id="form_nom" placeholder="A quoi correspond cette item ?" name="descr">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Prix</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="15.50" name="tarif">
+                        <div class="input-group-append">
+                            <span class="input-group-text">€</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Ajouter un item</button>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
+        return "$html";
+    }
+    /**
      * Render
      * @param int $select
      * @return string
@@ -411,6 +465,7 @@ class VueListe
         $url_compte= $this->container->router->pathFor('afficherCompte');
         $url_creerListe = $this->container->router->pathFor('creerListe') ;
         switch ($select) {
+            // modification reussi
             case 0 :
             {
                 $content .= "<div class=\"alert alert-success\" role=\"alert\">Modification réussie !</div>";
@@ -443,8 +498,13 @@ class VueListe
                 $content .= $this->formCreerListe();
                 break;
             }
+            // bandeau ajout d'item list
+            case 4:
+            {
+                $content .= "<div class=\"alert alert-success\" role=\"alert\">Ajout d'item!</div>";
+            }
             // affichage d'une liste
-            case 4 :
+            case 5:
             {
                 $path = "../";
                 $l = $this->tab[0][0][0];
@@ -454,7 +514,7 @@ class VueListe
                 break;
             }
             // modifier la liste
-            case 5 :
+            case 6 :
             {
                 $path = "../../";
                 $l = $this->tab['titre'];
@@ -464,6 +524,16 @@ class VueListe
                 $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_liste\">{$this->tab['titre']}</a></li>";
                 $current_page = "Modification";
                 break;
+            }
+            case 7 :
+            {
+                $path = "../../";
+                $l = $this->tab['titre'];
+                $content .= $this->ajouterUnItem();
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
+                $url_liste =$this->container->router->pathFor('aff_maliste', ['token' => $this->tab['token']]);
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_liste\">{$this->tab['titre']}</a></li>";
+                $current_page = "Ajout d'item";
             }
         }
         $html = $html = <<<FIN

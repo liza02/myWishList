@@ -62,7 +62,7 @@ $app->post('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.
 //Chemin Item Admin
 $app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCreateur' )->setName('aff_item_admin');
 $app->get('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('modifierItem');
-$app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('formModifierItem');
+$app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierUnItem' )->setName('formModifierItem');
 
 //Chemin Participant
 $app->get('/participer', ControleurParticipant::class.':afficherListes' )->setName('participer');

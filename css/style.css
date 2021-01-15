@@ -62,7 +62,7 @@
 }
 
 .box_item {
-    margin-top: 100px;
+    margin-top: 80px;
     margin-left: 200px;
     margin-right: 200px;
 }
@@ -84,4 +84,9 @@
 .box_item .card-header {
     width: 450px;
     height: auto;
+}
+
+.nom_item {
+    font-size: 23px;
+    font-weight: bold;
 }

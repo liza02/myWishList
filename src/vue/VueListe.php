@@ -3,6 +3,8 @@
 
 namespace mywishlist\vue;
 
+use mywishlist\models\Message;
+
 /**
  * Class VueListe
  * @package mywishlist\vue
@@ -338,7 +340,17 @@ class VueListe
             }
             $html_items .= "</div></div>";
         }
-        $html_items = $html_infosListe .  $html_items;
+
+        //Ajout des messages à la page
+        $messages = Message::where('id_parent', '=', $l['no'])->where('type_parent', '=', 'liste')->get()->toArray();
+        $html_messages = "";
+        foreach ($messages as $message) {
+            $html_messages .= <<<FIN
+                    <p>{$message['auteur']} : {$message['message']}</p>
+                    FIN;
+        }
+
+        $html_items = $html_infosListe .  $html_items . $html_messages;
         return $html_items;
     }
 
@@ -543,7 +555,6 @@ class VueListe
                 $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_liste\">{$this->tab['titre']}</a></li>";
                 $current_page = "Ajout d'item";
             }
-
         }
         $html = $html = <<<FIN
 <!DOCTYPE html>

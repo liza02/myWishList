@@ -43,7 +43,7 @@ class VueItem
         
             <div class="card flex-row">
                 <div class="card-header border-0">
-                    <img src="$image" alt="" >
+                    <img src="$image" onError="this.onerror=null;this.src='../img/default.png';" >
                 </div>
                 <div class="card-body info_item px-5">
                     <h4 class="card-title">$isReserved</h4>
@@ -82,7 +82,7 @@ class VueItem
         
             <div class="card flex-row">
                 <div class="card-header border-0">
-                    <img src="$image" alt="" >
+                    <img src="$image" onError="this.onerror=null;this.src='../../img/default.png';" >
                 </div>
                 <div class="card-body info_item px-5">
                     <h4 class="card-title">$isReserved</h4>

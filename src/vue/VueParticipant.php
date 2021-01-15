@@ -144,22 +144,19 @@ FIN;
                     $description = $items['descr'];
                 }
                 if ($items['reserve'] == "false"){
-                    $bouton = <<<FIN
-                    <a type="submit" class="btn btn-warning" href="$url_reservationItem" role="button"> Réserver</a>
-                        <p><span class="badge badge-success">DISPONIBLE</span></p>
-                    FIN;
+                    $bouton = "<a type=\"submit\" class=\"btn btn-warning\" href=\"$url_reservationItem\" role=\"button\"> Réserver</a>";
+                    $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-success\">DISPONIBLE</span></h7>";
                 }else{
-                    $bouton = <<<FIN
-                    <a class="btn btn-secondary disabled" href="$url_reservationItem" role="button" aria-disabled="true">Réserver</a>
-                        <p><span class="badge badge-secondary">RESERVÉ PAR {$items['reserve']}</span></p>
-                    FIN;
+                    $bouton = "<a class=\"btn btn-secondary disabled\" href=\"$url_reservationItem\" role=\"button\" aria-disabled=\"true\">Réserver</a>";
+                    $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-secondary\">RESERVÉ</span></h7>";
+
                 }
                 $html_items .= <<<FIN
                 <div class="col-3 Itembox">
                     <div class="card h-100 mb-3 border-secondary">
                       <img class="card-img-top image_item" src="$image" onError="this.onerror=null;this.src='../img/default.png';">
                       <div class="card-body">
-                        <h5 class="card-title">{$items['nom']}</h5>
+                        <h7 class="card-title"> {$isReserved} </h7>
                         <p class="card-text">{$description}</p>
                       </div>
                       <footer class="bouton_footer text-center">

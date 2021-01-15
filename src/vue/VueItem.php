@@ -28,33 +28,33 @@ class VueItem
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
         $image = "../../img/" . $i['img'];
+        $reservation = "";
+        $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-danger\">RÉSERVÉ par {$i['reserve']}</span></h5>";
+
+
         if ($i['reserve'] == "false"){
             $url_reservationItem = $this->container->router->pathFor("reserve_item", ['token' => $l['token'], 'id_item' => $i['id']]);
-            $html = <<<FIN
-        <div class="jumbotron">
-            <h1 class="display-4 titre_liste">{$i['nom']}</h1>
-            <p class="lead">{$i['descr']}</p>
-            <p class="lead">Liste de référence : {$l['titre']}</p>
-            <img src="$image" class="rounded mx-auto d-block" alt="{../../img/default.png}">
-            <hr class="my-4">
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Réserver l'item</a>
-            </p>
-             <div class="alert alert-success" role=\"alert\">L'item n'est pas reservé</div>
-        </div>
-        FIN;
-        }else{
-            $html = <<<FIN
-        <div class="jumbotron">
-            <h1 class="display-4 titre_liste">{$i['nom']}</h1>
-            <p class="lead">{$i['descr']}</p>
-            <p class="lead">Liste de référence : {$l['titre']}</p>
-            <hr class="my-4">
-            <img src="$image" class="rounded mx-auto d-block" alt="{../../img/default.png}">
-            <div class="alert alert-danger" role=\"alert\">L'item est réservé par : {$i['reserve']}</div>
-        </div>
-        FIN;
+            $reservation = "<a class=\"btn btn-primary btn-lg\" href=\"$url_reservationItem\" role=\"button\">Réserver l'item</a>";
+            $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-success\">PAS ENCORE RÉSERVÉ</span></h5>";
         }
+
+        $html = <<<FIN
+        <div class="box_item">
+        
+            <div class="card flex-row">
+                <div class="card-header border-0">
+                    <img src="$image" alt="" >
+                </div>
+                <div class="card-body info_item px-5">
+                    <h4 class="card-title">$isReserved</h4>
+                    <p class="card-text">{$i['descr']}</p>
+                    <p class="card-subtitle mb-2 text-muted">Liste de référence : {$l['titre']}</p>
+                    $reservation
+                </div>
+               
+            </div>
+        </div>
+        FIN;
         return $html;
     }
 
@@ -66,33 +66,33 @@ class VueItem
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
         $image = "../../img/" . $i['img'];
+        // item réservé
+        $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-danger\">RÉSERVÉ</span></h5>";
+        $modification = "<a class=\"btn btn-warning btn-lg disabled\" href=\"#\" role=\"button\" aria-disabled=\"true\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
+
+
         if ($i['reserve'] == "false"){
             $url_modification = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
-            $html = <<<FIN
-        <div class="jumbotron">
-            <h1 class="display-4 titre_liste">{$i['nom']}</h1>
-            <p class="lead">{$i['descr']}</p>
-            <p class="lead">Liste de référence : {$l['titre']}</p>
-            <img src="$image" class="rounded mx-auto d-block" alt="{../../img/default.png}">
-            <hr class="my-4">
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="$url_modification" role="button">Modifier l'item</a>
-            </p>
-             <div class="alert alert-success" role=\"alert\">L'item n'est pas reservé</div>
-        </div>
-        FIN;
-        }else{
-            $html = <<<FIN
-        <div class="jumbotron">
-            <h1 class="display-4 titre_liste">{$i['nom']}</h1>
-            <p class="lead">{$i['descr']}</p>
-            <p class="lead">Liste de référence : {$l['titre']}</p>
-            <hr class="my-4">
-            <img src="$image" class="rounded mx-auto d-block" alt="{../../img/default.png}">
-            <div class="alert alert-danger" role=\"alert\">L'item est réservé</div>
-        </div>
-        FIN;
+            $modification = "<a class=\"btn btn-warning btn-lg\" href=\"$url_modification\" role=\"button\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
+            $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">PAS ENCORE RÉSERVÉ</span></h5>";
         }
+
+        $html = <<<FIN
+        <div class="box_item">
+        
+            <div class="card flex-row">
+                <div class="card-header border-0">
+                    <img src="$image" alt="" >
+                </div>
+                <div class="card-body info_item px-5">
+                    <h4 class="card-title">$isReserved</h4>
+                    <p class="card-text">{$i['descr']}</p>
+                    $modification
+                </div>
+               
+            </div>
+        </div>
+        FIN;
         return $html;
     }
 

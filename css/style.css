@@ -60,3 +60,28 @@
 .bouton_footer {
     margin-bottom: 15px;
 }
+
+.box_item {
+    margin-top: 100px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.info_item {
+    margin-top: 15px;
+    font-size: 23px;
+}
+
+.info_item h5 #titre_item {
+    font-size: 30px;
+    font-weight: bold;
+}
+.box_item img {
+    width: 450px;
+    height: auto;
+}
+
+.box_item .card-header {
+    width: 450px;
+    height: auto;
+}

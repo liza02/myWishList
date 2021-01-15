@@ -77,12 +77,24 @@ class ControleurListe
             $rs->getBody()->write( $vue->render(4));
             return $rs;
         }else{
-            $liste = Liste::where('token','=',$args['token'])->get();
-            $item = Item::where('liste_id','=',$liste[0]['no'])->get();
-            $listeItem = array([$liste],[$item]);
-            $vue = new VueListe($listeItem, $this->container);
-            $rs->getBody()->write( $vue->render(5));
-            return $rs;
+            if (isset($_SESSION['suppressionOK'])){
+                $infoUser = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $infoUser;
+                $liste = Liste::where('token','=',$args['token'])->get();
+                $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+                $listeItem = array([$liste],[$item]);
+                $vue = new VueListe($listeItem, $this->container);
+                $rs->getBody()->write( $vue->render(8));
+                return $rs;
+            }else{
+                $liste = Liste::where('token','=',$args['token'])->get();
+                $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+                $listeItem = array([$liste],[$item]);
+                $vue = new VueListe($listeItem, $this->container);
+                $rs->getBody()->write( $vue->render(5));
+                return $rs;
+            }
         }
     }
 

@@ -38,17 +38,32 @@ class VueItem
             $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-success\">PAS ENCORE RÉSERVÉ</span></h5>";
         }
 
+        if ($i['url'] != "") {
+            $url =$i['url'];
+        } else {
+            $url = "Aucun URL disponible";
+        }
         $html = <<<FIN
         <div class="box_item">
         
             <div class="card flex-row">
-                <div class="card-header border-0">
-                    <img src="$image" onError="this.onerror=null;this.src='../img/default.png';" >
+                <div class="card-header bg-transparent border-0">
+                    <img src="$image" onError="this.onerror=null;this.src='../../img/default.png';" >
                 </div>
                 <div class="card-body info_item px-5">
                     <h4 class="card-title">$isReserved</h4>
                     <p class="card-text">{$i['descr']}</p>
                     <p class="card-subtitle mb-2 text-muted">Liste de référence : {$l['titre']}</p>
+                    <label for="url" >Ou trouver cet article ?</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend"> 
+                        <span class="input-group-text">URL</span>
+                      </div>
+                      <input readonly type="text" class="form-control" aria-label="url" value="{$url}" id="myInput">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="copyClipboard()">Copier</button>
+                      </div>
+                    </div>
                     $reservation
                 </div>
                
@@ -66,27 +81,42 @@ class VueItem
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
         $image = "../../img/" . $i['img'];
-        // item réservé
+        // item réservé (par défaut)
         $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-danger\">RÉSERVÉ</span></h5>";
         $modification = "<a class=\"btn btn-warning btn-lg disabled\" href=\"#\" role=\"button\" aria-disabled=\"true\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
 
-
+        // on verifie si l'item n'est pas reservé
         if ($i['reserve'] == "false"){
             $url_modification = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
             $modification = "<a class=\"btn btn-warning btn-lg\" href=\"$url_modification\" role=\"button\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
             $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">PAS ENCORE RÉSERVÉ</span></h5>";
         }
-
+        // on verifie si l'item possède un url pour l'acheter sur un site externe
+        if ($i['url'] != "") {
+            $url =$i['url'];
+        } else {
+            $url = "Aucun URL disponible";
+        }
         $html = <<<FIN
         <div class="box_item">
         
             <div class="card flex-row">
-                <div class="card-header border-0">
+                <div class="card-header bg-transparent border-0">
                     <img src="$image" onError="this.onerror=null;this.src='../../img/default.png';" >
                 </div>
                 <div class="card-body info_item px-5">
                     <h4 class="card-title">$isReserved</h4>
                     <p class="card-text">{$i['descr']}</p>
+                    <label for="url" >Ou trouver mon article ?</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend"> 
+                        <span class="input-group-text">URL</span>
+                      </div>
+                      <input readonly type="text" class="form-control" aria-label="url" value="{$url}" id="myInput">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="copyClipboard()">Copier</button>
+                      </div>
+                    </div>
                     $modification
                 </div>
                
@@ -287,6 +317,7 @@ FIN;
 <head>
     <title>MyWishList</title>
     <link rel="stylesheet" href="{$path}css/style.css">
+    <script src="{$path}js/main.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

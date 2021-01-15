@@ -287,7 +287,7 @@ class VueListe
               <div class="input-group-prepend">
                 <span class="input-group-text">Partagez votre liste</span>
               </div>
-              <input type="text" class="form-control" aria-label="url" value="{$actual_link}" id="myInput">
+              <input readonly type="text" class="form-control" aria-label="url" value="{$actual_link}" id="myInput">
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="copyClipboard()">Copier</button>
               </div>

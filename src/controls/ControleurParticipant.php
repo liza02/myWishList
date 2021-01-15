@@ -164,9 +164,10 @@ class ControleurParticipant
         $post = $rq->getParsedBody();
         $nomReservant = filter_var($post['nom'], FILTER_SANITIZE_STRING);
         $message = filter_var($post['message'], FILTER_SANITIZE_STRING);
+        $liste = Liste::where('token','=',$args['token'])->first();
 
         $m = new Message();
-        $m->id_parent = $args['token'];
+        $m->id_parent = $liste['no'];
         $m->type_parent = 'liste';
         $m->message = $message;
         $m->auteur = $nomReservant;

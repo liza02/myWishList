@@ -159,7 +159,7 @@ class ControleurItem
         $liste = Liste::where('token','=',$args['token'])->first();
 
         $m = new Message();
-        $m->id_parent = $args['token'];
+        $m->id_parent = $args['id_item'];
         $m->type_parent = 'item';
         $m->message = $message;
         $m->auteur = $nomReservant;

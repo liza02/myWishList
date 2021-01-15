@@ -249,7 +249,7 @@ class VueListe
                       <label class="form-check-label" for="inlineRadio1">Liste publique</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="public" id="inlineRadio2" value="false">
+                      <input class="form-check-input" type="radio" name="public" id="inlineRadio2" value="false" checked>
                       <label class="form-check-label" for="inlineRadio2">Liste privée</label>
                     </div>
                     

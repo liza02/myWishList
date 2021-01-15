@@ -1,5 +1,7 @@
 <?php
 namespace mywishlist\vue;
+use mywishlist\models\Message;
+
 
 class VueParticipant
 {
@@ -110,6 +112,8 @@ FIN;
         $l = $this->tab[0][0][0];
         // User dans l'array
         $u = $this->tab[2][0][0];
+
+        $messages = Message::where('id_parent', '=', $l['no'])->where('type_parent', '=', 'liste')->get()->toArray();
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $html_items = "";
         $html_infosListe = <<<FIN
@@ -171,8 +175,17 @@ FIN;
             }
             $html_items .= "</div></div>";
         }
+
+        //Ajout des messages à la page
+        $html_messages = "";
+        foreach ($messages as $message) {
+            $html_messages .= <<<FIN
+                    <p>{$message['auteur']} : {$message['message']}</p>
+                    FIN;
+        }
+
         $url_reservationItem = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
-        $html_items = $html_infosListe .  $html_items . <<<FIN
+        $html_items = $html_infosListe .  $html_items . $html_messages .<<<FIN
 <div class="d-flex justify-content-center"><a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Ajouter un message</a></div>
 FIN;
         return $html_items;

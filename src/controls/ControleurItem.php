@@ -3,9 +3,11 @@
 
 namespace mywishlist\controls;
 
+
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+use mywishlist\vue\VueListe;
 use mywishlist\vue\VueItem;
 
 use \mywishlist\models\Liste;
@@ -170,5 +172,19 @@ class ControleurItem
 
         $url_reservation = $this->container->router->pathFor("aff_item", ['token' => $args['token'], 'id_item' => $args['id_item']]);
         return $rs->withRedirect($url_reservation);
+    }
+
+    /**
+     * POST
+     * Suppression Item
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function supprimerItem(Request $rq, Response $rs, $args) : Response {
+        $vue = new VueListe();
+        $rs->getBody()->write( $vue->render(0));
+        return $rs;
     }
 }

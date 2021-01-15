@@ -73,6 +73,7 @@ $app->post('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.
 $app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCreateur' )->setName('aff_item_admin');
 $app->get('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('modifierItem');
 $app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierUnItem' )->setName('formModifierItem');
+$app->get('/meslistes/{token}/{id_item}/supprimer', ControleurItem::class.':supprimerItem' )->setName('supprimerItem');
 
 
 $app->run();

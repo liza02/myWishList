@@ -98,6 +98,7 @@ class VueItem
         } else {
             $url = "Aucun URL disponible";
         }
+        $url_supprimer = $this->container->router->pathFor("supprimerItem", ['token' => $l['token'], 'id_item' => $i['id']]);
         $html = <<<FIN
         <div class="box_item">
         
@@ -120,6 +121,28 @@ class VueItem
                     </div>
                     $modification
                     $supprimer
+                    
+                    <!-- Modal pour demander si on veut supprimer -->
+                        <div class="modal fade" id="confirmationSupp_{$i['nom']}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="confirmation">Etes-vous sûr de vouloir supprimer cet item ?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body text-center">
+                                {$i['nom']}
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <a type="button" href="$url_supprimer" class="btn btn-danger">Supprimer</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
                 </div>
                
             </div>
@@ -320,6 +343,7 @@ FIN;
     <title>MyWishList</title>
     <link rel="stylesheet" href="{$path}css/style.css">
     <script src="{$path}js/main.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

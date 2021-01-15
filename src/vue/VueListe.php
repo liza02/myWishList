@@ -555,6 +555,16 @@ class VueListe
                 $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_liste\">{$this->tab['titre']}</a></li>";
                 $current_page = "Ajout d'item";
             }
+            case 8:
+            {
+                $content .= "<div class=\"alert alert-danger\" role=\"alert\">Suppression d'item!</div>";
+                $path = "../";
+                $l = $this->tab[0][0][0];
+                $content .= $this->afficherUneListe();
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
+                $current_page = $l['titre'];
+                break;
+            }
         }
         $html = $html = <<<FIN
 <!DOCTYPE html>

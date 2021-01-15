@@ -183,8 +183,10 @@ class ControleurItem
      * @return Response
      */
     public function supprimerItem(Request $rq, Response $rs, $args) : Response {
-        $vue = new VueListe();
-        $rs->getBody()->write( $vue->render(0));
-        return $rs;
+        $item = Item::find($args['id_item']);
+        $item->delete();
+        $_SESSION['suppressionOK'] = true;
+        $url_affListe = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
+        return $rs->withRedirect($url_affListe);
     }
 }

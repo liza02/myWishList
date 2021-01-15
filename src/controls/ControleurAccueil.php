@@ -3,19 +3,13 @@
 
 namespace mywishlist\controls;
 
-use mywishlist\models\User;
-use mywishlist\vue\VueListe;
-use mywishlist\vue\VueParticipant;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use mywishlist\vue\MaVue;
 use mywishlist\vue\VueAccueil;
-use mywishlist\vue\VueCompte;
-use mywishlist\vue\VueItem;
 
 use \mywishlist\models\Liste;
-use \mywishlist\models\Item;
+use mywishlist\models\User;
 
 class ControleurAccueil
 {
@@ -33,6 +27,7 @@ class ControleurAccueil
 
     /**
      * GET
+     * Affichage des listes publiques dans l'accueil
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -46,7 +41,6 @@ class ControleurAccueil
             $arrayUser[] = User::where('id','=',$liste['user_id'])->first();
         }
         $listeItem = array([$lesListes],[$arrayUser]);
-
         $vue = new VueAccueil($listeItem, $this->container);
         $rs->getBody()->write($vue->render(0));
         return $rs;

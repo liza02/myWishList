@@ -6,16 +6,16 @@ namespace mywishlist\controls;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use mywishlist\vue\MaVue;
-use mywishlist\vue\VueAccueil;
-use mywishlist\vue\VueCompte;
 use mywishlist\vue\VueItem;
-use mywishlist\vue\VueListe;
 
 use \mywishlist\models\Liste;
 use \mywishlist\models\Item;
 use mywishlist\models\Message;
 
+/**
+ * Class ControleurItem
+ * @package mywishlist\controls
+ */
 class ControleurItem
 {
     private $container;
@@ -30,6 +30,7 @@ class ControleurItem
 
     /**
      * GET
+     * Affichage de l'item en tant que participant
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -58,6 +59,14 @@ class ControleurItem
         }
     }
 
+    /**
+     * GET
+     * Affichage de l'item en tant que créateur de celle-ci
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function afficherItemCreateur(Request $rq, Response $rs, $args) : Response {
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
@@ -73,10 +82,16 @@ class ControleurItem
             $rs->getBody()->write( $vue->render(3));
             return $rs;
         }
-
-
     }
 
+    /**
+     * GET
+     * Affichage du formulaire de modification
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function modifierItem(Request $rq, Response $rs, $args) : Response{
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
@@ -88,6 +103,7 @@ class ControleurItem
 
     /**
      * POST
+     * Enregistrement des modification de l'item
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -110,6 +126,7 @@ class ControleurItem
 
     /**
      * GET
+     * Affichage du formulaire de réservation d'item
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -127,6 +144,7 @@ class ControleurItem
 
     /**
      * POST
+     * Enregistrement de la réservation d'un item
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -141,7 +159,7 @@ class ControleurItem
         $liste = Liste::where('token','=',$args['token'])->first();
 
         $m = new Message();
-        $m->id_parent = $args['token'];
+        $m->id_parent = $args['id_item'];
         $m->type_parent = 'item';
         $m->message = $message;
         $m->auteur = $nomReservant;

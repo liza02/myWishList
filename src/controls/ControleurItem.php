@@ -37,23 +37,44 @@ class ControleurItem
      */
     public function afficherItemParticipant(Request $rq, Response $rs, $args) : Response {
         //isset($_Session['reservationOK']
+        // if pour participant pas connecté $_SESSION PROFILE
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
         $itemEtListe = array([$item],[$liste],[$args['token']]);
         $vue = new VueItem($itemEtListe, $this->container);
-        $rs->getBody()->write( $vue->render(1));
-        return $rs;
-        //3
+        if(isset($_SESSION['modificationOK'])){
+            if(isset($_SESSION['profile'])){
+                $infoUser = $_SESSION['profile'];
+                $_SESSION = [];
+                $_SESSION['profile'] = $infoUser;
+            }else{
+                $_SESSION = [];
+            }
+            $rs->getBody()->write( $vue->render(0));
+            return $rs;
+        }else{
+            $rs->getBody()->write( $vue->render(1));
+            return $rs;
+        }
     }
 
     public function afficherItemCreateur(Request $rq, Response $rs, $args) : Response {
-        //isset($_SESSION['modificatio']
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
         $itemEtListe = array([$item],[$liste],[$args['token']]);
         $vue = new VueItem($itemEtListe, $this->container);
-        $rs->getBody()->write( $vue->render(3));
-        return $rs;
+        if(isset($_SESSION['modificationOK'])){
+            $infoUser = $_SESSION['profile'];
+            $_SESSION = [];
+            $_SESSION['profile'] = $infoUser;
+            $rs->getBody()->write( $vue->render(2));
+            return $rs;
+        }else{
+            $rs->getBody()->write( $vue->render(3));
+            return $rs;
+        }
+
+
     }
 
     public function modifierItem(Request $rq, Response $rs, $args) : Response{
@@ -82,6 +103,7 @@ class ControleurItem
         $item->url = filter_var($post['url'], FILTER_SANITIZE_STRING);
         $item->save();
 
+        $_SESSION['modificationOK'] = true;
         $url_modif = $this->container->router->pathFor("aff_item_admin", ['token' => $args['token'], 'id_item' => $args['id_item']]);
         return $rs->withRedirect($url_modif);
     }
@@ -98,6 +120,7 @@ class ControleurItem
         $liste = Liste::where('token','=',$args['token'])->first();
         $itemEtListe = array([$item],[$liste],[$args['token']]);
         $vue = new VueItem($itemEtListe, $this->container);
+        $_SESSION['modificationOK'] = true;
         $rs->getBody()->write( $vue->render(4));
         return $rs;
     }

@@ -200,7 +200,7 @@ class VueItem
             // message de reservation en plus
             case 0 :
             {
-
+                $content .="<div class=\"alert alert-success\" role=\"alert\">Réservation réussie !</div>";
             }
             // afficher l'item en tant que participant
             case 1 :
@@ -222,7 +222,7 @@ FIN;
             // message de mofification de liste
             case 2 :
             {
-
+                $content = "<div class=\"alert alert-success\" role=\"alert\">Modification réussie !</div>";
             }
             // afficher l'item en tant que createur
             case 3 :

@@ -71,6 +71,7 @@ class VueParticipant
                 </div>
                 FIN;
             }
+            $increment_user++;
         }
         $url_accederListe = $this->container->router->pathFor("accederListe");
         $html = <<<FIN

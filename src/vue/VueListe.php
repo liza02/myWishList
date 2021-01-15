@@ -3,7 +3,10 @@
 
 namespace mywishlist\vue;
 
-
+/**
+ * Class VueListe
+ * @package mywishlist\vue
+ */
 class VueListe
 {
     private $tab;
@@ -265,6 +268,7 @@ class VueListe
      * @return string
      */
     private function afficherUneListe() : string {
+        // Recuperation de la liste dans l'array
         $l = $this->tab[0][0][0];
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $html_items = "";

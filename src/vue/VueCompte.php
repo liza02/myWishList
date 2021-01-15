@@ -3,17 +3,29 @@
 
 namespace mywishlist\vue;
 
-
+/**
+ * Class VueCompte
+ * @package mywishlist\vue
+ */
 class VueCompte
 {
     private $tab;
     private $container;
 
+    /**
+     * VueCompte constructor.
+     * @param $tab
+     * @param $container
+     */
     public function __construct($tab, $container){
         $this->tab = $tab;
         $this->container = $container;
     }
 
+    /**
+     * Formulaire d'inscription
+     * @return string
+     */
     private function formInscription() : string {
         // fonction pour enregistrer le formulaire
         $url_enregistrerInscription = $this->container->router->pathFor( 'enregistrerInscription' ) ;
@@ -56,6 +68,10 @@ class VueCompte
         return $html;
     }
 
+    /**
+     * Formulaire de connexion
+     * @return string
+     */
     private function formConnexion() : string {
         // fonction pour envoyer le formulaire de connexion, et tester si id et mdp sont corrects
         $url_testConnexion = $this->container->router->pathFor( 'testConnexion' ) ;
@@ -89,6 +105,10 @@ class VueCompte
         return $html;
     }
 
+    /**
+     * Afficage des information du compte
+     * @return string
+     */
     public function afficherInformations() : string{
         $url_modifier = $this->container->router->pathFor('modifierCompte');
         $url_changemdp = $this->container->router->pathFor('changerMotDePasse');
@@ -149,6 +169,10 @@ class VueCompte
         return $html;
     }
 
+    /**
+     * Formulaire de modification des informations du compte
+     * @return string
+     */
     public function modifierInformations() {
         $url_enregistrerModif = $this->container->router->pathFor( 'enregistrerModif' ) ;
         $html = "";
@@ -202,6 +226,11 @@ class VueCompte
         FIN;
         return $html;
     }
+
+    /**
+     * Formulaire de modification du mot de passe
+     * @return string
+     */
     public function changerMotDePasse() :string{
         $url_enregistrerMdp = $this->container->router->pathFor( 'enregistrerMotDePasse' ) ;
         $html = <<<FIN
@@ -233,6 +262,11 @@ class VueCompte
         return $html;
     }
 
+    /**
+     * RENDER
+     * @param int $select
+     * @return string
+     */
     public function render( int $select ) : string
     {
         $url_accueil = $this->container->router->pathFor('racine');
@@ -247,7 +281,7 @@ class VueCompte
             // l'utilisateur est connecté
             // le bouton affiche Mon Compte
             $connected = "Mon Compte";
-            // le bouton redirige vers l'affichage du compte (cf ligne 203)
+            // le bouton redirige vers l'affichage du compte
             $url_compte = $this->container->router->pathFor('afficherCompte');
             // le bouton pour accéder aux listes mène aux listes
             $url_liste = $this->container->router->pathFor('afficherMesListes');
@@ -255,7 +289,7 @@ class VueCompte
             // l'utilisateur n'est pas connecté
             // le bouton affiche Connexion
             $connected = "Connexion";
-            // le bouton redirige vers le formulaire de connexion (cf ligne 203)
+            // le bouton redirige vers le formulaire de connexion
             $url_compte = $this->container->router->pathFor('connexion');
             // le bouton pour accéder aux listes mène au formulaire de connexion, on ne peux pas accéder à ses listes si on est pas connecté
             $url_liste = $this->container->router->pathFor('connexion');

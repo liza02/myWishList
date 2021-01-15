@@ -7,24 +7,29 @@ namespace mywishlist\controls;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use mywishlist\vue\MaVue;
-use mywishlist\vue\VueAccueil;
 use mywishlist\vue\VueCompte;
-use mywishlist\vue\VueItem;
 
-use \mywishlist\models\Liste;
-use \mywishlist\models\Item;
 use \mywishlist\models\User;
 
+/**
+ * Class ControleurCompte
+ * @package mywishlist\controls
+ */
 class ControleurCompte {
+
     private $container;
 
+    /**
+     * ControleurCompte constructor.
+     * @param $container
+     */
     public function __construct($container) {
         $this->container = $container;
     }
 
     /**
      * GET
+     * Affichage du formulaire pour création de compte
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -38,6 +43,7 @@ class ControleurCompte {
 
     /**
      * POST
+     * Enregistrement des informations du nouveau compte dans la base de données
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -66,6 +72,7 @@ class ControleurCompte {
 
     /**
      * GET
+     * Affichage du formulaire de connexion
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -90,6 +97,7 @@ class ControleurCompte {
 
     /**
      * POST
+     * Test de la connexion
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -112,14 +120,13 @@ class ControleurCompte {
 
     /**
      * GET
+     * Affichage du compte
      * @param Request $rq
      * @param Response $rs
      * @param $args
      * @return Response
      */
     public function afficherCompte(Request $rq, Response $rs, $args) : Response {
-        // isset pour inscriptionOK et redirection sur compte
-        //TODO where fonctionnel ? -> récupération des listes de l'utilisateur connecté
         $infosUser = User::where('login','=',$_SESSION['profile']['username'])->first();
         $vue = new VueCompte($infosUser->toArray(), $this->container ) ;
         if (isset($_SESSION['inscriptionOK'])) {
@@ -162,6 +169,7 @@ class ControleurCompte {
 
     /**
      * GET
+     * Affichage du formulaire de modification des informations du compte
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -176,6 +184,7 @@ class ControleurCompte {
 
     /**
      * POST
+     * Enregistrement des nouvelles informations sur le compte
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -213,6 +222,14 @@ class ControleurCompte {
         }
     }
 
+    /**
+     * GET
+     * Affichage du formulaire de modification de mot de passe
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function changerMotDePasse (Request $rq, Response $rs, $args) : Response  {
         $infosUser = User::where('login','=',$_SESSION['profile']['username'])->first();
         $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
@@ -221,7 +238,8 @@ class ControleurCompte {
     }
 
     /**
-     * GET
+     * POST
+     * Enregistrement du nouveau mot de passe
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -257,6 +275,7 @@ class ControleurCompte {
 
     /**
      * POST
+     * Deconnexion du compte
      * @param Request $rq
      * @param Response $rs
      * @param $args

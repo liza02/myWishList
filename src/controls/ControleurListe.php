@@ -6,15 +6,15 @@ namespace mywishlist\controls;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use mywishlist\vue\MaVue;
-use mywishlist\vue\VueAccueil;
-use mywishlist\vue\VueCompte;
-use mywishlist\vue\VueItem;
 use mywishlist\vue\VueListe;
 
 use \mywishlist\models\Liste;
 use \mywishlist\models\Item;
 
+/**
+ * Class ControleurListe
+ * @package mywishlist\controls
+ */
 class ControleurListe
 {
     private $container;
@@ -29,6 +29,7 @@ class ControleurListe
 
     /**
      * GET
+     * Affichage des listes
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -58,6 +59,7 @@ class ControleurListe
 
     /**
      * GET
+     * Affichage d'une liste
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -86,6 +88,7 @@ class ControleurListe
 
     /**
      * GET
+     * Affichage du formualaire de création de liste
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -101,6 +104,7 @@ class ControleurListe
 
     /**
      * POST
+     * Enregistrement des informations sur la nouvelle liste crée
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -130,6 +134,7 @@ class ControleurListe
 
     /**
      * GET
+     * Affichage du formulaire de modification de liste
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -144,6 +149,7 @@ class ControleurListe
 
     /**
      * POST
+     * Enregistrement des modifications sur la liste
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -168,6 +174,7 @@ class ControleurListe
 
     /**
      * GET
+     * Affichage du formulaire d'ajout d'item dans une liste
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -182,6 +189,7 @@ class ControleurListe
 
     /**
      * POST
+     * enregistrement du nouvel item dans la liste
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -204,6 +212,7 @@ class ControleurListe
 
     /**
      * POST
+     * Suppression de liste
      * @param Request $rq
      * @param Response $rs
      * @param $args

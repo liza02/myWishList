@@ -4,7 +4,20 @@ namespace mywishlist\controls;
 
 use \mywishlist\models\User;
 
+/**
+ * Class Authentication
+ * @package mywishlist\controls
+ */
 class Authentication {
+
+    /**
+     * Fonction de création de USer
+     * @param $nom
+     * @param $prenom
+     * @param $username
+     * @param $password
+     * @throws \Exception
+     */
     public static function createUser($nom, $prenom, $username, $password) {
         $nb = User::where('login','=',$username)->count();
         if ($nb == 0) {
@@ -19,6 +32,12 @@ class Authentication {
         }
     }
 
+    /**
+     * Fonction de vérification d'authentification
+     * @param $username
+     * @param $password
+     * @return bool
+     */
     public static function authenticate($username, $password) {
         $u = User::where('login','=',$username)->first();
         if(gettype($u) != 'NULL'){
@@ -32,6 +51,10 @@ class Authentication {
         return $res;
     }
 
+    /**
+     * Fonction pour stocker le profile dans la variable de session
+     * @param $uid
+     */
     private static function loadProfile($uid) {
         session_destroy();
         $_SESSION = [];

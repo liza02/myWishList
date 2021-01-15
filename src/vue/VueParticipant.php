@@ -36,7 +36,9 @@ class VueParticipant
     {
         $html = "<div class=\"row\">";
         $increment_user = 0;
+        // Boucle sur toutes les listes publiques
         foreach($this->tab[0][0] as $liste){
+            // Récupération du User courant sur la boucle
             $user = $this->tab[1][0][$increment_user];
             $date = date('Y-m-d',strtotime($liste['expiration']));
             if ($date >= $this->today) {
@@ -104,7 +106,9 @@ FIN;
      * @return string
      */
     private function afficherListeParticipant() : string{
+        // Liste dans l'array
         $l = $this->tab[0][0][0];
+        // User dans l'array
         $u = $this->tab[2][0][0];
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $html_items = "";
@@ -126,6 +130,7 @@ FIN;
         </div>
         FIN;
 
+        // Boucle sur les items de l'array
         foreach ($this->tab[1] as $tableau){
             $count_bloc_line = 0;
             $html_items .= "<div class=\"container\"> <div class=\"row\">";
@@ -229,6 +234,7 @@ FIN;
         $url_accueil = $this->container->router->pathFor('racine');
         $url_participer = $this->container->router->pathFor('participer');
         switch ($select) {
+            // Erreur quand le token ne correspond à aucune liste
             case 0 :
             {
                 $content = "<div class=\"alert alert-danger\" role=\"alert\">La token saisi ne correspond à aucune liste</div>";
@@ -248,6 +254,7 @@ FIN;
                 $content .= $this->afficherListeParticipant();
                 break;
             }
+            // affichage du formulaire pour le message sur la liste
             case 3 :
             {
                 $path = "../../";

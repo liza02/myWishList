@@ -6,11 +6,6 @@ namespace mywishlist\controls;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-use mywishlist\vue\MaVue;
-use mywishlist\vue\VueAccueil;
-use mywishlist\vue\VueCompte;
-use mywishlist\vue\VueItem;
-use mywishlist\vue\VueListe;
 use mywishlist\vue\VueParticipant;
 
 use \mywishlist\models\Liste;
@@ -18,10 +13,18 @@ use \mywishlist\models\Item;
 use \mywishlist\models\User;
 use \mywishlist\models\Message;
 
+/**
+ * Class ControleurParticipant
+ * @package mywishlist\controls
+ */
 class ControleurParticipant
 {
     private $container;
 
+    /**
+     * ControleurParticipant constructor.
+     * @param $container
+     */
     public function __construct($container)
     {
         $this->container = $container;
@@ -29,6 +32,7 @@ class ControleurParticipant
 
     /**
      * GET
+     * Affichage des listes
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -36,8 +40,6 @@ class ControleurParticipant
      */
     public function afficherListes(Request $rq, Response $rs, $args): Response
     {
-//        $ensListes = Liste::where('public', '=', 'true')->get();
-//        $vue = new VueParticipant($ensListes->toArray(), $this->container);
         $ensListes = Liste::where('public','=','true')->get();
         $lesListes = $ensListes->toArray();
         $arrayUser = array();
@@ -64,6 +66,7 @@ class ControleurParticipant
 
     /**
      * GET
+     * Affichage d'une liste en tant que participant
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -97,7 +100,8 @@ class ControleurParticipant
     }
 
     /**
-     * GET
+     * POST
+     * Donne l'acces à une liste via le token --> redirection
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -133,6 +137,7 @@ class ControleurParticipant
 
     /**
      * GET
+     * Affichage du formulaire pour ajouter un message à une liste
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -149,6 +154,7 @@ class ControleurParticipant
 
     /**
      * POST
+     * Enregistrement du message pour la liste
      * @param Request $rq
      * @param Response $rs
      * @param $args

@@ -23,14 +23,12 @@ $db->bootEloquent();
 $container = new \Slim\Container($config);
 $app = new \Slim\App($container);
 
-/*
- * Nouveau Chemin (ceux que je mets a jour)
- */
-//Chemin Accueil
 
+//Chemin Accueil
 $app->get('/', ControleurAccueil::class.':accueil')->setName('racine');
 $app->get('/item', ControleurAccueil::class.':item')->setName('item');
 $app->get('/listes/nouvelleListe', ControleurAccueil::class.':list')->setName('liste');
+
 
 //Chemin Compte
 $app->get('/inscription', ControleurCompte::class.':inscription')->setName('inscription');
@@ -44,6 +42,7 @@ $app->get('/compte/changePassword', ControleurCompte::class.':changerMotDePasse'
 $app->post('/compte/changePassword', ControleurCompte::class.':enregistrerMotDePasse')->setName('enregistrerMotDePasse');
 $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
 
+
 //Chemin Liste
 $app->get('/mesListes',ControleurListe::class.':afficherMesListes')->setName('afficherMesListes');
 $app->get('/mesListes/nouvelleliste' , ControleurListe::class.':creerListe')->setName('creerListe');
@@ -56,22 +55,24 @@ $app->get('/meslistes/ajoutItem/{token}',ControleurListe::class.':ajoutItem')->s
 $app->post('/meslistes/ajoutItem/{token}',ControleurListe::class.':enregistrerNouveauItemListe')->setName('enregistrerNouveauItemListe');
 
 
-
-//Chemin Item Participant
-$app->get('/participant/{token}/{id_item}', ControleurItem::class.':afficherItemParticipant' )->setName('aff_item');
-$app->get('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
-$app->post('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverUnItem')->setName('formReserveItem');
-
-//Chemin Item Admin
-$app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCreateur' )->setName('aff_item_admin');
-$app->get('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('modifierItem');
-$app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierUnItem' )->setName('formModifierItem');
-
 //Chemin Participant
 $app->get('/participer', ControleurParticipant::class.':afficherListes' )->setName('participer');
 $app->post('/participer', ControleurParticipant::class.':accederListe' )->setName('accederListe');
 $app->get('/participer/{token}', ControleurParticipant::class.':afficherListeParticipant' )->setName('afficherListeParticipant');
 $app->get('/participer/{token}/message', ControleurParticipant::class.':ajouterMessage' )->setName('afficherFormMessage');
 $app->post('/participer/{token}/message', ControleurParticipant::class.':ajouterUnMessage' )->setName('formMessageListe');
+
+
+//Chemin Item Participant
+$app->get('/participant/{token}/{id_item}', ControleurItem::class.':afficherItemParticipant' )->setName('aff_item');
+$app->get('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
+$app->post('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverUnItem')->setName('formReserveItem');
+
+
+//Chemin Item Admin
+$app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCreateur' )->setName('aff_item_admin');
+$app->get('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('modifierItem');
+$app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierUnItem' )->setName('formModifierItem');
+
 
 $app->run();

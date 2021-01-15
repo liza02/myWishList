@@ -3,13 +3,21 @@
 
 namespace mywishlist\vue;
 
-
+/**
+ * Class VueAccueil
+ * @package mywishlist\vue
+ */
 class VueAccueil
 {
     private $tab;
     private $container;
     private $today;
 
+    /**
+     * VueAccueil constructor.
+     * @param $tab
+     * @param $container
+     */
     public function __construct($tab, $container){
         $this->tab = $tab;
         $this->container = $container;
@@ -26,10 +34,16 @@ class VueAccueil
         $this->today = $annee . "-" . $mois . "-" . $jour;
     }
 
+    /**
+     * Affichage des listes publiques
+     * @return string
+     */
     public function listesPublique() : string{
         $html = "<h3>Listes Publiques</h3><div class=\"row\">";
         $increment_user = 0;
+        // Boucle sur l'ensemble des listes
         foreach($this->tab[0][0] as $liste){
+            // Récupération du user appartenant à la liste courante de la boucle
             $user = $this->tab[1][0][$increment_user];
             $date = date('Y-m-d',strtotime($liste['expiration']));
             if ($date >= $this->today) {
@@ -62,13 +76,18 @@ class VueAccueil
                     </div>
                 </div>
                 FIN;
-                $increment_user++;
             }
+            $increment_user++;
         }
         $html .= "</div>";
         return $html;
     }
 
+    /**
+     * RENDER
+     * @param int $select
+     * @return string
+     */
     public function render( int $select ) : string
     {
         if (isset($_SESSION['profile']['username'])){

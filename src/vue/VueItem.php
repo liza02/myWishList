@@ -92,7 +92,7 @@ class VueItem
         $l = $this->tab[1][0];
         $image = "../../img/" . $i['img'];
         // item réservé (par défaut)
-        $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-danger\">RÉSERVÉ</span></h5>";
+        $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">RÉSERVÉ</span></h5>";
         $modification = "<a class=\"btn btn-warning btn-lg disabled\" href=\"#\" role=\"button\" aria-disabled=\"true\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
         $supprimer = "<button type=\"button\" class=\"btn btn-lg btn-danger disabled\" data-toggle=\"modal\" data-target=\"#confirmationSupp_{$i['nom']}\"><span class=\"fa fa-trash fa-lg\"></span> Supprimer</button>";
         // on verifie si l'item n'est pas reservé

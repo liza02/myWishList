@@ -592,6 +592,7 @@ class VueListe
                 $url_liste =$this->container->router->pathFor('aff_maliste', ['token' => $this->tab['token']]);
                 $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_liste\">{$this->tab['titre']}</a></li>";
                 $current_page = "Ajout d'item";
+                break;
             }
             case 8:
             {

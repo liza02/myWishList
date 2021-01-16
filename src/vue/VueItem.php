@@ -10,6 +10,7 @@ class VueItem
 {
     private $tab;
     private $container;
+    private $today;
 
     /**
      * VueItem constructor.
@@ -19,6 +20,17 @@ class VueItem
     public function __construct($tab, $container){
         $this->tab = $tab;
         $this->container = $container;
+        $today = getdate();
+        $jour = $today['mday'];
+        $mois = $today['mon'];
+        $annee = $today['year'];
+        if ($mois < 10) {
+            $mois = 0 . $mois;
+        }
+        if ($jour < 10) {
+            $jour = 0 . $jour;
+        }
+        $this->today = $annee . "-" . $mois . "-" . $jour;
     }
 
     /**
@@ -52,10 +64,9 @@ class VueItem
         $tarif = "<span class=\"badge badge-info\">{$i['tarif']}€</span>";
         $html = <<<FIN
         <div class="box_item">
-        
             <div class="card flex-row">
                 <div class="card-header bg-transparent border-0">
-                    <img src="$image" onError="this.onerror=null;this.src='../../img/default.png';" >
+                    <img src="$image" onError="this.onerror=null;this.src='../../img/default.png';">
                 </div>
                 <div class="card-body info_item px-5">
                     <h4 class="card-title">$isReserved</h4>
@@ -90,6 +101,7 @@ class VueItem
     private function affichageItemCreateur() : string{
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
+        $m = $this->tab[2][0];
         $image = "../../img/" . $i['img'];
         // item réservé (par défaut)
         $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">RÉSERVÉ</span></h5>";
@@ -107,6 +119,24 @@ class VueItem
             $url =$i['url'];
         } else {
             $url = "Aucun URL disponible";
+        }
+        $message = "";
+        $date = date('Y-m-d',strtotime($l['expiration']));
+        if ($date < $this->today) {
+            if (isset($m['auteur']) ) {
+                $message .= <<<FIN
+        <div class="card card_form">
+            <div class="card-header">
+               Message de réservation de {$m['auteur']} :
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <footer class="blockquote-footer">{$m['message']}</footer>
+                </blockquote>
+            </div>
+        </div>
+        FIN;
+            }
         }
         $tarif = "<span class=\"badge badge-info\">{$i['tarif']}€</span>";
         $url_supprimer = $this->container->router->pathFor("supprimerItem", ['token' => $l['token'], 'id_item' => $i['id']]);
@@ -153,13 +183,14 @@ class VueItem
                               </div>
                             </div>
                           </div>
-                        </div>
-                        
+                        </div> 
                 </div>
-               
             </div>
         </div>
+            $message 
+            <br>
         FIN;
+
         return $html;
     }
 
@@ -299,7 +330,6 @@ FIN;
 <li class="nav-item"><a class="nav-link" href="$url_participer">Participer à une liste</a></li>
 <li class="nav-item"><a class="nav-link active" href="$url_liste">Gérer mes listes</a></li>
 FIN;
-
                 $token = $this->tab[1][0]['token'];
                 $url_meslistes = $this->container->router->pathFor('afficherMesListes');
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistes\">Mes Listes</a></li>";

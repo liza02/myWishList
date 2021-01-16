@@ -381,6 +381,109 @@ class VueListe
         return $html_items;
     }
 
+    private function afficherUneListeNonConnecte() : string {
+        // Recuperation de la liste dans l'array
+        $l = $this->tab[0][0][0];
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $html_items = "";
+        $date = date('Y-m-d',strtotime($l['expiration']));
+        $url_modifier = $this->container->router->pathFor("modifierListe", ['token' => $l['token']]);
+        $url_ajoutItem = $this->container->router->pathFor("ajoutItem", ['token' => $l['token']]);
+
+        $ajoutItem = "<a class=\"btn btn-primary btn-lg\" href=\"$url_ajoutItem\" role=\"button\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i> Ajouter un item</a>";
+        $modifierListe = "<a type=\"submit\" class=\"btn btn-warning\" href=\"$url_modifier\" role=\"button\"><span class=\"fa fa-pencil\"></span> Modifier</a>";
+        $expired="";
+
+        // si la liste est expirée on ne propose pas l'ajout d'items ou la suppression
+        if ($date < $this->today) {
+            $ajoutItem = "";
+            $modifierListe = "";
+            $expired = "<div style='color: red'> Cette liste est expirée !</div>";
+        }
+
+        // affichage des infos générales de la liste: titre, description, boutons
+        $html_infosListe = <<<FIN
+        <div class="jumbotron">
+            <h1 class="display-4 titre_liste">Ma liste : {$l['titre']}</h1>
+            <p class="lead">{$l['description']}</p>
+            <hr class="my-4">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Partagez votre liste</span>
+              </div>
+              <input readonly type="text" class="form-control" aria-label="url" value="{$actual_link}" id="myInput">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" onclick="copyClipboard()">Copier</button>
+              </div>
+            </div>
+            <p class="lead">
+               $expired
+            </p>
+        </div>
+        FIN;
+        // affichage des items dans des cards dans un grid
+        foreach ($this->tab[1] as $tableau){
+            $count_bloc_line = 0;
+            $html_items .= "<div class=\"container\"> <div class=\"row\">";
+            foreach ($tableau as $items){
+                $url_item = $this->container->router->pathFor("aff_item_admin", ['id_item' => $items['id'], 'token' => $l['token']]);
+                $url_modifier = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $items['id']]);
+                $image = "../img/" . $items['img'];
+                if (strlen($items['descr']) >= 80) {
+                    $description = substr($items['descr'], 0, 80) . "...";
+                } else {
+                    $description = $items['descr'];
+                }
+                if ($items['reserve'] == "false"){
+                    $boutonmodification = "<a type=\"submit\" class=\"btn btn-warning\" href=\"$url_modifier\" role=\"button\"><span class=\"fa fa-pencil\"></span> Modifier</a>";
+                    $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-success\">DISPONIBLE</span></h7>";
+                }else {
+                    $boutonmodification = "<a class=\"btn btn-secondary disabled\" href=\"$url_modifier\" role=\"button\" aria-disabled=\"true\"><span class=\"fa fa-pencil\" ></span> Modifier</a>";
+                    $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-secondary\">RÉSERVÉ</span></h7>";
+                }
+                $tarif = "<h7><span class=\"badge badge-info\">{$items['tarif']}€</span></h7>";
+                $html_items .= <<<FIN
+                <div class="col-3 Itembox">
+                    <div class="card h-100 mb-3 border-secondary">
+                      <img class="card-img-top image_item" src="$image" onError="this.onerror=null;this.src='../img/default.png';">
+                      <div class="card-body">
+                        <h7 class="card-title"> {$isReserved} </h7>
+                        <p class="card-text">{$description}</p>
+                        <h4 class="card-text">$tarif</h4>
+                        </div>
+                      <footer class="bouton_footer text-center">
+                      </footer>
+                    </div>
+                </div>
+                FIN;
+                $count_bloc_line++;
+            }
+            $html_items .= "</div></div>";
+        }
+
+        //Ajout des messages à la page
+        $messages = Message::where('id_parent', '=', $l['no'])->where('type_parent', '=', 'liste')->get()->toArray();
+        $html_messages ="";
+        foreach ($messages as $message) {
+            $html_messages .= <<<FIN
+        <div class="card card_form">
+            <div class="card-header">
+               Message de {$message['auteur']} :
+            </div>
+            
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <footer class="blockquote-footer">{$message['message']}</footer>
+                </blockquote>
+            </div>
+        </div>
+        FIN;
+        }
+
+        $html_items = $html_infosListe .  $html_items . $html_messages . "<br>";
+        return $html_items;
+    }
+
     /**
      * Modification de liste
      * @return string
@@ -523,14 +626,25 @@ class VueListe
      */
     public function render( int $select ) : string
     {
-        $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
+        if (isset($_SESSION['profile'])) {
+            $content = "<div id='connected'>Connecté en tant que : "  . $_SESSION['profile']['username'] . "</div>";
+            $url_MesListes = $this->container->router->pathFor('afficherMesListes') ;
+            $url_compte= $this->container->router->pathFor('afficherCompte');
+            $etatConnexion = 'Mon Compte';
+        }
+        else {
+            $content = "<div id='not_connected'>Non connecté</div>";
+            $url_MesListes = $this->container->router->pathFor('connexion') ;
+            $url_compte= $this->container->router->pathFor('connexion');
+            $etatConnexion = 'Connexion';
+        }
         $current_page="";
         $pathIntermediaire ="";
         $path = "";
         $url_accueil= $this->container->router->pathFor('racine');
         $url_item= $this->container->router->pathFor('participer');
-        $url_MesListes = $this->container->router->pathFor('afficherMesListes') ;
-        $url_compte= $this->container->router->pathFor('afficherCompte');
+
+
         $url_creerListe = $this->container->router->pathFor('creerListe') ;
         switch ($select) {
             // modification reussi
@@ -576,7 +690,12 @@ class VueListe
             {
                 $path = "../";
                 $l = $this->tab[0][0][0];
-                $content .= $this->afficherUneListe();
+                if (isset($_SESSION['profile'])) {
+                    $content .= $this->afficherUneListe();
+                }
+                else {
+                    $content .= $this->afficherUneListeNonConnecte();
+                }
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
                 $current_page = $l['titre'];
                 break;
@@ -649,7 +768,7 @@ class VueListe
                 <li class="nav-item"> <a class="nav-link" href="$url_accueil">Accueil</a></li>
                 <li class="nav-item"><a class="nav-link" href="$url_item">Participer à une liste</a></li>
                 <li class="nav-item"><a class="nav-link active" href="$url_MesListes">Gérer mes listes</a></li>
-                <li class="nav-item"><a class="nav-link" href="$url_compte">Mon Compte</a></li>
+                <li class="nav-item"><a class="nav-link" href="$url_compte">$etatConnexion</a></li>
             </ul>
         </div>
     </nav>

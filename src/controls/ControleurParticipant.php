@@ -82,12 +82,7 @@ class ControleurParticipant
                 $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
                 return $rs->withRedirect($url_liste);
             }
-            elseif (isset($_COOKIE['user_id'])) {
-                if ($_COOKIE['user_id'] == $liste['user_id']) {
-                    $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
-                    return $rs->withRedirect($url_liste);
-                }
-            }
+
             else {
                 $liste = Liste::where('token', '=', $args['token'])->get();
                 $item = Item::where('liste_id', '=', $liste[0]['no'])->get();
@@ -98,13 +93,20 @@ class ControleurParticipant
                 return $rs;
             }
         } else {
-            $liste = Liste::where('token', '=', $args['token'])->get();
-            $item = Item::where('liste_id', '=', $liste[0]['no'])->get();
-            $user = User::where('id', '=', $liste[0]['user_id'])->get();
-            $listeItem = array([$liste], [$item], [$user]);
-            $vue = new VueParticipant($listeItem, $this->container);
-            $rs->getBody()->write($vue->render(2));
-            return $rs;
+            if (isset($_COOKIE['user_id'])) {
+                if ($_COOKIE['user_id'] == $liste['user_id']) {
+                    $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
+                    return $rs->withRedirect($url_liste);
+                }
+            }else {
+                $liste = Liste::where('token', '=', $args['token'])->get();
+                $item = Item::where('liste_id', '=', $liste[0]['no'])->get();
+                $user = User::where('id', '=', $liste[0]['user_id'])->get();
+                $listeItem = array([$liste], [$item], [$user]);
+                $vue = new VueParticipant($listeItem, $this->container);
+                $rs->getBody()->write($vue->render(2));
+                return $rs;
+            }
         }
     }
 

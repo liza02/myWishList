@@ -158,7 +158,6 @@ class VueAccueil
 FIN;
             }
         }
-        var_dump($_COOKIE);
         return $html;
     }
 }

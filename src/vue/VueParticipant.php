@@ -277,6 +277,8 @@ FIN;
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
                 $current_page = $this->tab[0][0][0]['titre'];
                 $content .= $this->afficherListeParticipant();
+                var_dump($_COOKIE);
+                var_dump($_COOKIE['user_id'] == $this->tab[0][0][0]['user_id']);
                 break;
             }
             // affichage du formulaire pour le message sur la liste

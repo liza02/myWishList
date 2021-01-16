@@ -299,7 +299,7 @@ class VueCompte
             //connexion echec: message d'erreur + réaffichage du formulaire de connexion
             case 0 :
             {
-                $content = "<div class=\"alert alert-danger\" role=\"alert\">Mot de pass incorrect !</div>";
+                $content = "<div class=\"alert alert-danger\" role=\"alert\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i> Mot de pass incorrect !</div>";
             }
             //connexion: formulaire de connexion
             case 1 :
@@ -311,7 +311,7 @@ class VueCompte
             // inscription echec: message d'erreur + réaffichage du formulaire d'inscription
             case 2 :
             {
-                $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de l'inscription ! Le login existe déjà</div>";
+                $content = "<div class=\"alert alert-danger\" role=\"alert\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i> Echec de l'inscription ! Ce login existe déjà</div>";
             }
             //inscription: formulaire d'inscription
             case 3 :
@@ -323,7 +323,7 @@ class VueCompte
             //accès au compte apres inscription
             case 4 :
             {
-                $content = "<div class=\"alert alert-success\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i>Inscription réussie ! Login <b> {$this->tab['login']} </b> enregistré</div>";
+                $content = "<div class=\"alert alert-success\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i> Inscription réussie ! Login <b> {$this->tab['login']} </b> enregistré</div>";
             }
             //accès au compte apres connexion
             case 5 :
@@ -345,7 +345,7 @@ class VueCompte
             // modification succes
             case 7 :
             {
-                $content = "<div class=\"alert alert-success\" role=\"alert\">Modification réussie !</div>";
+                $content = "<div class=\"alert alert-success\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i> Modifications enregistrées !</div>";
                 $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
                 $content .= $this->afficherInformations();
                 $current_page = "Espace personnel";
@@ -354,7 +354,7 @@ class VueCompte
             // modification echec login
             case 8 :
             {
-                $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de modification ! Le login existe déjà</div>";
+                $content = "<div class=\"alert alert-danger\" role=\"alert\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i> Echec de la modification ! Le login existe déjà</div>";
                 $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
                 $content .= $this->afficherInformations();
                 $current_page = "Espace personnel";
@@ -363,7 +363,7 @@ class VueCompte
             // modication echec email
             case 9 :
             {
-                $content = "<div class=\"alert alert-danger\" role=\"alert\">Echec de modification ! L'email existe déjà</div>";
+                $content = "<div class=\"alert alert-danger\" role=\"alert\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i> Echec de la modification ! L'email existe déjà</div>";
                 $content .= 'Bienvenue dans votre espace personnel, <b>' . $this->tab['prenom'] . '.</b>';
                 $content .= $this->afficherInformations();
                 $current_page = "Espace personnel";
@@ -383,7 +383,7 @@ class VueCompte
             {
                 $path = "../";
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";
-                $content.= "<div class=\"alert alert-danger\" role=\"alert\">L'ancien mot de passe est incorrect !</div>";
+                $content.= "<div class=\"alert alert-danger\" role=\"alert\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i> L'ancien mot de passe est incorrect !</div>";
                 $content .= $this->changerMotDePasse();
                 $current_page = "Modifier mon mot de passe";
                 break;
@@ -393,7 +393,7 @@ class VueCompte
             {
                 $path = "../";
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_compte\">Espace personnel</a></li>";
-                $content.= "<div class=\"alert alert-danger\" role=\"alert\">Les deux mots de passe sont différents !</div>";
+                $content.= "<div class=\"alert alert-danger\" role=\"alert\"<i class=\"fa fa-times\" aria-hidden=\"true\"></i> >Les deux mots de passe sont différents !</div>";
                 $content .= $this->changerMotDePasse();
                 $current_page = "Modifier mon mot de passe";
                 break;
@@ -406,6 +406,7 @@ class VueCompte
     <title>MyWishList</title>
 
     <link rel="stylesheet" href="{$path}css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

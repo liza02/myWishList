@@ -20,6 +20,11 @@
     margin-right: 300px;
 }
 
+.card_listePvForm {
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
 .vueListe {
     margin-left: 30px;
     margin-right: 30px;
@@ -89,4 +94,18 @@
 .nom_item {
     font-size: 23px;
     font-weight: bold;
+}
+
+.vueAccueil h3 {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 30px;
+    margin-left: 20px;
+}
+
+.vueParticipant h3 {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 30px;
+    margin-left: 40px;
 }

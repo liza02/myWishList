@@ -80,7 +80,7 @@ class VueParticipant
         $url_accederListe = $this->container->router->pathFor("accederListe");
         $html = <<<FIN
 <h3>Participer à une liste privée :</h3>
-<div class="card card_form">
+<div class="card card_listePvForm">
             <div class="card-header text-center">
                 Participer à une liste privée !
             </div>
@@ -112,6 +112,7 @@ FIN;
         $l = $this->tab[0][0][0];
         // User dans l'array
         $u = $this->tab[2][0][0];
+        $url_message = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
 
         $messages = Message::where('id_parent', '=', $l['no'])->where('type_parent', '=', 'liste')->get()->toArray();
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -131,6 +132,9 @@ FIN;
                 <button class="btn btn-outline-secondary" type="button" onclick="copyClipboard()">Copier</button>
               </div>
             </div>
+            <p class="lead">
+               <a class="btn btn-success btn-lg" href="$url_message" role="button">Ajouter un message</a>
+            </p>
         </div>
         FIN;
 
@@ -196,9 +200,7 @@ FIN;
         }
 
         $url_reservationItem = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
-        $html_items = $html_infosListe .  $html_items . <<<FIN
-<div class="d-flex justify-content-center"><a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Ajouter un message</a></div>
-FIN . $html_messages . "<br>";
+        $html_items = $html_infosListe .  $html_items . $html_messages . "<br>";
         return $html_items;
     }
 
@@ -331,7 +333,7 @@ FIN . $html_messages . "<br>";
         </ol>
     </nav>
 
-    <div>
+    <div class="vueParticipant">
         $content
     </div>
     

@@ -54,18 +54,23 @@ class VueListe
                 $count_bloc_line=0;
             }
             $date = date('Y-m-d',strtotime($liste['expiration']));
+            // on verifie que la liste n'est pas expirée
             if ($date >= $this->today) {
+                // si la liste expire aujourd'hui on l'écris explicitement
                 if ($date == $this->today) {
                     $date = "Aujourd'hui";
                 }
                 else {
                     $date = date('d/m/Y',strtotime($liste['expiration']));
                 }
+                // on place le badge publique ou privé
                 if ($liste['public'] == "true"){
                     $public = "<span class=\"badge badge-success\">PUBLIQUE</span>";
                 } else {
                     $public = "<span class=\"badge badge-secondary\">PRIVÉE</span>";
                 }
+                // si la description est trop longue on la coupe et termine par "..."
+                // dans l'affichage détaillé de la liste la description n'est pas coupé
                 if (strlen($liste['description']) >= 120) {
                     $description = substr($liste['description'], 0, 120) . "...";
                 } else {
@@ -243,7 +248,7 @@ class VueListe
                     <div class="form-group">
                         <label for="form_pass" >Date d'expiration</label>
                         <input type="date" class="form-control" id="form_nom" placeholder="Mot de passe" 
-                        name="date" value="$annee-$mois-$jour" min="2020-01-01" max="2030-12-31" required>
+                        name="date" value="$annee-$mois-$jour" min="$annee-$mois-$jour" max="2030-12-31" required>
                     </div>
                     
                     <div class="form-check form-check-inline">
@@ -274,12 +279,22 @@ class VueListe
         $l = $this->tab[0][0][0];
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $html_items = "";
-
-        // affichage des infos générales de la liste: titre, description, boutons
-
+        $date = date('Y-m-d',strtotime($l['expiration']));
         $url_modifier = $this->container->router->pathFor("modifierListe", ['token' => $l['token']]);
         $url_ajoutItem = $this->container->router->pathFor("ajoutItem", ['token' => $l['token']]);
 
+        $ajoutItem = "<a class=\"btn btn-primary btn-lg\" href=\"$url_ajoutItem\" role=\"button\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i> Ajouter un item</a>";
+        $modifierListe = "<a type=\"submit\" class=\"btn btn-warning\" href=\"$url_modifier\" role=\"button\"><span class=\"fa fa-pencil\"></span> Modifier</a>";
+        $expired="";
+
+        // si la liste est expirée on ne propose pas l'ajout d'items ou la suppression
+        if ($date < $this->today) {
+            $ajoutItem = "";
+            $modifierListe = "";
+            $expired = "<div style='color: red'> Cette liste est expirée !</div>";
+        }
+
+        // affichage des infos générales de la liste: titre, description, boutons
         $html_infosListe = <<<FIN
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Ma liste : {$l['titre']}</h1>
@@ -295,8 +310,9 @@ class VueListe
               </div>
             </div>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="$url_ajoutItem" role="button"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un item</a>
-                <a type="submit" class="btn btn-warning" href="$url_modifier" role="button"><span class="fa fa-pencil"></span> Modifier</a>
+               $ajoutItem
+               $modifierListe
+               $expired
             </p>
         </div>
         FIN;
@@ -362,9 +378,7 @@ class VueListe
         }
 
         $url_reservationItem = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
-        $html_items = $html_infosListe .  $html_items . <<<FIN
-<div class="d-flex justify-content-center"><a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Ajouter un message</a></div>
-FIN . $html_messages . "<br>";
+        $html_items = $html_infosListe .  $html_items . $html_messages;
         return $html_items;
     }
 
@@ -373,6 +387,16 @@ FIN . $html_messages . "<br>";
      * @return string
      */
     public function modifierListe() : string{
+        $today = getdate();
+        $jour = $today['mday'];
+        $mois = $today['mon'];
+        $annee = $today['year'];
+        if ($mois < 10) {
+            $mois = 0 . $mois;
+        }
+        if ($jour < 10) {
+            $jour = 0 . $jour;
+        }
         $url_enregistrerModificationListe = $this->container->router->pathFor("enregistrerModificationListe", ['token' => $this->tab['token']]);
         if ($this->tab['public'] == "true"){
             $html = <<<FIN
@@ -388,7 +412,7 @@ FIN . $html_messages . "<br>";
             <div class="form-group">
                 <label for="form_pass" >Nouvelle date d'expiration</label>
                 <input type="date" class="form-control" id="form_nom" placeholder="Mot de passe" 
-                name="date" value="{$this->tab['expiration']}" min="2020-01-01" max="2030-12-31" required>
+                name="date" value="{$this->tab['expiration']}" min="$annee-$mois-$jour" max="2030-12-31" required>
             </div>
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="public" id="inlineRadio1" value="true" checked>
@@ -502,7 +526,7 @@ FIN . $html_messages . "<br>";
             // modification reussi
             case 0 :
             {
-                $content .= "<div class=\"alert alert-success\" role=\"alert\">Modification réussie !</div>";
+                $content .= "<div class=\"alert alert-success\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i> Modifications enregistrées !</div>";
             }
             // affichage des listes
             case 1 :
@@ -535,7 +559,7 @@ FIN . $html_messages . "<br>";
             // bandeau ajout d'item list
             case 4:
             {
-                $content .= "<div class=\"alert alert-success\" role=\"alert\">Ajout d'item!</div>";
+                $content .= "<div class=\"alert alert-success\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i> Item ajouté !</div>";
             }
             // affichage d'une liste
             case 5:
@@ -571,7 +595,7 @@ FIN . $html_messages . "<br>";
             }
             case 8:
             {
-                $content .= "<div class=\"alert alert-danger\" role=\"alert\">Suppression d'item!</div>";
+                $content .= "<div class=\"alert alert-danger\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i> Item supprimé !</div>";
                 $path = "../";
                 $l = $this->tab[0][0][0];
                 $content .= $this->afficherUneListe();

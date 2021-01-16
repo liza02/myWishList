@@ -265,7 +265,7 @@ class VueItem
             // message de reservation en plus
             case 0 :
             {
-                $content .="<div class=\"alert alert-success\" role=\"alert\">Réservation réussie !</div>";
+                $content .="<div class=\"alert alert-success\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i> Réservation enregistrée !</div>";
             }
             // afficher l'item en tant que participant
             case 1 :
@@ -287,7 +287,7 @@ FIN;
             // message de mofification de liste
             case 2 :
             {
-                $content = "<div class=\"alert alert-success\" role=\"alert\">Modification réussie !</div>";
+                $content = "<div class=\"alert alert-success\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i> Modifications enregistrée !</div>";
             }
             // afficher l'item en tant que createur
             case 3 :

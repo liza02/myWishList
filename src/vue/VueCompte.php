@@ -123,6 +123,7 @@ class VueCompte
         } else {
             $email = "Pas encore d'email enregistré";
         }
+        $supprimer = "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#confirmationSupp_{$login}\"><span class=\"fa fa-trash fa-lg\"></span> Supprimer le compte</button>";
 //        $email = "Pas encore d'email enregistré";
         $html = <<<FIN
         <div class="card card_form" xmlns="http://www.w3.org/1999/html">
@@ -164,11 +165,27 @@ class VueCompte
         </div>  
         <div class="text-center deconnexion">
             <a href='$url_deconnexion' class="btn btn-danger text-center">Deconnexion</a> 
-            <a href='$url_supprimerCompte' class="btn btn-secondary text-center"> <span class="fa fa-trash fa-lg"></span> Supprimer le compte</a> 
+            $supprimer
         </div>
-        <div class="text-center">
-            
-        </div>
+        <div class="modal fade" id="confirmationSupp_{$login}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="confirmation">Etes-vous sûr de vouloir supprimer ce compte ?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body text-center">
+                                Login : {$login}
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <a type="button" href="$url_supprimerCompte" class="btn btn-danger">Supprimer</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div> 
         
         FIN;
         return $html;

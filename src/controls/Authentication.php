@@ -59,6 +59,7 @@ class Authentication {
         session_destroy();
         $_SESSION = [];
         session_start();
+        setcookie("user_id", $uid, time() + 60*60*24*30, "/" );
         $_SESSION['profile'] = array('username' => User::where('id','=',$uid)->first()->login, 'userid' => $uid);
     }
 

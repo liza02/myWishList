@@ -334,7 +334,7 @@ class VueListe
                     $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-success\">DISPONIBLE</span></h7>";
                 }else {
                     $boutonmodification = "<a class=\"btn btn-secondary disabled\" href=\"$url_modifier\" role=\"button\" aria-disabled=\"true\"><span class=\"fa fa-pencil\" ></span> Modifier</a>";
-                    $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-secondary\">RESERVÉ</span></h7>";
+                    $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-secondary\">RÉSERVÉ</span></h7>";
                 }
                 $tarif = "<h7><span class=\"badge badge-info\">{$items['tarif']}€</span></h7>";
                 $html_items .= <<<FIN
@@ -377,7 +377,6 @@ class VueListe
         FIN;
         }
 
-        $url_reservationItem = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
         $html_items = $html_infosListe .  $html_items . $html_messages . "<br>";
         return $html_items;
     }

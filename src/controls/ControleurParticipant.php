@@ -75,11 +75,20 @@ class ControleurParticipant
     public function afficherListeParticipant(Request $rq, Response $rs, $args): Response
     {
         $liste = Liste::where('token', '=', $args['token'])->first();
+
+        //Lorsque le créateur de la liste tente d'afficher la liste alors on le redirige vers /meslistes/{token}
         if (isset($_SESSION['profile'])) {
             if ($_SESSION['profile']['userid'] == $liste['user_id']) {
                 $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
                 return $rs->withRedirect($url_liste);
-            } else {
+            }
+            elseif (isset($_COOKIE['user_id'])) {
+                if ($_COOKIE['user_id'] == $liste['user_id']) {
+                    $url_liste = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
+                    return $rs->withRedirect($url_liste);
+                }
+            }
+            else {
                 $liste = Liste::where('token', '=', $args['token'])->get();
                 $item = Item::where('liste_id', '=', $liste[0]['no'])->get();
                 $user = User::where('id', '=', $liste[0]['user_id'])->get();

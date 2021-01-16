@@ -72,7 +72,8 @@ class ControleurItem
     public function afficherItemCreateur(Request $rq, Response $rs, $args) : Response {
         $item = Item::find( $args['id_item']) ;
         $liste = Liste::where('token','=',$args['token'])->first();
-        $itemEtListe = array([$item],[$liste],[$args['token']]);
+        $message = Message::where('id_parent', '=', $item['id'])->where('type_parent', '=', 'item')->first();
+        $itemEtListe = array([$item],[$liste],[$message]);
         $vue = new VueItem($itemEtListe, $this->container);
         if(isset($_SESSION['modificationOK'])){
             $infoUser = $_SESSION['profile'];

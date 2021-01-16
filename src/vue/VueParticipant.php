@@ -266,6 +266,7 @@ FIN;
             // affichage des listes
             case 1 :
             {
+                $current_page = "Participer";
                 $content .= $this->lesListes();
                 break;
             }

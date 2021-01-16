@@ -49,6 +49,7 @@ class VueItem
         } else {
             $url = "Aucun URL disponible";
         }
+        $tarif = "<span class=\"badge badge-info\">{$i['tarif']}€</span>";
         $html = <<<FIN
         <div class="box_item">
         
@@ -60,7 +61,7 @@ class VueItem
                     <h4 class="card-title">$isReserved</h4>
                     <p class="card-text">{$i['descr']}</p>
                     <p class="card-subtitle mb-2 text-muted">Liste de référence : {$l['titre']}</p>
-                    <label for="tarif">Prix : {$i['tarif']}€</label>
+                    <h2 class="card-text">$tarif</h2>
                     <br>
                     <label for="url" >Ou trouver cet article ?</label>
                     <div class="input-group mb-3">
@@ -107,6 +108,7 @@ class VueItem
         } else {
             $url = "Aucun URL disponible";
         }
+        $tarif = "<span class=\"badge badge-info\">{$i['tarif']}€</span>";
         $url_supprimer = $this->container->router->pathFor("supprimerItem", ['token' => $l['token'], 'id_item' => $i['id']]);
         $html = <<<FIN
         <div class="box_item">
@@ -118,7 +120,7 @@ class VueItem
                 <div class="card-body info_item px-5">
                     <h4 class="card-title">$isReserved</h4>
                     <p class="card-text">{$i['descr']}</p>
-                    <label for="tarif">Prix : {$i['tarif']}€</label>
+                    <h2 class="card-text">$tarif</h2>
                     <br>
                     <label for="url" >Ou trouver mon article ?</label>
                     <div class="input-group mb-3">

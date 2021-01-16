@@ -319,8 +319,8 @@ class VueListe
                 }else {
                     $boutonmodification = "<a class=\"btn btn-secondary disabled\" href=\"$url_modifier\" role=\"button\" aria-disabled=\"true\"><span class=\"fa fa-pencil\" ></span> Modifier</a>";
                     $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-secondary\">RESERVÉ</span></h7>";
-
                 }
+                $tarif = "<h7><span class=\"badge badge-info\">{$items['tarif']}€</span></h7>";
                 $html_items .= <<<FIN
                 <div class="col-3 Itembox">
                     <div class="card h-100 mb-3 border-secondary">
@@ -328,7 +328,7 @@ class VueListe
                       <div class="card-body">
                         <h7 class="card-title"> {$isReserved} </h7>
                         <p class="card-text">{$description}</p>
-                        <p class="card-text">Prix : {$items['tarif']}€</p>
+                        <h4 class="card-text">$tarif</h4>
                         </div>
                       <footer class="bouton_footer text-center">
                            <a href="$url_item" class="btn btn-primary">Voir item</a>

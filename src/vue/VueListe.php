@@ -328,6 +328,7 @@ class VueListe
                       <div class="card-body">
                         <h7 class="card-title"> {$isReserved} </h7>
                         <p class="card-text">{$description}</p>
+                        <p class="card-text">Prix : {$items['tarif']}€</p>
                         </div>
                       <footer class="bouton_footer text-center">
                            <a href="$url_item" class="btn btn-primary">Voir item</a>

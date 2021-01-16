@@ -54,6 +54,8 @@ class VueItem
                     <h4 class="card-title">$isReserved</h4>
                     <p class="card-text">{$i['descr']}</p>
                     <p class="card-subtitle mb-2 text-muted">Liste de référence : {$l['titre']}</p>
+                    <label for="tarif">Prix : {$i['tarif']}€</label>
+                    <br>
                     <label for="url" >Ou trouver cet article ?</label>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend"> 
@@ -109,6 +111,8 @@ class VueItem
                 <div class="card-body info_item px-5">
                     <h4 class="card-title">$isReserved</h4>
                     <p class="card-text">{$i['descr']}</p>
+                    <label for="tarif">Prix : {$i['tarif']}€</label>
+                    <br>
                     <label for="url" >Ou trouver mon article ?</label>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend"> 

@@ -4,6 +4,8 @@
 namespace mywishlist\vue;
 
 
+use mywishlist\models\Message;
+
 class VueItem
 {
     private $tab;
@@ -27,15 +29,19 @@ class VueItem
         $i = $this->tab[0][0];
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
+        $message = Message::where('id_parent', '=', $i['id'])->where('type_parent', '=', 'item')->first();
         $image = "../../img/" . $i['img'];
         $reservation = "";
         $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-danger\">RÉSERVÉ par {$i['reserve']}</span></h5>";
-
-
+        $html_message = "";
+        if ($i['reserve'] != "false") {
+            $html_message = "<h3>Message de la réservation :</h3><p>{$message['message']}</p>";
+        }
         if ($i['reserve'] == "false"){
             $url_reservationItem = $this->container->router->pathFor("reserve_item", ['token' => $l['token'], 'id_item' => $i['id']]);
             $reservation = "<a class=\"btn btn-primary btn-lg\" href=\"$url_reservationItem\" role=\"button\">Réserver l'item</a>";
             $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-success\">PAS ENCORE RÉSERVÉ</span></h5>";
+            $html_message = "";
         }
 
         if ($i['url'] != "") {
@@ -67,6 +73,7 @@ class VueItem
                       </div>
                     </div>
                     $reservation
+                    $html_message
                 </div>
                
             </div>
@@ -125,7 +132,6 @@ class VueItem
                     </div>
                     $modification
                     $supprimer
-                    
                     <!-- Modal pour demander si on veut supprimer -->
                         <div class="modal fade" id="confirmationSupp_{$i['nom']}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
                           <div class="modal-dialog" role="document">

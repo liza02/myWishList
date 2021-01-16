@@ -343,14 +343,27 @@ class VueListe
 
         //Ajout des messages à la page
         $messages = Message::where('id_parent', '=', $l['no'])->where('type_parent', '=', 'liste')->get()->toArray();
-        $html_messages = "";
+        $html_messages ="";
         foreach ($messages as $message) {
             $html_messages .= <<<FIN
-                    <p>{$message['auteur']} : {$message['message']}</p>
-                    FIN;
+        <div class="card card_form">
+            <div class="card-header">
+               Message de {$message['auteur']} :
+            </div>
+            
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <footer class="blockquote-footer">{$message['message']}</footer>
+                </blockquote>
+            </div>
+        </div>
+        FIN;
         }
 
-        $html_items = $html_infosListe .  $html_items . $html_messages;
+        $url_reservationItem = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
+        $html_items = $html_infosListe .  $html_items . <<<FIN
+<div class="d-flex justify-content-center"><a class="btn btn-primary btn-lg" href="$url_reservationItem" role="button">Ajouter un message</a></div>
+FIN . $html_messages . "<br>";
         return $html_items;
     }
 

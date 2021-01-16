@@ -378,7 +378,7 @@ class VueListe
         }
 
         $url_reservationItem = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
-        $html_items = $html_infosListe .  $html_items . $html_messages;
+        $html_items = $html_infosListe .  $html_items . $html_messages . "<br>";
         return $html_items;
     }
 

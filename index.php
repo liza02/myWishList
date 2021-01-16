@@ -41,7 +41,7 @@ $app->post('/compte', ControleurCompte::class.':enregistrerModif')->setName('enr
 $app->get('/compte/changePassword', ControleurCompte::class.':changerMotDePasse')->setName('changerMotDePasse');
 $app->post('/compte/changePassword', ControleurCompte::class.':enregistrerMotDePasse')->setName('enregistrerMotDePasse');
 $app->get('/deconnexion', ControleurCompte::class.':deconnexion')->setName('deconnexion');
-
+$app->get('/supprimerCompte', ControleurCompte::class.':supprimerCompte')->setName('supprimerCompte');
 
 //Chemin Liste
 $app->get('/mesListes',ControleurListe::class.':afficherMesListes')->setName('afficherMesListes');

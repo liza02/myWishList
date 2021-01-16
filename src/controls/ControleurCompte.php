@@ -4,6 +4,9 @@
 namespace mywishlist\controls;
 
 
+use mywishlist\models\Liste;
+use mywishlist\models\Item;
+use mywishlist\models\Message;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -18,6 +21,7 @@ use \mywishlist\models\User;
 class ControleurCompte {
 
     private $container;
+    private $today;
 
     /**
      * ControleurCompte constructor.
@@ -25,6 +29,17 @@ class ControleurCompte {
      */
     public function __construct($container) {
         $this->container = $container;
+        $today = getdate();
+        $jour = $today['mday'];
+        $mois = $today['mon'];
+        $annee = $today['year'];
+        if ($mois < 10) {
+            $mois = 0 . $mois;
+        }
+        if ($jour < 10) {
+            $jour = 0 . $jour;
+        }
+        $this->today = $annee . "-" . $mois . "-" . $jour;
     }
 
     /**
@@ -252,11 +267,13 @@ class ControleurCompte {
         $nouveauMDP = filter_var($post['nouveauMDP'], FILTER_SANITIZE_STRING);
         $confirmerMDP = filter_var($post['confirmerMDP'], FILTER_SANITIZE_STRING);
         $mdpOK = Authentication::authenticate($_SESSION['profile']['username'], $ancienMDP);
+
         if (!$mdpOK) {
             $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
             $rs->getBody()->write($vue->render(11)) ;
             return $rs;
         }
+
         else {
             if ($nouveauMDP != $confirmerMDP) {
                 $vue = new VueCompte( $infosUser->toArray() , $this->container ) ;
@@ -271,10 +288,11 @@ class ControleurCompte {
                 return $rs->withRedirect($url_enregisterModif);
             }
         }
+
     }
 
     /**
-     * POST
+     * GET
      * Deconnexion du compte
      * @param Request $rq
      * @param Response $rs
@@ -282,6 +300,50 @@ class ControleurCompte {
      * @return Response
      */
     public function deconnexion(Request $rq, Response $rs, $args) : Response {
+        session_destroy();
+        $_SESSION = [];
+        $url_accueil = $this->container->router->pathFor('racine');
+        $vue = new VueCompte( [], $this->container);
+        return $rs->withRedirect($url_accueil);
+
+    }
+
+    /**
+     * GET
+     * Suppression du compte
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function supprimerCompte(Request $rq, Response $rs, $args) : Response {
+        session_destroy();
+        $listes = Liste::where('user_id','=',$_SESSION['profile']['userid'])->get();
+        foreach ($listes as $liste) {
+            $date = date('Y-m-d',strtotime($liste['expiration']));
+            if ($this->today < $date) {
+                $listeASupprimer = Liste::find($liste['no']);
+                $items = Item::where('liste_id','=',$liste['no'])->get();
+                foreach ($items as $item) {
+                    $itemASupprimer = Item::find($item['id']);
+                    $messages = Message::where('id_parent','=',$item['id'])->where('type_parent','=','item')->get();
+                    foreach ($messages as $message) {
+                        $messageASupprimer = Message::find($message['id_message']);
+                        $messageASupprimer->delete();
+                    }
+                    $itemASupprimer->delete();
+                }
+                $messages = Message::where('id_parent','=',$liste['no'])->where('type_parent','=','liste')->get();
+                foreach ($messages as $message) {
+                    $messageASupprimer = Message::find($message['id_message']);
+                    $messageASupprimer->delete();
+                }
+                $listeASupprimer->delete();
+            }
+        }
+        $user = User::find($_SESSION['profile']['userid']);
+        $user->delete();
+        setcookie("user_id", '-1', time() + 60*60*24*30, "/" );
         session_destroy();
         $_SESSION = [];
         $url_accueil = $this->container->router->pathFor('racine');

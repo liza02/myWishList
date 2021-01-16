@@ -113,6 +113,7 @@ class VueCompte
         $url_modifier = $this->container->router->pathFor('modifierCompte');
         $url_changemdp = $this->container->router->pathFor('changerMotDePasse');
         $url_deconnexion = $this->container->router->pathFor('deconnexion');
+        $url_supprimerCompte = $this->container->router->pathFor('supprimerCompte');
         $html = "";
         $nom = $this->tab['nom'];
         $prenom = $this->tab['prenom'];
@@ -124,7 +125,7 @@ class VueCompte
         }
 //        $email = "Pas encore d'email enregistré";
         $html = <<<FIN
-        <div class="card card_form">
+        <div class="card card_form" xmlns="http://www.w3.org/1999/html">
             <div class="card-header text-center">
                 Mes informations
             </div>
@@ -163,6 +164,10 @@ class VueCompte
         </div>  
         <div class="text-center deconnexion">
             <a href='$url_deconnexion' class="btn btn-danger text-center">Deconnexion</a> 
+            <a href='$url_supprimerCompte' class="btn btn-secondary text-center"> <span class="fa fa-trash fa-lg"></span> Supprimer le compte</a> 
+        </div>
+        <div class="text-center">
+            
         </div>
         
         FIN;

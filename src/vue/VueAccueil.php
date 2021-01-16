@@ -45,6 +45,12 @@ class VueAccueil
         foreach($this->tab[0][0] as $liste){
             // Récupération du user appartenant à la liste courante de la boucle
             $user = $this->tab[1][0][$increment_user];
+            if ($user != null) {
+                $createur = $user['prenom'];
+            }
+            else {
+                $createur = 'Compte supprimé';
+            }
             $date = date('Y-m-d',strtotime($liste['expiration']));
             if ($date >= $this->today) {
                 $date = date('d/m/Y',strtotime($liste['expiration']));
@@ -64,7 +70,7 @@ class VueAccueil
                             <p>{$liste['titre']} </p>
                         </div>
                         <div class="card-body">
-                            <h6 class="card-subtitle mb-2 text-muted">Créateur :  {$user['prenom']}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Créateur :  $createur</h6>
                             <p class="card-text">{$description}</p>
                         </div>
                         <footer class="bouton_footer text-center">

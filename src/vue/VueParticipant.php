@@ -42,6 +42,12 @@ class VueParticipant
         foreach($this->tab[0][0] as $liste){
             // Récupération du User courant sur la boucle
             $user = $this->tab[1][0][$increment_user];
+            if ($user != null) {
+                $createur = $user['prenom'];
+            }
+            else {
+                $createur = 'Compte supprimé';
+            }
             $date = date('Y-m-d',strtotime($liste['expiration']));
             if ($date >= $this->today) {
                 $date = date('d/m/Y',strtotime($liste['expiration']));
@@ -62,7 +68,7 @@ class VueParticipant
                             <p>{$liste['titre']} </p>
                         </div>
                         <div class="card-body">
-                            <h6 class="card-subtitle mb-2 text-muted">Créateur :  {$user['prenom']}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Créateur :  $createur</h6>
                             <p class="card-text">{$description}</p>
                         </div>
                         <footer class="bouton_footer text-center">
@@ -111,7 +117,15 @@ FIN;
         // Liste dans l'array
         $l = $this->tab[0][0][0];
         // User dans l'array
-        $u = $this->tab[2][0][0];
+        if (isset($this->tab[2][0][0])) {
+            $u = $this->tab[2][0][0];
+            $nomCreateur = $u['nom'];
+            $prenomCreateur = $u['prenom'];
+        }
+        else {
+            $nomCreateur = 'Compte supprimé';
+            $prenomCreateur = '';
+        }
         $url_message = $this->container->router->pathFor("afficherFormMessage", ['token' => $l['token']]);
 
         $messages = Message::where('id_parent', '=', $l['no'])->where('type_parent', '=', 'liste')->get()->toArray();
@@ -121,7 +135,7 @@ FIN;
         <div class="jumbotron">
             <h1 class="display-4 titre_liste">Liste : {$l['titre']}</h1>
             <p class="lead">{$l['description']}</p>
-            <p class="lead">Propriétaire : {$u['nom']} {$u['prenom']}</p>
+            <p class="lead">Propriétaire : $nomCreateur $prenomCreateur</p>
             <hr class="my-4">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -277,8 +291,6 @@ FIN;
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
                 $current_page = $this->tab[0][0][0]['titre'];
                 $content .= $this->afficherListeParticipant();
-                var_dump($_COOKIE);
-                var_dump($_COOKIE['user_id'] == $this->tab[0][0][0]['user_id']);
                 break;
             }
             // affichage du formulaire pour le message sur la liste

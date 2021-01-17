@@ -600,7 +600,7 @@ class VueListe
                     <!--             image       -->
                     <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
                         <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
-                        <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
+                        <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose File</label>
                         <div class="input-group-append">
                             <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                         </div>
@@ -740,6 +740,7 @@ class VueListe
 <head>
     <title>MyWishList</title>
     <link rel="stylesheet" href="{$path}css/style.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
     <script src="{$path}js/main.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js">

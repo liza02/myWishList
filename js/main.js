@@ -1,6 +1,9 @@
 
-// upload de l'image
+/*  ==========================================
+    SHOW UPLOADED IMAGE
+* ========================================== */
 function readURL(input) {
+    console.log(input);
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -24,12 +27,14 @@ $(function () {
 var input = document.getElementById( 'upload' );
 var infoArea = document.getElementById( 'upload-label' );
 
-input.addEventListener( 'change', showFileName );
+
 function showFileName( event ) {
-    var input = event.srcElement;
+    var input = event.target;
     var fileName = input.files[0].name;
+    console.log(event);
     infoArea.textContent = 'File name: ' + fileName;
 }
+input.addEventListener( 'change', showFileName );
 
 // copie de texte dans le presse-papier
 $('#myModal').on('shown.bs.modal', function () {

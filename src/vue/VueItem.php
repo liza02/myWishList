@@ -124,6 +124,7 @@ class VueItem
         $date = date('Y-m-d',strtotime($l['expiration']));
         if ($date < $this->today) {
             if (isset($m['auteur']) ) {
+                $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">RÉSERVÉ par {$m['auteur']}</span></h5>";
                 $message .= <<<FIN
         <div class="card card_form">
             <div class="card-header">

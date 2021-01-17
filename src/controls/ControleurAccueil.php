@@ -41,7 +41,16 @@ class ControleurAccueil
             $arrayUser[] = User::where('id','=',$liste['user_id'])->first();
         }
         $listeItem = array([$lesListes],[$arrayUser]);
-        $vue = new VueAccueil($listeItem, $this->container);
+        $ensCreateur = User::all();
+        $arrayListe = array();
+        foreach ($ensCreateur as $createur){
+            if (Liste::where('user_id','=',$createur['id'])->count() > 0){
+                $arrayListe[] = Liste::where('user_id','=',$createur['id'])->get()->toArray();
+            }else{
+                $arrayListe[] = 'vide';
+            }
+        }
+        $vue = new VueAccueil([$listeItem, $ensCreateur, $arrayListe], $this->container);
         $rs->getBody()->write($vue->render(0));
         return $rs;
     }

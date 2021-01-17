@@ -12,6 +12,10 @@
     text-align: right;
 }
 
+.box_list{
+    margin-bottom: 30px;
+}
+
 .card_form {
     margin: 0 auto; /* Added */
     float: none; /* Added */
@@ -144,4 +148,15 @@
 .image-area img {
     z-index: 2;
     position: relative;
+}
+
+#imageResult {
+    width: 350px;
+    height: auto;
+}
+
+.container_img {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
 }

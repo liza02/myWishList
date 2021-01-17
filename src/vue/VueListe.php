@@ -575,14 +575,20 @@ class VueListe
                 Nouvel Item
             </div>
             <div class="card-body">
+
+        <div class="row">
+            <div class="col container_img">
+                <img id="imageResult" src="#" alt="image de l'item" onError="this.onerror=null;this.src='../../img/default.png';" class="img-fluid rounded shadow-sm">
+            </div>
+            <div class="col">
                 <form method="POST" action="$url_new_liste">
                     <div class="form-group">
-                        <label for="form_login" >Titre</label>
-                        <input type="text" class="form-control" id="form_login" placeholder="bouteille d'eau, cerf volant..." name="nom" required>
+                        <label for="form_titre" >Titre</label>
+                        <input type="text" class="form-control" id="form_titre" placeholder="bouteille d'eau, cerf volant..." name="nom" required>
                     </div>
                     <div class="form-group">
-                        <label for="form_pass" >Description</label>
-                        <input type="text" class="form-control" id="form_nom" placeholder="A quoi correspond cette item ?" name="descr">
+                        <label for="form_description" >Description</label>
+                        <input type="text" class="form-control" id="form_description" placeholder="A quoi correspond cette item ?" name="descr">
                     </div>
                     <div class="form-group">
                         <label for="form_url" >URL</label>
@@ -599,22 +605,21 @@ class VueListe
                     </div>
                     <!--             image       -->
                     <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                        <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
+                        <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0" name="image">
                         <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose File</label>
                         <div class="input-group-append">
                             <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                         </div>
                     </div>
-                    </div>
                     <!--           /image         -->
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Ajouter un item</button>
+                        <button id="enregistrerItem" type="submit" class="btn btn-primary" onclick="copyFile();">Ajouter un item</button>
                     </div>
-                </form> 
+                </form>
             </div>
-        </div>  
-        <div class="image-area mt-4"><img id="imageResult" src="#" alt="image de l'item" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
-        FIN;
+        </div>
+    </div>
+    FIN;
         return "$html";
     }
 

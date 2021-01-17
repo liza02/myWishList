@@ -12,12 +12,16 @@ function readURL(input) {
     }
 }
 
+function copyFile() {
+    var fileName = document.getElementById( 'upload-label' ).nodeValue;
+    console.log(fileName);
+}
 
 function showFileName( event ) {
     var input = event.target;
     var fileName = input.files[0].name;
     var infoArea = document.getElementById( 'upload-label' );
-    infoArea.textContent = 'File name: ' + fileName;
+    infoArea.textContent = fileName;
 }
 
 // copie de texte dans le presse-papier
@@ -34,8 +38,12 @@ function copyClipboard() {
     alert("URL copié dans le presse papier : " + copyText.value);
 }
 
-    window.addEventListener('load', function() {
-        var input = document.getElementById( 'upload');
-        input.addEventListener( 'change', showFileName );
-        input.addEventListener( 'change', readURL(input));
-    });
+window.addEventListener('load', function() {
+    var input = document.getElementById( 'upload');
+    input.addEventListener( 'change', showFileName );
+    input.addEventListener( 'change', readURL(input));
+    var enregistrer = document.getElementById( 'enregistrerItem');
+    enregistrer.addEventListener('click', copyFile);
+
+
+});

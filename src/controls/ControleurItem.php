@@ -190,4 +190,21 @@ class ControleurItem
         $url_affListe = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
         return $rs->withRedirect($url_affListe);
     }
+
+    /**
+     * GET
+     * Activer la cagnotte sur un item
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function creerCagnotte(Request $rq, Response $rs, $args): Response
+    {
+        $item = Item::find($args['id_item']);
+        $item->cagnotteActive = 'true';
+        $item->save();
+        $url_affListe = $this->container->router->pathFor("aff_item_admin", ['token' => $args['token'], 'id_item' => $args['id_item']]);
+        return $rs->withRedirect($url_affListe);
+    }
 }

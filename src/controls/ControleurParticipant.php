@@ -196,4 +196,6 @@ class ControleurParticipant
         $url_retourListe = $this->container->router->pathFor("afficherListeParticipant", ['token' => $args['token']]);
         return $rs->withRedirect($url_retourListe);
     }
+
+
 }

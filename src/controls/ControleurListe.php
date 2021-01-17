@@ -220,6 +220,15 @@ class ControleurListe
         $item->save();
         $_SESSION['creationItemOK'] = true;
         $url_listes = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
+
+        //upload image
+        $info = pathinfo($_FILES['upload']['name']);
+        $ext = $info['extension']; // get the extension of the file
+        $newname = "newname.".$ext;
+
+        $target = 'img/'.$newname;
+        move_uploaded_file( $_FILES['upload']['tmp_name'], $target);
+
         return $rs->withRedirect($url_listes);
     }
 

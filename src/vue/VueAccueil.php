@@ -93,7 +93,6 @@ class VueAccueil
         $compteur = 0;
         foreach ($users as $user){
             $liste = $this->tab[2][$compteur];
-            var_dump(gettype($liste[0]));
             if (gettype($liste[0]) != 'string') {
                 $createur = $user['nom'];
                 $debut .= "<div class=\"col-3 box_list\">
@@ -108,10 +107,10 @@ class VueAccueil
                     $debut .= " <li class=list-group-item><a href=$url_liste>{$l['titre']}</a></li>
                                 ";
                 }
-            }
-            $debut.= "</ul>
+                $debut.= "</ul>
                       </div>
                      </div>";
+            }
             $compteur++;
         }
         $debut .= "</div>";

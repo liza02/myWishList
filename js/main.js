@@ -52,7 +52,7 @@ window.addEventListener('load', function() {
     input.addEventListener( 'change', showFileName );
     input.addEventListener( 'change', readURL(input));
     var enregistrer = document.getElementById( 'enregistrerItem');
-    enregistrer.addEventListener('click', copyFile);
+    enregistrer.addEventListener('click', copyFile());
 
 
 });

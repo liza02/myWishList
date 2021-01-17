@@ -1,12 +1,9 @@
-
 /*  ==========================================
     SHOW UPLOADED IMAGE
 * ========================================== */
 function readURL(input) {
-    console.log(input);
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-
         reader.onload = function (e) {
             $('#imageResult')
                 .attr('src', e.target.result);
@@ -15,26 +12,13 @@ function readURL(input) {
     }
 }
 
-$(function () {
-    $('#upload').on('change', function () {
-        readURL(input);
-    });
-});
-
-/*  ==========================================
-    SHOW UPLOADED IMAGE NAME
-* ========================================== */
-var input = document.getElementById( 'upload' );
-var infoArea = document.getElementById( 'upload-label' );
-
 
 function showFileName( event ) {
     var input = event.target;
     var fileName = input.files[0].name;
-    console.log(event);
+    var infoArea = document.getElementById( 'upload-label' );
     infoArea.textContent = 'File name: ' + fileName;
 }
-input.addEventListener( 'change', showFileName );
 
 // copie de texte dans le presse-papier
 $('#myModal').on('shown.bs.modal', function () {
@@ -49,3 +33,9 @@ function copyClipboard() {
     document.execCommand("copy");
     alert("URL copié dans le presse papier : " + copyText.value);
 }
+
+window.addEventListener('load', function() {
+    var input = document.getElementById( 'upload');
+    input.addEventListener( 'change', showFileName );
+    input.addEventListener( 'change', readURL(input));
+});

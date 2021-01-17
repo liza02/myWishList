@@ -60,7 +60,6 @@ $app->get('/participer/{token}', ControleurParticipant::class.':afficherListePar
 $app->get('/participer/{token}/message', ControleurParticipant::class.':ajouterMessage' )->setName('afficherFormMessage');
 $app->post('/participer/{token}/message', ControleurParticipant::class.':ajouterUnMessage' )->setName('formMessageListe');
 
-
 //Chemin Item Participant
 $app->get('/participant/{token}/{id_item}', ControleurItem::class.':afficherItemParticipant' )->setName('aff_item');
 $app->get('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
@@ -72,6 +71,7 @@ $app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCr
 $app->get('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('modifierItem');
 $app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierUnItem' )->setName('formModifierItem');
 $app->get('/meslistes/{token}/{id_item}/supprimer', ControleurItem::class.':supprimerItem' )->setName('supprimerItem');
+$app->get('/meslistes/{token}/{id_item}/creerCagnotte', ControleurItem::class.':creerCagnotte' )->setName('creerCagnotte');
 
 
 $app->run();

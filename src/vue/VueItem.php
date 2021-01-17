@@ -110,8 +110,9 @@ class VueItem
         // on verifie si l'item n'est pas reservé
         if ($i['reserve'] == "false"){
             $url_modification = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
+            $url_creerCagnotte = $this->container->router->pathFor("creerCagnotte", ['token' => $l['token'], 'id_item' => $i['id']]);
             $modification = "<a class=\"btn btn-warning btn-lg\" href=\"$url_modification\" role=\"button\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
-            $cagnotte = "<a class=\"btn btn-success btn-lg\" href=\"#\" role=\"button\" aria-disabled=\"true\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> Créer une cagnotte</a>";
+            $cagnotte = "<a class=\"btn btn-success btn-lg\" href=\"$url_creerCagnotte\" role=\"button\" aria-disabled=\"true\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> Créer une cagnotte</a>";
             $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">PAS ENCORE RÉSERVÉ</span></h5>";
             $supprimer = "<button type=\"button\" class=\"btn btn-lg btn-danger\" data-toggle=\"modal\" data-target=\"#confirmationSupp_{$i['nom']}\"><span class=\"fa fa-trash fa-lg\"></span> Supprimer</button>";
         }

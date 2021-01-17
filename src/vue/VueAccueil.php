@@ -3,6 +3,8 @@
 
 namespace mywishlist\vue;
 
+use mywishlist\controls\ControleurAccueil;
+
 /**
  * Class VueAccueil
  * @package mywishlist\vue
@@ -42,9 +44,9 @@ class VueAccueil
         $html = "<h3>Listes Publiques</h3><div class=\"row\">";
         $increment_user = 0;
         // Boucle sur l'ensemble des listes
-        foreach($this->tab[0][0] as $liste){
+        foreach($this->tab[0][0][0] as $liste){
             // Récupération du user appartenant à la liste courante de la boucle
-            $user = $this->tab[1][0][$increment_user];
+            $user = $this->tab[0][1][0][$increment_user];
             if ($user != null) {
                 $createur = $user['prenom'];
             }
@@ -64,7 +66,7 @@ class VueAccueil
 
                 $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
                 $html .= <<<FIN
-                <div class="col-3 ">
+                <div class="col-3 box_list">
                     <div class="card h-100 border-light mb-3" >
                         <div class="card-header text-center">
                             <p>{$liste['titre']} </p>
@@ -86,9 +88,39 @@ class VueAccueil
             $increment_user++;
         }
         $html .= "</div>";
-        return $html;
+        $debut = $html . "<br><br><h3>Listes publique des créateurs</h3><div class=\"row\">";
+        $users = $this->tab[1];
+        $compteur = 0;
+        foreach ($users as $user){
+            $liste = $this->tab[2][$compteur];
+            var_dump(gettype($liste[0]));
+            if (gettype($liste[0]) != 'string') {
+                $createur = $user['nom'];
+                $debut .= "<div class=\"col-3 box_list\">
+                        <div class=card>
+                        <div class=card-header text-center>
+                            <p>Créateur :  $createur </p>
+                        </div>
+                        <ul class=list-group list-group-flush>";
+                foreach ($liste as $l) {
+                    $token = $l['token'];
+                    $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
+                    $debut .= " <li class=list-group-item><a href=$url_liste>{$l['titre']}</a></li>
+                                ";
+                }
+            }
+            $debut.= "</ul>
+                      </div>
+                     </div>";
+            $compteur++;
+        }
+        $debut .= "</div>";
+        return $debut;
     }
 
+    public function listeCreateur() : string{
+
+    }
     /**
      * RENDER
      * @param int $select
@@ -114,8 +146,15 @@ class VueAccueil
                 $content .= $this->listesPublique();
                 $url_accueil = $this->container->router->pathFor('racine');
                 $url_participer = $this->container->router->pathFor('participer');
-
-                $html = <<<FIN
+                break;
+            }
+            case 1 :
+                $content .= $this->listeCreateur();
+                $url_accueil = $this->container->router->pathFor('racine');
+                $url_participer = $this->container->router->pathFor('participer');
+                break;
+        }
+        $html = <<<FIN
 <!DOCTYPE html>
 <html>
 <head>
@@ -162,8 +201,6 @@ class VueAccueil
 </body>
 </html>
 FIN;
-            }
-        }
         return $html;
     }
 }

@@ -93,14 +93,15 @@ class VueAccueil
         $compteur = 0;
         foreach ($users as $user){
             $liste = $this->tab[2][$compteur];
-            $createur = $user['nom'];
-            $debut .= "<div class=\"col-3 box_list\">
+            var_dump(gettype($liste[0]));
+            if (gettype($liste[0]) != 'string') {
+                $createur = $user['nom'];
+                $debut .= "<div class=\"col-3 box_list\">
                         <div class=card>
                         <div class=card-header text-center>
                             <p>Créateur :  $createur </p>
                         </div>
                         <ul class=list-group list-group-flush>";
-            if (gettype($liste[0]) != 'string') {
                 foreach ($liste as $l) {
                     $token = $l['token'];
                     $url_liste = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);

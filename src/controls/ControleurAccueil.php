@@ -14,6 +14,7 @@ use mywishlist\models\User;
 class ControleurAccueil
 {
     private $container;
+    private $today;
 
     /**
      * ControleurAccueil constructor.
@@ -21,8 +22,17 @@ class ControleurAccueil
      */
     public function __construct($container) {
         $this->container = $container;
-//        session_destroy();
-//        $_SESSION = [];
+        $today = getdate();
+        $jour = $today['mday'];
+        $mois = $today['mon'];
+        $annee = $today['year'];
+        if ($mois < 10) {
+            $mois = 0 . $mois;
+        }
+        if ($jour < 10) {
+            $jour = 0 . $jour;
+        }
+        $this->today = $annee . "-" . $mois . "-" . $jour;
     }
 
     /**
@@ -44,7 +54,7 @@ class ControleurAccueil
         $ensCreateur = User::all();
         $arrayListe = array();
         foreach ($ensCreateur as $createur){
-            if (Liste::where('user_id','=',$createur['id'])->count() > 0){
+            if (Liste::where('user_id','=',$createur['id'])->where('expiration','>=',$this->today)->count() > 0){
                 $arrayListe[] = Liste::where('user_id','=',$createur['id'])->get()->toArray();
             }else{
                 $arrayListe[] = 'vide';

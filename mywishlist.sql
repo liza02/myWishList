@@ -36,6 +36,7 @@ CREATE TABLE `item` (
   `img` text DEFAULT 'default.png',
   `url` text DEFAULT NULL,
   `tarif` decimal(5,2) DEFAULT NULL,
+  `cagnotteActive` text NOT NULL DEFAULT 'false',
   `cagnotte` int(1) NOT NULL DEFAULT 0,
   `id_utilisateur` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `message` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,

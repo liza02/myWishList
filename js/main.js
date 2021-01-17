@@ -12,7 +12,6 @@ function readURL(input) {
     }
 }
 
-
 function showFileName( event ) {
     var input = event.target;
     var fileName = input.files[0].name;
@@ -24,7 +23,6 @@ function showFileName( event ) {
 $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
 })
-
 
 function copyClipboard() {
     var copyText = document.getElementById("myInput");

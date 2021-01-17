@@ -47,7 +47,7 @@ class VueItem
         $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-danger\">RÉSERVÉ par {$i['reserve']}</span></h5>";
         $html_message = "";
         if ($i['reserve'] != "false") {
-            $html_message = "<h3>Message de la réservation :</h3><p>{$message['message']}</p>";
+            $html_message = "<h3><i class=\"fa fa-comment-o\" aria-hidden=\"true\"></i>Message de la réservation :</h3><p>{$message['message']}</p>";
         }
         if ($i['reserve'] == "false"){
             $url_reservationItem = $this->container->router->pathFor("reserve_item", ['token' => $l['token'], 'id_item' => $i['id']]);
@@ -111,6 +111,7 @@ class VueItem
         if ($i['reserve'] == "false"){
             $url_modification = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
             $modification = "<a class=\"btn btn-warning btn-lg\" href=\"$url_modification\" role=\"button\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
+            $cagnotte = "<a class=\"btn btn-success btn-lg\" href=\"#\" role=\"button\" aria-disabled=\"true\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> Créer une cagnotte</a>";
             $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">PAS ENCORE RÉSERVÉ</span></h5>";
             $supprimer = "<button type=\"button\" class=\"btn btn-lg btn-danger\" data-toggle=\"modal\" data-target=\"#confirmationSupp_{$i['nom']}\"><span class=\"fa fa-trash fa-lg\"></span> Supprimer</button>";
         }
@@ -164,6 +165,7 @@ class VueItem
                       </div>
                     </div>
                     $modification
+                    $cagnotte
                     $supprimer
                     <!-- Modal pour demander si on veut supprimer -->
                         <div class="modal fade" id="confirmationSupp_{$i['nom']}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">

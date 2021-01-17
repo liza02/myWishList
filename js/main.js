@@ -1,6 +1,8 @@
 /*  ==========================================
     SHOW UPLOADED IMAGE
 * ========================================== */
+var filePath = "";
+
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -9,7 +11,14 @@ function readURL(input) {
                 .attr('src', e.target.result);
         };
         reader.readAsDataURL(input.files[0]);
+        getFilePath();
     }
+}
+var filePath = "";
+
+function getFilePath(){
+    //TODO
+    // modification filePath pour stocker le path
 }
 
 function copyFile() {

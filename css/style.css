@@ -12,6 +12,10 @@
     text-align: right;
 }
 
+.box_list{
+    margin-bottom: 30px;
+}
+
 .card_form {
     margin: 0 auto; /* Added */
     float: none; /* Added */

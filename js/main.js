@@ -34,8 +34,8 @@ function copyClipboard() {
     alert("URL copié dans le presse papier : " + copyText.value);
 }
 
-window.addEventListener('load', function() {
-    var input = document.getElementById( 'upload');
-    input.addEventListener( 'change', showFileName );
-    input.addEventListener( 'change', readURL(input));
-});
+    window.addEventListener('load', function() {
+        var input = document.getElementById( 'upload');
+        input.addEventListener( 'change', showFileName );
+        input.addEventListener( 'change', readURL(input));
+    });

@@ -216,6 +216,7 @@ class ControleurListe
         $item->descr = filter_var($post['descr'] , FILTER_SANITIZE_STRING) ;
         $item->tarif = filter_var($post['tarif'], FILTER_SANITIZE_STRING);
         $item->url = filter_var($post['url'], FILTER_SANITIZE_STRING);
+        $item->img = filter_var($post['image'], FILTER_SANITIZE_STRING);
         $item->save();
         $_SESSION['creationItemOK'] = true;
         $url_listes = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);

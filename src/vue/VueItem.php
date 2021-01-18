@@ -42,7 +42,12 @@ class VueItem
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
         $message = Message::where('id_parent', '=', $i['id'])->where('type_parent', '=', 'item')->first();
-        $image = "../../img/" . $i['img'];
+        $testType = explode("/",$i['img']);
+        if (count($testType) > 1){
+            $image = $i['img'];
+        }else{
+            $image = "../../img/" . $i['img'];
+        }
         $reservation = "";
         $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-danger\">RÉSERVÉ par {$i['reserve']}</span></h5>";
         $html_message = "";
@@ -102,7 +107,12 @@ class VueItem
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
         $m = $this->tab[2][0];
-        $image = "../../img/" . $i['img'];
+        $testType = explode("/",$i['img']);
+        if (count($testType) > 1){
+            $image = $i['img'];
+        }else{
+            $image = "../../img/" . $i['img'];
+        }
         // item réservé (par défaut)
         $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">RÉSERVÉ</span></h5>";
         $modification = "<a class=\"btn btn-warning btn-lg disabled\" href=\"#\" role=\"button\" aria-disabled=\"true\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
@@ -415,6 +425,7 @@ FIN;
     <title>MyWishList</title>
     <link rel="stylesheet" href="{$path}css/style.css">
     <script src="{$path}js/main.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

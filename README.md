@@ -40,7 +40,7 @@ collation=utf8_unicode_ci
 
 ## Utilisation
 
--> Lancer un serveur XAMPP, importez le fichier de création de la base MySQL ([mywihlist.sql](https://github.com/liza02/myWishList/blob/main/mywishlist.sql)), executez le et connectez-vous sur le site via index.php
+-> Lancer un serveur XAMPP, importez le fichier de création de la base MySQL ([mywishlist.sql](https://github.com/liza02/myWishList/blob/main/mywishlist.sql)), executez le et connectez-vous sur le site via index.php
 
 OU
 
@@ -56,6 +56,12 @@ OU
 ### Comptes
 
 ### Listes & items
+
+-----------------
+
+## Fiche de suivi du projet
+
+[Lien vers fiche excel en ligne](https://docs.google.com/spreadsheets/d/1c6Gno93pC22lAoNt-PZcFQJxETBG9XXCOx5xNwqz7ko/edit?usp=sharing)
 
 -----------------
 
@@ -87,7 +93,7 @@ OU
 - [x] *Rajouter une image à un item* 
 - [x] *Modifier une image à un item* 
 - [x] *Supprimer une image d'un item* 
-- [x] *Partager une liste* (Jules)
+- [x] *Partager une liste*
 - [x] *Consulter les réservations d'une de ses listes avant échéance* 
 - [x] *Consulter les réservations et messages d'une de ses listes après échéance* 
 

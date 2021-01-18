@@ -479,12 +479,12 @@ FIN;
 <li class="nav-item"><a class="nav-link" href="$url_participer">Participer à une liste</a></li>
 <li class="nav-item"><a class="nav-link active" href="$url_liste">Gérer mes listes</a></li>
 FIN;
-                $url_meslistes = $this->container->router->pathFor('afficherMesListes');
-                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistes\">Mes Listes</a></li>";
-                $url_listeActive = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
+                $url_participer = $this->container->router->pathFor('participer');
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
+                $url_listeActive = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
                 $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_listeActive\">{$this->tab[1][0]['titre']}</a></li>";
-                $url_meslistesItem = $this->container->router->pathFor("aff_item_admin", ['id_item' => $this->tab[0][0]['id'], 'token' => $token]);
-                $pathIntermediaire .="<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistesItem\">{$this->tab[0][0]['nom']}</a></li>";
+                $url_participationItem = $this->container->router->pathFor("aff_item", ['id_item' => $this->tab[0][0]['id'], 'token' => $token]);
+                $pathIntermediaire .="<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participationItem\">{$this->tab[0][0]['nom']}</a></li>";
                 $current_page = "Cagnotte";
                 $content .= $this->formCagnotte();
             }

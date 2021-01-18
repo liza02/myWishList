@@ -245,28 +245,54 @@ class VueItem
                 Modifier l'item '{$i['nom']}'
             </div>
             <div class="card-body">
-                <form method="POST" action="$url_modif_item">
-                    <div class="form-group">
-                        <label for="form_nom" >Titre</label>
-                        <input type="text" class="form-control" id="form_login" placeholder="{$i['nom']}" name="nom" required>
+            
+                <div class="row">
+                    <div class="col container_img">
+                        <img id="imageResult" src="../../../img/{$i['img']}" alt="image de l'item" onError="this.onerror=null;this.src='../../../img/default.png';" class="img-fluid rounded shadow-sm">
                     </div>
-                    <div class="form-group">
-                        <label for="form_description" >Description</label>
-                        <input type="text" class="form-control" id="form_description" placeholder="{$i['descr']}" name="description">
+                    <div class="col">
+            
+                        <form method="POST" action="$url_modif_item">
+                            <div class="form-group">
+                                <label for="form_nom" >Titre</label>
+                                <input type="text" class="form-control" id="form_login" placeholder="Nouveau nom" value="{$i['nom']}" name="nom" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="form_description" >Description</label>
+                                <input type="text" class="form-control" id="form_description" placeholder="Nouvelle description" value="{$i['descr']}" name="description">
+                            </div>
+                            <div class="form-group">
+                                <label for="form_url" >URL</label>
+                                <input type="text" class="form-control" id="form_url" placeholder="Nouvel URL" value="{$i['url']}" name="url">
+                            </div>
+                            <div class="form-group"> 
+                                <label for="form_prix" >Prix</label>
+                                <input type="text" class="form-control" id="form_prix" aria-label="Amount (to the nearest dollar)" placeholder="Nouveau prix" value="{$i['tarif']}" name="tarif">
+                            </div>
+
+                            
+                            <label >Importez votre image !</label>
+                            <!--             image       -->
+                            <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                                <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0" name="image">
+                                <label id="upload-label" for="upload" class="font-weight-light text-muted">Choisissez une image</label>
+                                <div class="input-group-append">
+                                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                                </div>
+                            </div>
+                            
+                            <!--             image URL -->
+                            <div class="form-group">
+                                <label for="form_url" > URL Image <b>(optionnel)</b></label>
+                                <input type="text" id="url_image" class="form-control" id="form_url" placeholder="URL vers l'image" onchange="" name="url_image">
+                            </div>
+                            
+                            <!--           /image         -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="form_url" >URL</label>
-                        <input type="text" class="form-control" id="form_url" placeholder="{$i['url']}" name="url">
-                    </div>
-                    <div class="form-group"> 
-                        <label for="form_prix" >Prix</label>
-                        <input type="text" class="form-control" id="form_prix" aria-label="Amount (to the nearest dollar)" placeholder="{$i['tarif']}" name="prix">
-                    </div>
-                        
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-                    </div>
-                </form> 
             </div>
         </div>   
         FIN;

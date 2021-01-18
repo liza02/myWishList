@@ -608,10 +608,11 @@ class VueListe
                             <span class="input-group-text">€</span>
                         </div>
                     </div>
+                    <label >Importez votre image !</label>
                     <!--             image       -->
                     <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
                         <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0" name="image">
-                        <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose File</label>
+                        <label id="upload-label" for="upload" class="font-weight-light text-muted">Choisissez une image</label>
                         <div class="input-group-append">
                             <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                         </div>
@@ -619,7 +620,7 @@ class VueListe
                     
                     <!--             image URL -->
                     <div class="form-group">
-                        <label for="form_url" >URL Image <b>(optionnel)</b></label>
+                        <label for="form_url" > URL Image <b>(optionnel)</b></label>
                         <input type="text" id="url_image" class="form-control" id="form_url" placeholder="URL vers l'image" onchange="" name="url_image">
                     </div>
                     

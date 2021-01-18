@@ -107,10 +107,11 @@ class VueAccueil
                     $debut .= " <li class=list-group-item><a href=$url_liste>{$l['titre']}</a></li>
                                 ";
                 }
-            }
-            $debut.= "</ul>
+                $debut.= "</ul>
                       </div>
                      </div>";
+            }
+
             $compteur++;
         }
         $debut .= "</div>";

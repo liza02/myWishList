@@ -129,15 +129,15 @@ class ControleurItem
         $item->descr = filter_var($post['description'], FILTER_SANITIZE_STRING);
         $item->tarif = filter_var($post['tarif'], FILTER_SANITIZE_STRING);
         $item->url = filter_var($post['url'], FILTER_SANITIZE_STRING);
-
-        $urlIMG = filter_var($post['url_image'],FILTER_SANITIZE_STRING) ;
+        $urlIMG = filter_var($post['url_image'],FILTER_SANITIZE_STRING);
         if ( $urlIMG != "" ){
             $item->img = $urlIMG;
         }else{
-            $fileName = $_FILES['image']['name'];
-            $fileTmpName = $_FILES['image']['tmp_name'];
-            $fileSize = $_FILES['image']['size'];
-            $fileError = $_FILES['image']['error'];
+            $file = $_FILES['image2'];
+            $fileName = $_FILES['image2']['name'];
+            $fileTmpName = $_FILES['image2']['tmp_name'];
+            $fileSize = $_FILES['image2']['size'];
+            $fileError = $_FILES['image2']['error'];
 
             $fileExt = explode('.', $fileName);
             $fileActualExt = strtolower(end($fileExt));

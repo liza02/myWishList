@@ -1,7 +1,14 @@
 .idea/
 
+img/
+/img
+
+config/
+/config
+
 vendor/
 /vendor
+
 composer.json
 composer.lock
 /test

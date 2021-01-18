@@ -119,6 +119,10 @@
     opacity: 0;
 }
 
+#upload2 {
+    opacity: 0;
+}
+
 #upload-label {
     position: absolute;
     top: 50%;

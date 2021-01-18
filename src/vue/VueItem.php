@@ -39,6 +39,7 @@ class VueItem
      */
     private function affichageItemParticipant() : string {
         $i = $this->tab[0][0];
+        $i = $this->tab[0][0];
         $l = $this->tab[1][0];
         $message = Message::where('id_parent', '=', $i['id'])->where('type_parent', '=', 'item')->first();
         $testType = explode("/",$i['img']);
@@ -64,7 +65,6 @@ class VueItem
         if ($i['cagnotteActive'] == "true") {
             $cagnotte = "<a class=\"btn btn-success btn-lg\" href=\"$url_cagnotte\" role=\"button\">Participer à la cagnotte</a>";
         }
-
         if ($i['url'] != "") {
             $url =$i['url'];
         } else {
@@ -101,7 +101,6 @@ class VueItem
             </div>
         </div>
         FIN;
-
         return $html;
     }
 
@@ -128,6 +127,7 @@ class VueItem
         // on verifie si l'item n'est pas reservé
         if ($i['reserve'] == "false"){
             $url_modification = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
+            $url_creerCagnotte = $this->container->router->pathFor("creerCagnotte", ['token' => $l['token'], 'id_item' => $i['id']]);
             $modification = "<a class=\"btn btn-warning btn-lg\" href=\"$url_modification\" role=\"button\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
             if ($i['cagnotteActive'] == "false") {
                 $cagnotte = "<a class=\"btn btn-success btn-lg\" href=\"$url_creerCagnotte\" role=\"button\" aria-disabled=\"true\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> Créer une cagnotte</a>";
@@ -287,7 +287,13 @@ class VueItem
     public function formModification() : string{
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
-        $url_modif_item = $url_modification = $this->container->router->pathFor("formModifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $url_modif_item = $this->container->router->pathFor("formModifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $testType = explode("/",$i['img']);
+        if (count($testType) > 1){
+            $image = $i['img'];
+        }else{
+            $image = "../../../img/" . $i['img'];
+        }
         $html = <<<FIN
         <div class="card" id="list_form">
             <div class="card-header text-center">
@@ -297,11 +303,11 @@ class VueItem
             
                 <div class="row">
                     <div class="col container_img">
-                        <img id="imageResult" src="../../../img/{$i['img']}" alt="image de l'item" onError="this.onerror=null;this.src='../../../img/default.png';" class="img-fluid rounded shadow-sm">
+                        <img id="imageResult" src="$image" alt="image de l'item" onError="this.onerror=null;this.src='../../../img/default.png';" class="img-fluid rounded shadow-sm">
                     </div>
                     <div class="col">
             
-                        <form method="POST" action="$url_modif_item">
+                        <form method="POST" action="$url_modif_item" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="form_nom" >Titre</label>
                                 <input type="text" class="form-control" id="form_login" placeholder="Nouveau nom" value="{$i['nom']}" name="nom" required>
@@ -321,9 +327,10 @@ class VueItem
 
                             
                             <label >Importez votre image !</label>
+                            
                             <!--             image       -->
                             <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                                <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0" name="image">
+                                <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0" name="image2">
                                 <label id="upload-label" for="upload" class="font-weight-light text-muted">Choisissez une image</label>
                                 <div class="input-group-append">
                                     <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
@@ -341,7 +348,7 @@ class VueItem
                                 <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
                             </div>
                         </form>
-                    </div>
+                 </div>
             </div>
         </div>   
         FIN;
@@ -495,14 +502,10 @@ FIN;
 <head>
     <title>MyWishList</title>
     <link rel="stylesheet" href="{$path}css/style.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="{$path}js/main.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
 </head>
 <body>
 

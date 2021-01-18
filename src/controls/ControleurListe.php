@@ -224,6 +224,7 @@ class ControleurListe
         if ( $urlIMG != "" ){
             $item->img = $urlIMG;
         }else{
+            $file = $_FILES['image'];
             $fileName = $_FILES['image']['name'];
             $fileTmpName = $_FILES['image']['tmp_name'];
             $fileSize = $_FILES['image']['size'];

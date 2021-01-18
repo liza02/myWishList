@@ -60,7 +60,11 @@ class VueItem
             $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-success\">PAS ENCORE RÉSERVÉ</span></h5>";
             $html_message = "";
         }
-
+        $cagnotte = "";
+        $url_cagnotte = $this->container->router->pathFor("formCagnotte", ['token' => $l['token'], 'id_item' => $i['id']]);
+        if ($i['cagnotteActive'] == "true") {
+            $cagnotte = "<a class=\"btn btn-success btn-lg\" href=\"$url_cagnotte\" role=\"button\">Participer à la cagnotte</a>";
+        }
         if ($i['url'] != "") {
             $url =$i['url'];
         } else {
@@ -90,6 +94,7 @@ class VueItem
                       </div>
                     </div>
                     $reservation
+                    $cagnotte
                     $html_message
                 </div>
                
@@ -116,13 +121,21 @@ class VueItem
         // item réservé (par défaut)
         $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">RÉSERVÉ</span></h5>";
         $modification = "<a class=\"btn btn-warning btn-lg disabled\" href=\"#\" role=\"button\" aria-disabled=\"true\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
+        $url_creerCagnotte = $this->container->router->pathFor("creerCagnotte", ['token' => $l['token'], 'id_item' => $i['id']]);
         $supprimer = "<button type=\"button\" class=\"btn btn-lg btn-danger disabled\" data-toggle=\"modal\" data-target=\"#confirmationSupp_{$i['nom']}\"><span class=\"fa fa-trash fa-lg\"></span> Supprimer</button>";
+        $cagnotte = "<a class=\"btn btn-success btn-lg disabled\" href=\"$url_creerCagnotte\" role=\"button\" aria-disabled=\"true\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> Créer une cagnotte</a>";
         // on verifie si l'item n'est pas reservé
         if ($i['reserve'] == "false"){
             $url_modification = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $i['id']]);
             $url_creerCagnotte = $this->container->router->pathFor("creerCagnotte", ['token' => $l['token'], 'id_item' => $i['id']]);
             $modification = "<a class=\"btn btn-warning btn-lg\" href=\"$url_modification\" role=\"button\"><span class=\"fa fa-pencil\" ></span> Modifier l'item</a>";
-            $cagnotte = "<a class=\"btn btn-success btn-lg\" href=\"$url_creerCagnotte\" role=\"button\" aria-disabled=\"true\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> Créer une cagnotte</a>";
+            if ($i['cagnotteActive'] == "false") {
+                $cagnotte = "<a class=\"btn btn-success btn-lg\" href=\"$url_creerCagnotte\" role=\"button\" aria-disabled=\"true\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> Créer une cagnotte</a>";
+            }
+            else {
+                $cagnotte = "<a class=\"btn btn-success btn-lg disabled\" href=\"$url_creerCagnotte\" role=\"button\" aria-disabled=\"true\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> Créer une cagnotte</a>";
+            }
+
             $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">PAS ENCORE RÉSERVÉ</span></h5>";
             $supprimer = "<button type=\"button\" class=\"btn btn-lg btn-danger\" data-toggle=\"modal\" data-target=\"#confirmationSupp_{$i['nom']}\"><span class=\"fa fa-trash fa-lg\"></span> Supprimer</button>";
         }
@@ -241,6 +254,32 @@ class VueItem
         return $html;
     }
 
+    public function formCagnotte() : string{
+        $i = $this->tab[0][0];
+        $l = $this->tab[1][0];
+        $url_cagnotte = $url_modification = $this->container->router->pathFor("formCagnotte", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $valeur_max= $i['tarif']-$i['cagnotte'];
+        $html = <<<FIN
+        <div class="card" id="list_form">
+            <div class="card-header text-center">
+                Participer à la cagnotte de '{$i['nom']}'
+            </div>
+            <div class="card-body">
+                <form method="POST" action="$url_cagnotte">
+                    <div class="form-group">
+                        <label for="form_message" >Montant apporté (max : $valeur_max €) :</label>
+                        <input type="text" class="form-control" id="form_message" placeholder="5.00" name="valeur">
+                    </div> 
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Contribuer</button>
+                    </div>
+                </form> 
+            </div>
+        </div>   
+        FIN;
+        return $html;
+    }
+
     /**
      * Formulaire de modification
      * @return string
@@ -285,6 +324,7 @@ class VueItem
                                 <label for="form_prix" >Prix</label>
                                 <input type="text" class="form-control" id="form_prix" aria-label="Amount (to the nearest dollar)" placeholder="Nouveau prix" value="{$i['tarif']}" name="tarif">
                             </div>
+
                             
                             <label >Importez votre image !</label>
                             
@@ -423,10 +463,37 @@ FIN;
                 $content .= $this->formModification();
                 break;
             }
-            case 6 :
-            {
+            case 6 : {
+                $path = "../../";
+                $content = "<div class=\"alert alert-success\" role=\"alert\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i> Cagnotte créée !</div>";
+                $linkactif = <<<FIN
+<li class="nav-item"><a class="nav-link" href="$url_participer">Participer à une liste</a></li>
+<li class="nav-item"><a class="nav-link active" href="$url_liste">Gérer mes listes</a></li>
+FIN;
+                $token = $this->tab[1][0]['token'];
+                $url_meslistes = $this->container->router->pathFor('afficherMesListes');
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistes\">Mes Listes</a></li>";
+                $url_listeActive = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_listeActive\">{$this->tab[1][0]['titre']}</a></li>";
+                $current_page = $this->tab[0][0]['nom'];
+                $content .= $this->affichageItemCreateur();
+                break;
+            }
+            case 7 : {
                 $path = "../../../";
-                var_dump($this->tab);
+                $token = $this->tab[1][0]['token'];
+                $linkactif = <<<FIN
+<li class="nav-item"><a class="nav-link" href="$url_participer">Participer à une liste</a></li>
+<li class="nav-item"><a class="nav-link active" href="$url_liste">Gérer mes listes</a></li>
+FIN;
+                $url_participer = $this->container->router->pathFor('participer');
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participer\">Participer</a></li>";
+                $url_listeActive = $this->container->router->pathFor("afficherListeParticipant", ['token' => $token]);
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_listeActive\">{$this->tab[1][0]['titre']}</a></li>";
+                $url_participationItem = $this->container->router->pathFor("aff_item", ['id_item' => $this->tab[0][0]['id'], 'token' => $token]);
+                $pathIntermediaire .="<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participationItem\">{$this->tab[0][0]['nom']}</a></li>";
+                $current_page = "Cagnotte";
+                $content .= $this->formCagnotte();
             }
         }
         $html = <<<FIN

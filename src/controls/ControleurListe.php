@@ -220,27 +220,31 @@ class ControleurListe
         $_SESSION['creationItemOK'] = true;
         $url_listes = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
 
-        $file = $_FILES['image'];
-        $fileName = $_FILES['image']['name'];
-        $fileTmpName = $_FILES['image']['tmp_name'];
-        $fileSize = $_FILES['image']['size'];
-        $fileError = $_FILES['image']['error'];
+        $urlIMG = filter_var($post['url_image'],FILTER_SANITIZE_STRING) ;
+        if ( $urlIMG != "" ){
+            $item->img = $urlIMG;
+        }else{
+            $fileName = $_FILES['image']['name'];
+            $fileTmpName = $_FILES['image']['tmp_name'];
+            $fileSize = $_FILES['image']['size'];
+            $fileError = $_FILES['image']['error'];
 
-        $fileExt = explode('.', $fileName);
-        $fileActualExt = strtolower(end($fileExt));
+            $fileExt = explode('.', $fileName);
+            $fileActualExt = strtolower(end($fileExt));
 
-        $allowed = array('jpg','jpeg','png');
+            $allowed = array('jpg','jpeg','png');
 
-        if (in_array($fileActualExt, $allowed)){
-            if ($fileError === 0){
-                if ($fileSize < 1000000){
-                    $fileNameNew = uniqid('',true).".".$fileActualExt;
-                    $fileDestination = 'img/'.$fileNameNew;
-                    move_uploaded_file($fileTmpName,$fileDestination);
+            if (in_array($fileActualExt, $allowed)){
+                if ($fileError === 0){
+                    if ($fileSize < 1000000){
+                        $fileNameNew = uniqid('',true).".".$fileActualExt;
+                        $fileDestination = 'img/'.$fileNameNew;
+                        move_uploaded_file($fileTmpName,$fileDestination);
+                    }
                 }
             }
+            $item->img = $fileNameNew;
         }
-        $item->img = $fileNameNew;
         $item->save();
         return $rs->withRedirect($url_listes);
     }

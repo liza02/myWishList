@@ -21,6 +21,11 @@ function showFileName( event ) {
     infoArea.textContent = fileName;
 }
 
+function fileImageVraiURL(event){
+    var imageResult = document.getElementById('imageResult');
+    imageResult.src = document.getElementById( 'url_image').value;
+}
+
 // copie de texte dans le presse-papier
 $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
@@ -39,4 +44,7 @@ window.addEventListener('load', function() {
     var input = document.getElementById( 'upload');
     input.addEventListener( 'change', showFileName );
     input.addEventListener( 'change', readURL(input));
+
+    var test = document.getElementById( 'url_image');
+    test.addEventListener( 'change', fileImageVraiURL);
 });

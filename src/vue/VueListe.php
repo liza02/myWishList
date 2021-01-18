@@ -597,7 +597,7 @@ class VueListe
                     </div>
                     <div class="form-group">
                         <label for="form_url" >URL</label>
-                        <input type="text" class="form-control" id="form_url" placeholder="où trouver mon item ?" name="url">
+                        <input type="text" class="form-control" id="form_url" placeholder="Où trouver mon item ?" name="url">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -616,6 +616,13 @@ class VueListe
                             <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
                         </div>
                     </div>
+                    
+                    <!--             image URL -->
+                    <div class="form-group">
+                        <label for="form_url" >URL Image <b>(optionnel)</b></label>
+                        <input type="text" id="url_image" class="form-control" id="form_url" placeholder="URL vers l'image" onchange="" name="url_image">
+                    </div>
+                    
                     <!--           /image         -->
                     <div class="text-center">
                         <button id="enregistrerItem" type="submit" class="btn btn-primary" onclick="copyFile();">Ajouter un item</button>
@@ -742,10 +749,6 @@ class VueListe
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
                 $current_page = $l['titre'];
                 break;
-            }
-            case 9 :
-            {
-                var_dump($this->tab);
             }
         }
         $html = $html = <<<FIN

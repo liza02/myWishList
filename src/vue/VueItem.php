@@ -258,6 +258,7 @@ class VueItem
         $i = $this->tab[0][0];
         $l = $this->tab[1][0];
         $url_cagnotte = $url_modification = $this->container->router->pathFor("formCagnotte", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $valeur_max= $i['tarif']-$i['cagnotte'];
         $html = <<<FIN
         <div class="card" id="list_form">
             <div class="card-header text-center">
@@ -266,11 +267,11 @@ class VueItem
             <div class="card-body">
                 <form method="POST" action="$url_cagnotte">
                     <div class="form-group">
-                        <label for="form_message" >Montant apporté (max : {$i['cagnotte']}€) :</label>
-                        <input type="text" class="form-control" id="form_message" placeholder="Remarques éventuelles" name="message">
+                        <label for="form_message" >Montant apporté (max : $valeur_max €) :</label>
+                        <input type="text" class="form-control" id="form_message" placeholder="5.00" name="valeur">
                     </div> 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Réserver l'item</button>
+                        <button type="submit" class="btn btn-primary">Contribuer</button>
                     </div>
                 </form> 
             </div>
@@ -470,6 +471,22 @@ FIN;
                 $current_page = $this->tab[0][0]['nom'];
                 $content .= $this->affichageItemCreateur();
                 break;
+            }
+            case 7 : {
+                $path = "../../../";
+                $token = $this->tab[1][0]['token'];
+                $linkactif = <<<FIN
+<li class="nav-item"><a class="nav-link" href="$url_participer">Participer à une liste</a></li>
+<li class="nav-item"><a class="nav-link active" href="$url_liste">Gérer mes listes</a></li>
+FIN;
+                $url_meslistes = $this->container->router->pathFor('afficherMesListes');
+                $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistes\">Mes Listes</a></li>";
+                $url_listeActive = $this->container->router->pathFor("aff_maliste", ['token' => $token]);
+                $pathIntermediaire .= "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_listeActive\">{$this->tab[1][0]['titre']}</a></li>";
+                $url_meslistesItem = $this->container->router->pathFor("aff_item_admin", ['id_item' => $this->tab[0][0]['id'], 'token' => $token]);
+                $pathIntermediaire .="<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_meslistesItem\">{$this->tab[0][0]['nom']}</a></li>";
+                $current_page = "Cagnotte";
+                $content .= $this->formCagnotte();
             }
         }
         $html = <<<FIN

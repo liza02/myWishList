@@ -246,25 +246,24 @@ class ControleurItem
 
     /**
      * GET
-     * Affichage du formulaire de réservation d'item
+     * Affichage du formulaire de participation à la cagnotte
      * @param Request $rq
      * @param Response $rs
      * @param $args
      * @return Response
      */
     public function participerCagnotte(Request $rq, Response $rs, $args) : Response {
-        $item = Item::find( $args['id_item']) ;
+        $item = Item::find( $args['id_item']);
         $liste = Liste::where('token','=',$args['token'])->first();
         $itemEtListe = array([$item],[$liste],[$args['token']]);
         $vue = new VueItem($itemEtListe, $this->container);
-        $_SESSION['modificationOK'] = true;
-        $rs->getBody()->write( $vue->render(4));
+        $rs->getBody()->write( $vue->render(7));
         return $rs;
     }
 
     /**
      * POST
-     * Enregistrement de la réservation d'un item
+     * Enregistrement de la participation à la cagnotte
      * @param Request $rq
      * @param Response $rs
      * @param $args
@@ -272,21 +271,18 @@ class ControleurItem
      */
     public function formCagnotte(Request $rq, Response $rs, $args) : Response {
         $post = $rq->getParsedBody();
-        $nomReservant = filter_var($post['nom'], FILTER_SANITIZE_STRING);
-        $message = filter_var($post['message'], FILTER_SANITIZE_STRING);
+        $contribution = filter_var($post['valeur'], FILTER_SANITIZE_STRING);
 
         $item = Item::find( $args['id_item']) ;
-        $liste = Liste::where('token','=',$args['token'])->first();
 
-        $m = new Message();
-        $m->id_parent = $args['id_item'];
-        $m->type_parent = 'item';
-        $m->message = $message;
-        $m->auteur = $nomReservant;
-        $m->save();
-
-        $item->reserve = $nomReservant;
+        if ($item->cagnotte + $contribution <= $item->tarif) {
+            $item->cagnotte = $item->cagnotte + $contribution;
+        }
+        else {
+            $item->cagnotte = $item->tarif;
+        }
         $item->save();
+
 
         $url_reservation = $this->container->router->pathFor("aff_item", ['token' => $args['token'], 'id_item' => $args['id_item']]);
         return $rs->withRedirect($url_reservation);

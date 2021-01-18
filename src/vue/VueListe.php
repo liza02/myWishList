@@ -323,7 +323,12 @@ class VueListe
             foreach ($tableau as $items){
                 $url_item = $this->container->router->pathFor("aff_item_admin", ['id_item' => $items['id'], 'token' => $l['token']]);
                 $url_modifier = $this->container->router->pathFor("modifierItem", ['token' => $l['token'], 'id_item' => $items['id']]);
-                $image = "../img/" . $items['img'];
+                $testType = explode("/",$items['img']);
+                if (count($testType) > 1){
+                    $image = $items['img'];
+                }else{
+                    $image = "../img/" . $items['img'];
+                }
                 if (strlen($items['descr']) >= 80) {
                     $description = substr($items['descr'], 0, 80) . "...";
                 } else {
@@ -581,7 +586,7 @@ class VueListe
                 <img id="imageResult" src="#" alt="image de l'item" onError="this.onerror=null;this.src='../../img/default.png';" class="img-fluid rounded shadow-sm">
             </div>
             <div class="col">
-                <form method="POST" action="$url_new_liste">
+                <form method="POST" action="$url_new_liste" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="form_titre" >Titre</label>
                         <input type="text" class="form-control" id="form_titre" placeholder="bouteille d'eau, cerf volant..." name="nom" required>
@@ -737,6 +742,10 @@ class VueListe
                 $pathIntermediaire = "<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_MesListes\">Mes Listes</a></li>";
                 $current_page = $l['titre'];
                 break;
+            }
+            case 9 :
+            {
+                var_dump($this->tab);
             }
         }
         $html = $html = <<<FIN

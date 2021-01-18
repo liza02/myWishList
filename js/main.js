@@ -1,7 +1,6 @@
 /*  ==========================================
     SHOW UPLOADED IMAGE
 * ========================================== */
-var filePath = "";
 
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -13,17 +12,6 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
         getFilePath();
     }
-}
-var filePath = "";
-
-function getFilePath(){
-    //TODO
-    // modification filePath pour stocker le path
-}
-
-function copyFile() {
-    var fileName = document.getElementById( 'upload-label' ).nodeValue;
-    console.log(fileName);
 }
 
 function showFileName( event ) {
@@ -51,8 +39,4 @@ window.addEventListener('load', function() {
     var input = document.getElementById( 'upload');
     input.addEventListener( 'change', showFileName );
     input.addEventListener( 'change', readURL(input));
-    var enregistrer = document.getElementById( 'enregistrerItem');
-    enregistrer.addEventListener('click', copyFile());
-
-
 });

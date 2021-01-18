@@ -216,19 +216,32 @@ class ControleurListe
         $item->descr = filter_var($post['descr'] , FILTER_SANITIZE_STRING) ;
         $item->tarif = filter_var($post['tarif'], FILTER_SANITIZE_STRING);
         $item->url = filter_var($post['url'], FILTER_SANITIZE_STRING);
-        $item->img = filter_var($post['image'], FILTER_SANITIZE_STRING);
-        $item->save();
+
         $_SESSION['creationItemOK'] = true;
         $url_listes = $this->container->router->pathFor("aff_maliste", ['token' => $args['token']]);
 
-        //upload image
-        $info = pathinfo($_FILES['upload']['name']);
-        $ext = $info['extension']; // get the extension of the file
-        $newname = "newname.".$ext;
+        $file = $_FILES['image'];
+        $fileName = $_FILES['image']['name'];
+        $fileTmpName = $_FILES['image']['tmp_name'];
+        $fileSize = $_FILES['image']['size'];
+        $fileError = $_FILES['image']['error'];
 
-        $target = 'img/'.$newname;
-        move_uploaded_file( $_FILES['upload']['tmp_name'], $target);
+        $fileExt = explode('.', $fileName);
+        $fileActualExt = strtolower(end($fileExt));
 
+        $allowed = array('jpg','jpeg','png');
+
+        if (in_array($fileActualExt, $allowed)){
+            if ($fileError === 0){
+                if ($fileSize < 1000000){
+                    $fileNameNew = uniqid('',true).".".$fileActualExt;
+                    $fileDestination = 'img/'.$fileNameNew;
+                    move_uploaded_file($fileTmpName,$fileDestination);
+                }
+            }
+        }
+        $item->img = $fileNameNew;
+        $item->save();
         return $rs->withRedirect($url_listes);
     }
 

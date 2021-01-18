@@ -31,7 +31,6 @@ $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
 })
 
-
 function copyClipboard() {
     var copyText = document.getElementById("myInput");
     copyText.select();

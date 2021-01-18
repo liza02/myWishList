@@ -113,7 +113,6 @@ class ControleurListe
         return $rs;
     }
 
-
     /**
      * POST
      * Enregistrement des informations sur la nouvelle liste crée

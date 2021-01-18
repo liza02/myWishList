@@ -65,6 +65,9 @@ $app->get('/participant/{token}/{id_item}', ControleurItem::class.':afficherItem
 $app->get('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
 $app->post('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverUnItem')->setName('formReserveItem');
 
+$app->get('/participant/{token}/{id_item}/cagnotte', ControleurItem::class.':participerCagnotte')->setName('participerCagnotte');
+$app->post('/participant/{token}/{id_item}/cagnotte', ControleurItem::class.':formCagnotte')->setName('formCagnotte');
+
 
 //Chemin Item Admin
 $app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCreateur' )->setName('aff_item_admin');

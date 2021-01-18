@@ -2,6 +2,8 @@
 
 Projet PHP @IUT-NC 2020/2021
 
+-----------------
+
 ## Installation locale
 
 -> Utiliser [composer](https://getcomposer.org/) pour installer MyWishList.
@@ -34,13 +36,20 @@ collation=utf8_unicode_ci
 | charset       | utf8             | Méthode d'encodage        |
 | collation     | utf8_unicode_ci  | Collation de la BDD       |
 
+-----------------
+
 ## Utilisation
 
--> Lancer un serveur XAMPP, importez le fichier de création de la BDD ([mywihlist.sql](https://github.com/liza02/myWishList/blob/main/mywishlist.sql)) et connectez-vous sur le site.
+-> Lancer un serveur XAMPP, importez le fichier de création de la base MySQL ([mywihlist.sql](https://github.com/liza02/myWishList/blob/main/mywishlist.sql)), executez le et connectez-vous sur le site via index.php
 
 OU
 
-Vous pouvez directement accéder à la [dernière release](https://github.com/Wilders/MyWishList/releases/latest), [disponible ici](https://webetu.iutnc.univ-lorraine.fr/www/sayer6u/wishlist/)
+-> Accéder au site en ligne : [disponible ici](https://alessi.cailacmaxime.ovh/)
+
+OU 
+
+-> Accéder au site hebergé sur Webetu : *disponible prochainement*
+
 
 ## Jeu de données pour tester
 
@@ -48,16 +57,16 @@ Vous pouvez directement accéder à la [dernière release](https://github.com/Wi
 
 ### Listes & items
 
+-----------------
 
-...
+## Techniques et concepts
 
-## Disparités avec le sujet
+- [x] *architecture MVC (Modèle - Vue - Controleur*
+- [x] *utilisation de l'ORM Eloquent*
+- [x] *utilisation d'un micro framework Slim 3*
+- [x] *utilisation de Bootstrap*
 
-- [x] *Nous utilisons Slim 3*
-- [x] *Nous utilisons [FIG Cookies](https://github.com/dflydev/dflydev-fig-cookies) 1.0.2 pour gérer les cookies*
-- [x] *Nous utilisons [PHPView](https://github.com/slimphp/PHP-View) 2.2 pour gérer les vues et les layouts*
-- [x] *Nous utilisons [Flash](https://github.com/slimphp/Slim-Flash) pour gérer les messages Flash (erreurs,succès..)*
-
+-----------------
 
 ## Fonctionnalités
 
@@ -100,6 +109,8 @@ Vous pouvez directement accéder à la [dernière release](https://github.com/Wi
 - [x] *Supprimer une liste*
 - [x] *Modifier le mot de passe*
 - [x] *Se déconnecter du compte*
+
+-----------------
 
 ## Contributions
 **CARRIER Lisa** - S3D @[liza02](https://github.com/liza02/myWishList/commits?author=liza02)

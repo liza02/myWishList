@@ -127,8 +127,34 @@ class ControleurItem
 
         $item->nom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
         $item->descr = filter_var($post['description'], FILTER_SANITIZE_STRING);
-        $item->tarif = filter_var($post['prix'], FILTER_SANITIZE_NUMBER_FLOAT);
+        $item->tarif = filter_var($post['tarif'], FILTER_SANITIZE_STRING);
         $item->url = filter_var($post['url'], FILTER_SANITIZE_STRING);
+
+        $urlIMG = filter_var($post['url_image'],FILTER_SANITIZE_STRING) ;
+        if ( $urlIMG != "" ){
+            $item->img = $urlIMG;
+        }else{
+            $fileName = $_FILES['image']['name'];
+            $fileTmpName = $_FILES['image']['tmp_name'];
+            $fileSize = $_FILES['image']['size'];
+            $fileError = $_FILES['image']['error'];
+
+            $fileExt = explode('.', $fileName);
+            $fileActualExt = strtolower(end($fileExt));
+
+            $allowed = array('jpg','jpeg','png');
+
+            if (in_array($fileActualExt, $allowed)){
+                if ($fileError === 0){
+                    if ($fileSize < 1000000){
+                        $fileNameNew = uniqid('',true).".".$fileActualExt;
+                        $fileDestination = 'img/'.$fileNameNew;
+                        move_uploaded_file($fileTmpName,$fileDestination);
+                    }
+                }
+            }
+            $item->img = $fileNameNew;
+        }
         $item->save();
 
         $_SESSION['modificationOK'] = true;

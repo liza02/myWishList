@@ -321,7 +321,7 @@ class VueCompte
             //connexion echec: message d'erreur + réaffichage du formulaire de connexion
             case 0 :
             {
-                $content = "<div class=\"alert alert-danger\" role=\"alert\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i> Mot de pass incorrect !</div>";
+                $content = "<div class=\"alert alert-danger\" role=\"alert\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i> Mot de passe incorrect !</div>";
             }
             //connexion: formulaire de connexion
             case 1 :

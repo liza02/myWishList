@@ -1,5 +1,8 @@
 .idea/
 
+img/
+/img
+
 vendor/
 /vendor
 composer.json

@@ -170,7 +170,16 @@ FIN;
                     $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-success\">DISPONIBLE</span></h7>";
                 }else{
                     $bouton = "<a class=\"btn btn-secondary disabled\" href=\"$url_reservationItem\" role=\"button\" aria-disabled=\"true\">Réserver</a>";
-                    $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-secondary\">RESERVÉ</span></h7>";
+                    $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-secondary\">RÉSERVÉ</span></h7>";
+                }
+                if ($items['cagnotteActive'] == "true") {
+                    $bouton = "<a class=\"btn btn-secondary disabled\" href=\"$url_reservationItem\" role=\"button\" aria-disabled=\"true\">Réserver</a>";
+                    $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-warning\">CAGNOTTE</span></h7>";
+                    if ($items['cagnotte'] != $items['tarif']) {
+                    }
+                    else {
+                        $isReserved = "<h7><span class=\"nom_item\">{$items['nom']} </span><span class=\"badge badge-secondary\">CAGNOTTE</span></h7>";
+                    }
 
                 }
                 $tarif = "<h7><span class=\"badge badge-info\">{$items['tarif']}€</span></h7>";

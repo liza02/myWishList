@@ -51,6 +51,9 @@ class VueItem
         $reservation = "";
         $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-danger\">RÉSERVÉ par {$i['reserve']}</span></h5>";
         $html_message = "";
+        $cagnotte = "";
+        $url_cagnotte = $this->container->router->pathFor("formCagnotte", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $montantCagnotte = "";
         if ($i['reserve'] != "false") {
             $html_message = "<h3><i class=\"fa fa-comment-o\" aria-hidden=\"true\"></i>Message de la réservation :</h3><p>{$message['message']}</p>";
         }
@@ -60,16 +63,26 @@ class VueItem
             $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-success\">PAS ENCORE RÉSERVÉ</span></h5>";
             $html_message = "";
         }
-        $cagnotte = "";
-        $url_cagnotte = $this->container->router->pathFor("formCagnotte", ['token' => $l['token'], 'id_item' => $i['id']]);
         if ($i['cagnotteActive'] == "true") {
+            $reservation = "";
             $cagnotte = "<a class=\"btn btn-success btn-lg\" href=\"$url_cagnotte\" role=\"button\">Participer à la cagnotte</a>";
+            if ($i['cagnotte'] != $i['tarif']) {
+                $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-warning\">CAGNOTTE EN COURS</span></h5>";
+                $montantCagnotte = "Montant de la cagnotte : <span class=\"badge badge-warning\">{$i['cagnotte']}€</span>";
+            }
+            else {
+                $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-danger\">CAGNOTTE COMPLÈTE</span></h5>";
+                $cagnotte = "<a class=\"btn btn-success btn-lg disabled\" href=\"$url_cagnotte\" role=\"button\">Participer à la cagnotte</a>";
+            }
+
         }
+
         if ($i['url'] != "") {
             $url =$i['url'];
         } else {
             $url = "Aucun URL disponible";
         }
+
         $tarif = "<span class=\"badge badge-info\">{$i['tarif']}€</span>";
         $html = <<<FIN
         <div class="box_item">
@@ -82,6 +95,7 @@ class VueItem
                     <p class="card-text">{$i['descr']}</p>
                     <p class="card-subtitle mb-2 text-muted">Liste de référence : {$l['titre']}</p>
                     <h2 class="card-text">$tarif</h2>
+                    <h3 class="card-text">$montantCagnotte</h3>
                     <br>
                     <label for="url" >Ou trouver cet article ?</label>
                     <div class="input-group mb-3">

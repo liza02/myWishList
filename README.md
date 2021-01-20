@@ -56,11 +56,11 @@ OU
 ### Comptes
 Login : *alessi* | Mot de passe : *aless*
 
-Numero 2 - Login : *theo* | Mot de passe : *theo*
+Login : *theo* | Mot de passe : *theo*
 
-Numero 3 - Login : *lisa* | Mot de passe : *lisa*
+Login : *lisa* | Mot de passe : *lisa*
 
-Numero 4 - Login : *thomas* | Mot de passe : *test*
+Login : *thomas* | Mot de passe : *test*
 
 ### Listes 
 Liste 1 - Pour fêter le bac ! | Message de Jean
@@ -69,7 +69,7 @@ Liste 2 - Liste de mariage d'Alice et de Bob - Cagnotte sur le premier item
 
 Liste 3 - C'est l'anniversaire de Charlie
 
-Liste 4 - Pour le déconfinnement
+Liste 4 - Pour le déconfinement
 
 Liste 5 - Ma liste pour plus tard | Privée
 

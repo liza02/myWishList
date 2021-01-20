@@ -77,5 +77,8 @@ $app->get('/mesListes/{token}/{id_item}/supprimer', ControleurItem::class.':supp
 $app->get('/mesListes/{token}/{id_item}/supprimerImage', ControleurItem::class.':supprimerImage' )->setName('supprimerImage');
 $app->get('/mesListes/{token}/{id_item}/creerCagnotte', ControleurItem::class.':creerCagnotte' )->setName('creerCagnotte');
 
+//Chemin Error
+$app->get('/meslistes/erreur',ControleurListe::class.':erreurListe')->setName('erreurListe');
+$app->get('/meslistes/item/erreur',ControleurItem::class.':erreurItem')->setName('erreurItem');
 
 $app->run();

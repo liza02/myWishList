@@ -100,9 +100,8 @@ class ControleurListe
                     }
                 }
             }else {
-                $vue = new VueListe([], $this->container);
-                $rs->getBody()->write($vue->render(9));
-                return $rs;
+                $url_erreurListe = $this->container->router->pathFor('erreurListe') ;
+                return $rs->withRedirect($url_erreurListe);
             }
         }else{
             if (isset($_COOKIE['user_id'])) {
@@ -114,14 +113,12 @@ class ControleurListe
                     $rs->getBody()->write( $vue->render(5));
                     return $rs;
                 }else{
-                    $vue = new VueListe([], $this->container);
-                    $rs->getBody()->write( $vue->render(9));
-                    return $rs;
+                    $url_erreurListe = $this->container->router->pathFor('erreurListe') ;
+                    return $rs->withRedirect($url_erreurListe);
                 }
             }else{
-                $vue = new VueListe([], $this->container);
-                $rs->getBody()->write( $vue->render(9));
-                return $rs;
+                $url_erreurListe = $this->container->router->pathFor('erreurListe') ;
+                return $rs->withRedirect($url_erreurListe);
             }
         }
     }
@@ -181,9 +178,21 @@ class ControleurListe
      */
     public function modifierListe(Request $rq, Response $rs, $args) : Response {
         $liste = Liste::where('token','=',$args['token'])->first();
-        $vue = new VueListe($liste->toArray(), $this->container);
-        $rs->getBody()->write( $vue->render(6));
-        return $rs;
+        if (isset($_SESSION['profile'])){
+            if ($_SESSION['profile']['userid'] == $liste->user_id){
+                $vue = new VueListe($liste->toArray(), $this->container);
+                $rs->getBody()->write( $vue->render(6));
+                return $rs;
+            } else{
+                $url_erreurListe = $this->container->router->pathFor('erreurListe') ;
+                return $rs->withRedirect($url_erreurListe);
+            }
+        }else{
+            $url_erreurListe = $this->container->router->pathFor('erreurListe') ;
+            return $rs->withRedirect($url_erreurListe);
+        }
+
+
     }
 
     /**
@@ -290,5 +299,11 @@ class ControleurListe
         $liste->delete();
         $url_MesListes = $this->container->router->pathFor('afficherMesListes') ;
         return $rs->withRedirect($url_MesListes);
+    }
+
+    public function erreurListe(Request $rq, Response $rs, $args) : Response {
+        $vue = new VueListe([], $this->container);
+        $rs->getBody()->write( $vue->render(9));
+        return $rs;
     }
 }

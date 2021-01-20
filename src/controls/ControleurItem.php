@@ -100,14 +100,12 @@ class ControleurItem
                     }
                 }
             }else{
-                $vue = new VueItem([], $this->container);
-                $rs->getBody()->write( $vue->render(8));
-                return $rs;
+                $url_erreurItem = $this->container->router->pathFor("erreurItem");
+                return $rs->withRedirect($url_erreurItem);
             }
         }else{
-            $vue = new VueItem([], $this->container);
-            $rs->getBody()->write( $vue->render(8));
-            return $rs;
+            $url_erreurItem = $this->container->router->pathFor("erreurItem");
+            return $rs->withRedirect($url_erreurItem);
         }
     }
 
@@ -318,6 +316,12 @@ class ControleurItem
         $_SESSION['modificationOK'] = true;
         $url_modif = $this->container->router->pathFor("aff_item_admin", ['token' => $args['token'], 'id_item' => $args['id_item']]);
         return $rs->withRedirect($url_modif);
+    }
+
+    public function erreurItem(Request $rq, Response $rs, $args) : Response {
+        $vue = new VueItem([], $this->container);
+        $rs->getBody()->write( $vue->render(8));
+        return $rs;
     }
 
 }

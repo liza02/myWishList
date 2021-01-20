@@ -532,9 +532,13 @@ FIN;
                 $content .= $this->formCagnotte();
             }
             case 8 : {
-                $path = "../";
+                $path = "../../";
                 $current_page = "Oups!";
                 $content .= $this->securite();
+                $linkactif = <<<FIN
+<li class="nav-item"><a class="nav-link" href="$url_participer">Participer à une liste</a></li>
+<li class="nav-item"><a class="nav-link active" href="$url_liste">Gérer mes listes</a></li>
+FIN;
             }
         }
         $html = <<<FIN

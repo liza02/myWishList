@@ -772,6 +772,7 @@ class VueListe
             case 9 :
             {
                 $path = "../";
+                $current_page = "Oups!";
                 $content .= $this->securite();
             }
         }

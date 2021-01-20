@@ -88,7 +88,7 @@ class VueAccueil
             $increment_user++;
         }
         $html .= "</div>";
-        $debut = $html . "<br><br><h3>Listes publique des créateurs</h3><div class=\"row\">";
+        $debut = $html . "<br><br><h3>Listes Publiques des créateurs</h3><div class=\"row\">";
         $users = $this->tab[1];
         $compteur = 0;
         foreach ($users as $user){

@@ -36,7 +36,7 @@ function copyClipboard() {
     copyText.select();
     copyText.setSelectionRange(0, 99999)
     document.execCommand("copy");
-    alert("URL copié dans le presse papier : " + copyText.value);
+    alert("URL copiée dans le presse papier : " + copyText.value);
 }
 
 window.addEventListener('load', function() {

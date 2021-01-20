@@ -164,7 +164,7 @@ class VueCompte
             </div>
         </div>  
         <div class="text-center deconnexion">
-            <a href='$url_deconnexion' class="btn btn-danger text-center">Deconnexion</a> 
+            <a href='$url_deconnexion' class="btn btn-danger text-center">Déconnexion</a> 
             $supprimer
         </div>
         <div class="modal fade" id="confirmationSupp_{$login}" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">

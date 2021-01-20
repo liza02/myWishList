@@ -33,10 +33,10 @@ CREATE TABLE `item` (
   `liste_id` int(11) NOT NULL,
   `nom` text NOT NULL,
   `descr` text DEFAULT NULL,
-  `img` text DEFAULT 'default.png',
+  `img` varchar(250) DEFAULT 'default.png',
   `url` text DEFAULT NULL,
   `tarif` decimal(5,2) DEFAULT NULL,
-  `cagnotteActive` text NOT NULL DEFAULT 'false',
+  `cagnotteActive` varchar(250) NOT NULL DEFAULT 'false',
   `cagnotte` decimal(5,2) NOT NULL DEFAULT 0,
   `id_utilisateur` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `message` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -48,28 +48,28 @@ CREATE TABLE `item` (
 -- Déchargement des données de la table `item`
 --
 
-INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`, `cagnotte`, `id_utilisateur`,  `message`) VALUES
-(1, 2, 'Champagne', 'Bouteille de champagne + flutes + jeux à gratter', 'champagne.jpg', '', '20.00', 0, NULL,  NULL),
-(2, 2, 'Musique', 'Partitions de piano à 4 mains', 'musique.jpg', '', '25.00', 0, NULL, NULL),
-(3, 2, 'Exposition', 'Visite guidée de l’exposition ‘REGARDER’ à la galerie Poirel', 'poirelregarder.jpg', '', '14.00', 0, NULL, NULL),
-(4, 3, 'Goûter', 'Goûter au FIFNL', 'gouter.jpg', '', '20.00', 0, NULL, NULL),
-(5, 3, 'Projection', 'Projection courts-métrages au FIFNL', 'film.jpg', '', '10.00', 0, NULL, NULL),
-(6, 2, 'Bouquet', 'Bouquet de roses et Mots de Marion Renaud', 'rose.jpg', '', '16.00', 0, NULL, NULL),
-(7, 2, 'Diner Stanislas', 'Diner à La Table du Bon Roi Stanislas (Apéritif /Entrée / Plat / Vin / Dessert / Café / Digestif)', 'bonroi.jpg', '', '60.00', 0, NULL, NULL),
-(8, 3, 'Origami', 'Baguettes magiques en Origami en buvant un thé', 'origami.jpg', '', '12.00', 0, NULL, NULL),
-(9, 3, 'Livres', 'Livre bricolage avec petits-enfants + Roman', 'bricolage.jpg', '', '24.00', 0, NULL, NULL),
-(10, 2, 'Diner  Grand Rue ', 'Diner au Grand’Ru(e) (Apéritif / Entrée / Plat / Vin / Dessert / Café)', 'grandrue.jpg', '', '59.00', 0, NULL, NULL),
-(11, 0, 'Visite guidée', 'Visite guidée personnalisée de Saint-Epvre jusqu’à Stanislas', 'place.jpg', '', '11.00', 0, NULL, NULL),
-(12, 2, 'Bijoux', 'Bijoux de manteau + Sous-verre pochette de disque + Lait après-soleil', 'bijoux.jpg', '', '29.00', 0, NULL, NULL),
-(19, 0, 'Jeu contacts', 'Jeu pour échange de contacts', 'contact.png', '', '5.00', 0, NULL, NULL),
-(22, 0, 'Concert', 'Un concert à Nancy', 'concert.jpg', '', '17.00', 0, NULL, NULL),
-(23, 1, 'Appart Hotel', 'Appart’hôtel Coeur de Ville, en plein centre-ville', 'apparthotel.jpg', '', '56.00', 0, NULL, NULL),
-(24, 2, 'Hôtel d\'Haussonville', 'Hôtel d\'Haussonville, au coeur de la Vieille ville à deux pas de la place Stanislas', 'hotel_haussonville_logo.png', '', '169.00', 0, NULL, NULL),
-(25, 1, 'Boite de nuit', 'Discothèque, Boîte tendance avec des soirées à thème & DJ invités', 'boitedenuit.jpg', '', '32.00', 0, NULL, NULL),
-(26, 1, 'Planètes Laser', 'Laser game : Gilet électronique et pistolet laser comme matériel, vous voilà équipé.', 'laser.jpg', '', '15.00', 0, NULL, NULL),
-(27, 1, 'Fort Aventure', 'Découvrez Fort Aventure à Bainville-sur-Madon, un site Accropierre unique en Lorraine ! Des Parcours Acrobatiques pour petits et grands, Jeu Mission Aventure, Crypte de Crapahute, Tyrolienne, Saut à l\'élastique inversé, Toboggan géant... et bien plus encore.', 'fort.jpg', '', '25.00', 0, NULL, NULL),
-(28, 4, 'Champagne', 'Bouteille de champagne + flutes + jeux à gratter', 'champagne.jpg', '', '20.00', 0, NULL,  NULL),
-(29, 4, 'Fort Aventure', 'Découvrez Fort Aventure à Bainville-sur-Madon, un site Accropierre unique en Lorraine ! Des Parcours Acrobatiques pour petits et grands, Jeu Mission Aventure, Crypte de Crapahute, Tyrolienne, Saut à l\'élastique inversé, Toboggan géant... et bien plus encore.', 'fort.jpg', '', '25.00', 0, NULL, NULL);
+INSERT INTO `item` (`id`, `liste_id`, `nom`, `descr`, `img`, `url`, `tarif`, `cagnotteActive`, `cagnotte`, `id_utilisateur`, `message`, `reserve`) VALUES
+(1, 2, 'Champagne', 'Bouteille de champagne + flutes + jeux à gratter', 'champagne.jpg', '', '20.00', 'true', '0.00', NULL, NULL, 'false'),
+(2, 2, 'Musique', 'Partitions de piano à 4 mains', 'musique.jpg', '', '25.00', 'false', '0.00', NULL, NULL, 'Alessi'),
+(3, 2, 'Exposition', 'Visite guidée de l’exposition ‘REGARDER’ à la galerie Poirel', 'poirelregarder.jpg', '', '14.00', 'false', '0.00', NULL, NULL, 'false'),
+(4, 3, 'Goûter', 'Goûter au FIFNL', 'gouter.jpg', '', '20.00', 'false', '0.00', NULL, NULL, 'false'),
+(5, 3, 'Projection', 'Projection courts-métrages au FIFNL', 'film.jpg', '', '10.00', 'false', '0.00', NULL, NULL, 'false'),
+(6, 2, 'Bouquet', 'Bouquet de roses et Mots de Marion Renaud', 'rose.jpg', '', '16.00', 'false', '0.00', NULL, NULL, 'false'),
+(7, 2, 'Diner Stanislas', 'Diner à La Table du Bon Roi Stanislas (Apéritif /Entrée / Plat / Vin / Dessert / Café / Digestif)', 'bonroi.jpg', '', '60.00', 'false', '0.00', NULL, NULL, 'false'),
+(8, 3, 'Origami', 'Baguettes magiques en Origami en buvant un thé', 'origami.jpg', '', '12.00', 'false', '0.00', NULL, NULL, 'false'),
+(9, 3, 'Livres', 'Livre bricolage avec petits-enfants + Roman', 'bricolage.jpg', '', '24.00', 'false', '0.00', NULL, NULL, 'Natasha '),
+(10, 2, 'Diner  Grand Rue ', 'Diner au Grand’Ru(e) (Apéritif / Entrée / Plat / Vin / Dessert / Café)', 'grandrue.jpg', '', '59.00', 'false', '0.00', NULL, NULL, 'false'),
+(11, 0, 'Visite guidée', 'Visite guidée personnalisée de Saint-Epvre jusqu’à Stanislas', 'place.jpg', '', '11.00', 'false', '0.00', NULL, NULL, 'false'),
+(12, 2, 'Bijoux', 'Bijoux de manteau + Sous-verre pochette de disque + Lait après-soleil', 'bijoux.jpg', '', '29.00', 'false', '0.00', NULL, NULL, 'false'),
+(19, 0, 'Jeu contacts', 'Jeu pour échange de contacts', 'contact.png', '', '5.00', 'false', '0.00', NULL, NULL, 'false'),
+(22, 0, 'Concert', 'Un concert à Nancy', 'concert.jpg', '', '17.00', 'false', '0.00', NULL, NULL, 'false'),
+(23, 1, 'Appart Hotel', 'Appart’hôtel Coeur de Ville, en plein centre-ville', 'apparthotel.jpg', '', '56.00', 'false', '0.00', NULL, NULL, 'Hubert'),
+(24, 2, 'Hôtel d\'Haussonville', 'Hôtel d\'Haussonville, au coeur de la Vieille ville à deux pas de la place Stanislas', 'hotel_haussonville_logo.png', '', '169.00', 'false', '0.00', NULL, NULL, 'false'),
+(25, 1, 'Boite de nuit', 'Discothèque, Boîte tendance avec des soirées à thème & DJ invités', 'boitedenuit.jpg', '', '32.00', 'false', '0.00', NULL, NULL, 'false'),
+(26, 1, 'Planètes Laser', 'Laser game : Gilet électronique et pistolet laser comme matériel, vous voilà équipé.', 'laser.jpg', '', '15.00', 'false', '0.00', NULL, NULL, 'Arthur'),
+(27, 1, 'Fort Aventure', 'Découvrez Fort Aventure à Bainville-sur-Madon, un site Accropierre unique en Lorraine ! Des Parcours Acrobatiques pour petits et grands, Jeu Mission Aventure, Crypte de Crapahute, Tyrolienne, Saut à l\'élastique inversé, Toboggan géant... et bien plus encore.', 'fort.jpg', '', '25.00', 'false', '0.00', NULL, NULL, 'false'),
+(28, 4, 'Champagne', 'Bouteille de champagne + flutes + jeux à gratter', 'champagne.jpg', '', '20.00', 'false', '0.00', NULL, NULL, 'false'),
+(29, 4, 'Fort Aventure', 'Découvrez Fort Aventure à Bainville-sur-Madon, un site Accropierre unique en Lorraine ! Des Parcours Acrobatiques pour petits et grands, Jeu Mission Aventure, Crypte de Crapahute, Tyrolienne, Saut à l\'élastique inversé, Toboggan géant... et bien plus encore.', 'fort.jpg', '', '25.00', 'false', '0.00', NULL, NULL, 'false');
 
 -- --------------------------------------------------------
 
@@ -96,7 +96,9 @@ INSERT INTO `liste` (`no`, `user_id`, `titre`, `description`, `expiration`, `tok
 (1, 1, 'Pour fêter le bac !', 'Pour un week-end à Nancy qui nous fera oublier les épreuves. ', '2021-06-27', 'nosecure1', 'true'),
 (2, 2, 'Liste de mariage d\'Alice et Bob', 'Nous souhaitons passer un week-end royal à Nancy pour notre lune de miel :)', '2021-06-30', 'nosecure2', 'true'),
 (3, 3, 'C\'est l\'anniversaire de Charlie', 'Pour lui préparer une fête dont il se souviendra :)', '2021-12-12', 'nosecure3', 'true'),
-(4, 4, 'Pour le déconfinement', 'Afin de s\'aérer l\'esprit !', '2021-05-05', 'nosecure4', 'true');
+(4, 4, 'Pour le déconfinement', 'Afin de s\'aérer l\'esprit !', '2021-05-05', 'nosecure4', 'true'),
+(5, 1, 'Ma liste pour plus tard...', 'Cette liste...', '2021-12-25', '00b1cf4bc5867426b39e', 'false'),
+(6, 2, 'Noël 2017', 'Super noël', '2017-01-20', '7d132965578185dd2f63', 'false');
 
 -- --------------------------------------------------------
 
@@ -113,6 +115,17 @@ CREATE TABLE `message` (
   `auteur` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_message`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `message`
+--
+
+INSERT INTO `message` (`id_message`, `id_parent`, `type_parent`, `message`, `auteur`) VALUES
+(1, 23, 'item', 'J&#39;adore ça ', 'Hubert'),
+(2, 26, 'item', 'Bravo pour les projets', 'Arthur'),
+(3, 2, 'item', 'J&#39;adore la musique', 'Alessi'),
+(4, 9, 'item', 'Super les livre !', 'Natasha '),
+(5, 1, 'liste', 'Super ta liste !', 'Jean');
 
 -- --------------------------------------------------------
 

@@ -154,10 +154,10 @@ class VueItem {
             }
 
             $isReserved = "<h5><span id='titre_item'>{$i['nom']}</span> <span class=\"badge badge-secondary\">PAS ENCORE RÉSERVÉ</span></h5>";
-            $url_supprimerImage = $this->container->router->pathFor("supprimerImage", ['token' => $l['token'], 'id_item' => $i['id']]);
-            $supprimerImage = "<a class=\"btn btn-danger btn-lg\" href=\"$url_supprimerImage\" role=\"button\"><span class=\"fa fa-trash fa-lg\" ></span> Supprimer Image</a>";
             $supprimer = "<button type=\"button\" class=\"btn btn-lg btn-danger\" data-toggle=\"modal\" data-target=\"#confirmationSupp_{$i['nom']}\"><span class=\"fa fa-trash fa-lg\"></span> Supprimer</button>";
         }
+        $url_supprimerImage = $this->container->router->pathFor("supprimerImage", ['token' => $l['token'], 'id_item' => $i['id']]);
+        $supprimerImage = "<a class=\"btn btn-danger btn-lg\" href=\"$url_supprimerImage\" role=\"button\"><span class=\"fa fa-trash fa-lg\" ></span> Supprimer Image</a>";
         // on verifie si l'item possède un url pour l'acheter sur un site externe
         if ($i['url'] != "") {
             $url =$i['url'];

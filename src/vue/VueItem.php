@@ -375,6 +375,22 @@ class VueItem
         return $html;
     }
 
+    public function securite () : string{
+        $url_redirConnexion = $this->container->router->pathFor('connexion');
+        $html = <<<FIN
+        <div class="card text-white bg-danger mb-3" style="max-width: 50rem;margin-right: auto;margin-left: auto">
+            <div class="card-header text-center">
+                <h4>ERREUR !</h4>
+            </div>
+            <div class="card-body text-center">
+                <h4>Vous n'avez pas accès à cette page ! <a href="{$url_redirConnexion}">Connectez vous</a></h4>
+            </div>
+        </div>
+
+        FIN;
+        return $html;
+    }
+
     /**
      * RENDER
      * @param int $select
@@ -514,6 +530,11 @@ FIN;
                 $pathIntermediaire .="<li class=\"breadcrumb-item \" aria-current=\"page\"><a href=\"$url_participationItem\">{$this->tab[0][0]['nom']}</a></li>";
                 $current_page = "Cagnotte";
                 $content .= $this->formCagnotte();
+            }
+            case 8 : {
+                $path = "../";
+                $current_page = "Oups!";
+                $content .= $this->securite();
             }
         }
         $html = <<<FIN

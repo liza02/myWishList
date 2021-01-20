@@ -201,7 +201,6 @@ class ControleurItem
         $liste = Liste::where('token','=',$args['token'])->first();
         $itemEtListe = array([$item],[$liste],[$args['token']]);
         $vue = new VueItem($itemEtListe, $this->container);
-        $_SESSION['modificationOK'] = true;
         $rs->getBody()->write( $vue->render(4));
         return $rs;
     }
@@ -231,7 +230,7 @@ class ControleurItem
 
         $item->reserve = $nomReservant;
         $item->save();
-
+        $_SESSION['modificationOK'] = true;
         $url_reservation = $this->container->router->pathFor("aff_item", ['token' => $args['token'], 'id_item' => $args['id_item']]);
         return $rs->withRedirect($url_reservation);
     }

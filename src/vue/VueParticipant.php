@@ -182,6 +182,10 @@ FIN;
                     }
 
                 }
+                if ($l['expiration']<$this->today) {
+                    $bouton = "<a class=\"btn btn-secondary disabled\" href=\"$url_reservationItem\" role=\"button\" aria-disabled=\"true\">Réserver</a>";
+                }
+
                 $tarif = "<h7><span class=\"badge badge-info\">{$items['tarif']}€</span></h7>";
                 $html_items .= <<<FIN
                 <div class="col-3 Itembox">

@@ -54,8 +54,17 @@ OU
 ## Jeu de données pour tester
 
 ### Comptes
+Numero 1 - Login : *alessi* Mot de passe : *aless*
+Numero 2 - Login : *theo* Mot de passe : *theo*
+Numero 3 - Login : *lisa* Mot de passe : *lisa*
+Numero 4 - Login : *thomas* Mot de passe : *test*
 
-### Listes & items
+### Listes 
+Liste 1 - Pour fêter le bac !
+Liste 2 - Liste de mariage d'Alice et de Bob
+Liste 3 - C'est l'anniversaire de Charlie
+Liste 4 - Pour le déconfinnement
+
 
 -----------------
 
@@ -67,7 +76,7 @@ OU
 
 ## Techniques et concepts
 
-- [x] *architecture MVC (Modèle - Vue - Controleur*
+- [x] *architecture MVC (Modèle - Vue - Controleur)*
 - [x] *utilisation de l'ORM Eloquent*
 - [x] *utilisation d'un micro framework Slim 3*
 - [x] *utilisation de Bootstrap*
@@ -115,6 +124,10 @@ OU
 - [x] *Supprimer une liste*
 - [x] *Modifier le mot de passe*
 - [x] *Se déconnecter du compte*
+- [x] *Afficher toutes nos listes*
+- [x] *Design*
+- [x] *Maquettage*
+- [x] *Débogage*
 
 -----------------
 

@@ -66,35 +66,48 @@ class ControleurListe
      * @return Response
      */
     public function afficherUneListe(Request $rq, Response $rs, $args) : Response{
-        if (isset($_SESSION['modificationOK'])){
-            $infoUser = $_SESSION['profile'];
-            $_SESSION = [];
-            $_SESSION['profile'] = $infoUser;
-            $liste = Liste::where('token','=',$args['token'])->get();
-            $item = Item::where('liste_id','=',$liste[0]['no'])->get();
-            $listeItem = array([$liste],[$item]);
-            $vue = new VueListe($listeItem, $this->container);
-            $rs->getBody()->write( $vue->render(4));
-            return $rs;
-        }else{
-            if (isset($_SESSION['suppressionOK'])){
-                $infoUser = $_SESSION['profile'];
-                $_SESSION = [];
-                $_SESSION['profile'] = $infoUser;
-                $liste = Liste::where('token','=',$args['token'])->get();
-                $item = Item::where('liste_id','=',$liste[0]['no'])->get();
-                $listeItem = array([$liste],[$item]);
-                $vue = new VueListe($listeItem, $this->container);
-                $rs->getBody()->write( $vue->render(8));
-                return $rs;
+        $liste = Liste::where('token','=',$args['token'])->first();
+        if (isset($_SESSION['profile'])){
+            if ($_SESSION['profile']['userid'] == $liste->user_id){
+                if (isset($_SESSION['modificationOK'])){
+                    $infoUser = $_SESSION['profile'];
+                    $_SESSION = [];
+                    $_SESSION['profile'] = $infoUser;
+                    $liste = Liste::where('token','=',$args['token'])->get();
+                    $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+                    $listeItem = array([$liste],[$item]);
+                    $vue = new VueListe($listeItem, $this->container);
+                    $rs->getBody()->write( $vue->render(4));
+                    return $rs;
+                }else{
+                    if (isset($_SESSION['suppressionOK'])){
+                        $infoUser = $_SESSION['profile'];
+                        $_SESSION = [];
+                        $_SESSION['profile'] = $infoUser;
+                        $liste = Liste::where('token','=',$args['token'])->get();
+                        $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+                        $listeItem = array([$liste],[$item]);
+                        $vue = new VueListe($listeItem, $this->container);
+                        $rs->getBody()->write( $vue->render(8));
+                        return $rs;
+                    }else{
+                        $liste = Liste::where('token','=',$args['token'])->get();
+                        $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+                        $listeItem = array([$liste],[$item]);
+                        $vue = new VueListe($listeItem, $this->container);
+                        $rs->getBody()->write( $vue->render(5));
+                        return $rs;
+                    }
+                }
             }else{
-                $liste = Liste::where('token','=',$args['token'])->get();
-                $item = Item::where('liste_id','=',$liste[0]['no'])->get();
-                $listeItem = array([$liste],[$item]);
-                $vue = new VueListe($listeItem, $this->container);
-                $rs->getBody()->write( $vue->render(5));
+                $vue = new VueListe([], $this->container);
+                $rs->getBody()->write( $vue->render(10));
                 return $rs;
             }
+        }else{
+            $vue = new VueListe([], $this->container);
+            $rs->getBody()->write( $vue->render(10));
+            return $rs;
         }
     }
 

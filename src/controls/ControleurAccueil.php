@@ -11,8 +11,7 @@ use mywishlist\vue\VueAccueil;
 use \mywishlist\models\Liste;
 use mywishlist\models\User;
 
-class ControleurAccueil
-{
+class ControleurAccueil {
     private $container;
     private $today;
 

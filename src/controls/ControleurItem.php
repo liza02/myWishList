@@ -18,8 +18,7 @@ use mywishlist\models\Message;
  * Class ControleurItem
  * @package mywishlist\controls
  */
-class ControleurItem
-{
+class ControleurItem {
     private $container;
 
     /**

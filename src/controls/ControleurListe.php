@@ -15,8 +15,7 @@ use \mywishlist\models\Item;
  * Class ControleurListe
  * @package mywishlist\controls
  */
-class ControleurListe
-{
+class ControleurListe {
     private $container;
 
     /**

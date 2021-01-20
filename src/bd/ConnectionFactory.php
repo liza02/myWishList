@@ -3,7 +3,7 @@ namespace mywishlist\bd;
 use \PDO;
 use PDOException;
 
-class ConnectionFactory{
+class ConnectionFactory {
 
     private static $config = null;
     private static $db = null;

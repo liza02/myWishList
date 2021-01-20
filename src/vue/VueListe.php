@@ -9,8 +9,8 @@ use mywishlist\models\Message;
  * Class VueListe
  * @package mywishlist\vue
  */
-class VueListe
-{
+class VueListe {
+
     private $tab;
     private $container;
     private $today;

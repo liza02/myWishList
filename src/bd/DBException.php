@@ -3,9 +3,7 @@ namespace mywishlist\bd;
 
 use Throwable;
 
-class DBException implements \Throwable
-{
-
+class DBException implements \Throwable {
 
     public function getMessage()
     {

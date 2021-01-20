@@ -9,8 +9,8 @@ use mywishlist\controls\ControleurAccueil;
  * Class VueAccueil
  * @package mywishlist\vue
  */
-class VueAccueil
-{
+class VueAccueil {
+
     private $tab;
     private $container;
     private $today;

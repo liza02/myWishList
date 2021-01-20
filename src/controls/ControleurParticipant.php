@@ -17,8 +17,7 @@ use \mywishlist\models\Message;
  * Class ControleurParticipant
  * @package mywishlist\controls
  */
-class ControleurParticipant
-{
+class ControleurParticipant {
     private $container;
 
     /**

@@ -3,8 +3,8 @@ namespace mywishlist\vue;
 use mywishlist\models\Message;
 
 
-class VueParticipant
-{
+class VueParticipant {
+
     private $tab; // tab array PHP
     private $container;
     private $today;

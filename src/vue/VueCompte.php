@@ -7,8 +7,8 @@ namespace mywishlist\vue;
  * Class VueCompte
  * @package mywishlist\vue
  */
-class VueCompte
-{
+class VueCompte {
+
     private $tab;
     private $container;
 

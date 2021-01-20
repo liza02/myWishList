@@ -6,8 +6,8 @@ namespace mywishlist\vue;
 
 use mywishlist\models\Message;
 
-class VueItem
-{
+class VueItem {
+
     private $tab;
     private $container;
     private $today;

@@ -99,15 +99,30 @@ class ControleurListe
                         return $rs;
                     }
                 }
+            }else {
+                $vue = new VueListe([], $this->container);
+                $rs->getBody()->write($vue->render(9));
+                return $rs;
+            }
+        }else{
+            if (isset($_COOKIE['user_id'])) {
+                if ($_COOKIE['user_id'] == $liste['user_id']){
+                    $liste = Liste::where('token','=',$args['token'])->get();
+                    $item = Item::where('liste_id','=',$liste[0]['no'])->get();
+                    $listeItem = array([$liste],[$item]);
+                    $vue = new VueListe($listeItem, $this->container);
+                    $rs->getBody()->write( $vue->render(5));
+                    return $rs;
+                }else{
+                    $vue = new VueListe([], $this->container);
+                    $rs->getBody()->write( $vue->render(9));
+                    return $rs;
+                }
             }else{
                 $vue = new VueListe([], $this->container);
                 $rs->getBody()->write( $vue->render(9));
                 return $rs;
             }
-        }else{
-            $vue = new VueListe([], $this->container);
-            $rs->getBody()->write( $vue->render(9));
-            return $rs;
         }
     }
 

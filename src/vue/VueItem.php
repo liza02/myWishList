@@ -76,6 +76,9 @@ class VueItem
             }
 
         }
+        if ($l['expiration']<$this->today) {
+            $reservation = "<a class=\"btn btn-primary btn-lg disabled\" href=\"$url_reservationItem\" role=\"button\">Réserver l'item</a>";
+        }
 
         if ($i['url'] != "") {
             $url =$i['url'];

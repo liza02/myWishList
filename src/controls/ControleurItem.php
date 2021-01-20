@@ -74,25 +74,40 @@ class ControleurItem
         $liste = Liste::where('token','=',$args['token'])->first();
         $message = Message::where('id_parent', '=', $item['id'])->where('type_parent', '=', 'item')->first();
         $itemEtListe = array([$item],[$liste],[$message]);
-        $vue = new VueItem($itemEtListe, $this->container);
-        if(isset($_SESSION['modificationOK'])){
-            $infoUser = $_SESSION['profile'];
-            $_SESSION = [];
-            $_SESSION['profile'] = $infoUser;
-            $rs->getBody()->write( $vue->render(2));
-            return $rs;
+
+        if (isset($_SESSION['profile'])){
+            if ($_SESSION['profile']['userid'] == $liste->user_id){
+                if(isset($_SESSION['modificationOK'])){
+                    $infoUser = $_SESSION['profile'];
+                    $_SESSION = [];
+                    $_SESSION['profile'] = $infoUser;
+                    $vue = new VueItem($itemEtListe, $this->container);
+                    $rs->getBody()->write( $vue->render(2));
+                    return $rs;
+                }else{
+                    if (isset($_SESSION['cagnotteOK'])) {
+                        $infoUser = $_SESSION['profile'];
+                        $_SESSION = [];
+                        $_SESSION['profile'] = $infoUser;
+                        $vue = new VueItem($itemEtListe, $this->container);
+                        $rs->getBody()->write( $vue->render(6));
+                        return $rs;
+                    }
+                    else {
+                        $vue = new VueItem($itemEtListe, $this->container);
+                        $rs->getBody()->write( $vue->render(3));
+                        return $rs;
+                    }
+                }
+            }else{
+                $vue = new VueItem([], $this->container);
+                $rs->getBody()->write( $vue->render(8));
+                return $rs;
+            }
         }else{
-            if (isset($_SESSION['cagnotteOK'])) {
-                $infoUser = $_SESSION['profile'];
-                $_SESSION = [];
-                $_SESSION['profile'] = $infoUser;
-                $rs->getBody()->write( $vue->render(6));
-                return $rs;
-            }
-            else {
-                $rs->getBody()->write( $vue->render(3));
-                return $rs;
-            }
+            $vue = new VueItem([], $this->container);
+            $rs->getBody()->write( $vue->render(8));
+            return $rs;
         }
     }
 

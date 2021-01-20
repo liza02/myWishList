@@ -61,21 +61,21 @@ $app->get('/participer/{token}/message', ControleurParticipant::class.':ajouterM
 $app->post('/participer/{token}/message', ControleurParticipant::class.':ajouterUnMessage' )->setName('formMessageListe');
 
 //Chemin Item Participant
-$app->get('/participant/{token}/{id_item}', ControleurItem::class.':afficherItemParticipant' )->setName('aff_item');
-$app->get('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
-$app->post('/participant/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverUnItem')->setName('formReserveItem');
+$app->get('/participer/{token}/{id_item}', ControleurItem::class.':afficherItemParticipant' )->setName('aff_item');
+$app->get('/participer/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverItem')->setName('reserve_item');
+$app->post('/participer/{token}/{id_item}/reserverItem', ControleurItem::class.':reserverUnItem')->setName('formReserveItem');
 
-$app->get('/participant/{token}/{id_item}/cagnotte', ControleurItem::class.':participerCagnotte')->setName('participerCagnotte');
-$app->post('/participant/{token}/{id_item}/cagnotte', ControleurItem::class.':formCagnotte')->setName('formCagnotte');
+$app->get('/participer/{token}/{id_item}/cagnotte', ControleurItem::class.':participerCagnotte')->setName('participerCagnotte');
+$app->post('/participer/{token}/{id_item}/cagnotte', ControleurItem::class.':formCagnotte')->setName('formCagnotte');
 
 
 //Chemin Item Admin
-$app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCreateur' )->setName('aff_item_admin');
-$app->get('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('modifierItem');
-$app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierUnItem' )->setName('formModifierItem');
-$app->get('/meslistes/{token}/{id_item}/supprimer', ControleurItem::class.':supprimerItem' )->setName('supprimerItem');
-$app->get('/meslistes/{token}/{id_item}/supprimerImage', ControleurItem::class.':supprimerImage' )->setName('supprimerImage');
-$app->get('/meslistes/{token}/{id_item}/creerCagnotte', ControleurItem::class.':creerCagnotte' )->setName('creerCagnotte');
+$app->get('/mesListes/{token}/{id_item}', ControleurItem::class.':afficherItemCreateur' )->setName('aff_item_admin');
+$app->get('/mesListes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('modifierItem');
+$app->post('/mesListes/{token}/{id_item}/modifier', ControleurItem::class.':modifierUnItem' )->setName('formModifierItem');
+$app->get('/mesListes/{token}/{id_item}/supprimer', ControleurItem::class.':supprimerItem' )->setName('supprimerItem');
+$app->get('/mesListes/{token}/{id_item}/supprimerImage', ControleurItem::class.':supprimerImage' )->setName('supprimerImage');
+$app->get('/mesListes/{token}/{id_item}/creerCagnotte', ControleurItem::class.':creerCagnotte' )->setName('creerCagnotte');
 
 
 $app->run();

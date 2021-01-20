@@ -303,4 +303,21 @@ class ControleurItem
         return $rs->withRedirect($url_reservation);
     }
 
+    /**
+     * POST
+     * Suppression Item
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
+    public function supprimerImage(Request $rq, Response $rs, $args) : Response {
+        $item = Item::find($args['id_item']);
+        $item->img = NULL;
+        $item->save();
+        $_SESSION['modificationOK'] = true;
+        $url_modif = $this->container->router->pathFor("aff_item_admin", ['token' => $args['token'], 'id_item' => $args['id_item']]);
+        return $rs->withRedirect($url_modif);
+    }
+
 }

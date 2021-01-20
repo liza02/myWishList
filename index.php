@@ -74,6 +74,7 @@ $app->get('/meslistes/{token}/{id_item}', ControleurItem::class.':afficherItemCr
 $app->get('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierItem' )->setName('modifierItem');
 $app->post('/meslistes/{token}/{id_item}/modifier', ControleurItem::class.':modifierUnItem' )->setName('formModifierItem');
 $app->get('/meslistes/{token}/{id_item}/supprimer', ControleurItem::class.':supprimerItem' )->setName('supprimerItem');
+$app->get('/meslistes/{token}/{id_item}/supprimerImage', ControleurItem::class.':supprimerImage' )->setName('supprimerImage');
 $app->get('/meslistes/{token}/{id_item}/creerCagnotte', ControleurItem::class.':creerCagnotte' )->setName('creerCagnotte');
 
 

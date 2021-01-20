@@ -301,6 +301,14 @@ class ControleurListe
         return $rs->withRedirect($url_MesListes);
     }
 
+    /**
+     * GET
+     * Affichage erreur liste
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function erreurListe(Request $rq, Response $rs, $args) : Response {
         $vue = new VueListe([], $this->container);
         $rs->getBody()->write( $vue->render(9));

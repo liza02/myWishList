@@ -135,44 +135,57 @@ class ControleurItem
      * @return Response
      */
     public function modifierUnItem(Request $rq, Response $rs, $args) : Response {
-        $post = $rq->getParsedBody();
-        $item = Item::find( $args['id_item']) ;
+        $liste = Liste::where('token','=',$args['token'])->first();
+        if (isset($_SESSION['profile'])){
+            if ($_SESSION['profile']['userid'] == $liste->user_id){
+                $post = $rq->getParsedBody();
+                $item = Item::find( $args['id_item']) ;
 
-        $item->nom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
-        $item->descr = filter_var($post['description'], FILTER_SANITIZE_STRING);
-        $item->tarif = filter_var($post['tarif'], FILTER_SANITIZE_STRING);
-        $item->url = filter_var($post['url'], FILTER_SANITIZE_STRING);
-        $urlIMG = filter_var($post['url_image'],FILTER_SANITIZE_STRING);
-        if ( $urlIMG != "" ){
-            $item->img = $urlIMG;
-        }else{
-            $file = $_FILES['image2'];
-            $fileName = $_FILES['image2']['name'];
-            $fileTmpName = $_FILES['image2']['tmp_name'];
-            $fileSize = $_FILES['image2']['size'];
-            $fileError = $_FILES['image2']['error'];
+                $item->nom = filter_var($post['nom'], FILTER_SANITIZE_STRING);
+                $item->descr = filter_var($post['description'], FILTER_SANITIZE_STRING);
+                $item->tarif = filter_var($post['tarif'], FILTER_SANITIZE_STRING);
+                $item->url = filter_var($post['url'], FILTER_SANITIZE_STRING);
+                $urlIMG = filter_var($post['url_image'],FILTER_SANITIZE_STRING);
+                if ( $urlIMG != "" ){
+                    $item->img = $urlIMG;
+                }else{
+                    $file = $_FILES['image2'];
+                    $fileName = $_FILES['image2']['name'];
+                    $fileTmpName = $_FILES['image2']['tmp_name'];
+                    $fileSize = $_FILES['image2']['size'];
+                    $fileError = $_FILES['image2']['error'];
 
-            $fileExt = explode('.', $fileName);
-            $fileActualExt = strtolower(end($fileExt));
+                    $fileExt = explode('.', $fileName);
+                    $fileActualExt = strtolower(end($fileExt));
 
-            $allowed = array('jpg','jpeg','png');
+                    $allowed = array('jpg','jpeg','png');
 
-            if (in_array($fileActualExt, $allowed)){
-                if ($fileError === 0){
-                    if ($fileSize < 1000000){
-                        $fileNameNew = uniqid('',true).".".$fileActualExt;
-                        $fileDestination = 'img/'.$fileNameNew;
-                        move_uploaded_file($fileTmpName,$fileDestination);
+                    if (in_array($fileActualExt, $allowed)){
+                        if ($fileError === 0){
+                            if ($fileSize < 1000000){
+                                $fileNameNew = uniqid('',true).".".$fileActualExt;
+                                $fileDestination = 'img/'.$fileNameNew;
+                                move_uploaded_file($fileTmpName,$fileDestination);
+                            }
+                        }
                     }
+                    $item->img = $fileNameNew;
                 }
-            }
-            $item->img = $fileNameNew;
-        }
-        $item->save();
+                $item->save();
 
-        $_SESSION['modificationOK'] = true;
-        $url_modif = $this->container->router->pathFor("aff_item_admin", ['token' => $args['token'], 'id_item' => $args['id_item']]);
-        return $rs->withRedirect($url_modif);
+                $_SESSION['modificationOK'] = true;
+                $url_modif = $this->container->router->pathFor("aff_item_admin", ['token' => $args['token'], 'id_item' => $args['id_item']]);
+                return $rs->withRedirect($url_modif);
+            }else{
+                $url_erreurItem = $this->container->router->pathFor("erreurItem");
+                return $rs->withRedirect($url_erreurItem);
+            }
+        }else{
+            $url_erreurItem = $this->container->router->pathFor("erreurItem");
+            return $rs->withRedirect($url_erreurItem);
+        }
+
+
     }
 
     /**
@@ -318,6 +331,14 @@ class ControleurItem
         return $rs->withRedirect($url_modif);
     }
 
+    /**
+     * GET
+     * Affichage erreur pour item
+     * @param Request $rq
+     * @param Response $rs
+     * @param $args
+     * @return Response
+     */
     public function erreurItem(Request $rq, Response $rs, $args) : Response {
         $vue = new VueItem([], $this->container);
         $rs->getBody()->write( $vue->render(8));

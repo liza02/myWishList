@@ -639,12 +639,12 @@ class VueListe
     public function securite () : string{
         $url_redirConnexion = $this->container->router->pathFor('connexion');
         $html = <<<FIN
-        <div class="card">
-            <div class="card-header">
-                ERREUR !
+        <div class="card text-white bg-danger mb-3" style="max-width: 50rem;margin-right: auto;margin-left: auto">
+            <div class="card-header text-center">
+                <h4>ERREUR !</h4>
             </div>
-            <div class="card-body">
-                <h1>Vous n'avez pas accès à cette page ! <a href="{$url_redirConnexion}">Connectez vous</a></h1>
+            <div class="card-body text-center">
+                <h4>Vous n'avez pas accès à cette page ! <a href="{$url_redirConnexion}">Connectez vous</a></h4>
             </div>
         </div>
 
@@ -767,15 +767,11 @@ class VueListe
                 $current_page = $l['titre'];
                 break;
             }
-            case 9 :
-            {
-                $path = "../../";
-                var_dump($this->tab);
-            }
             // gestion de la sécurité: si on essaye de mettre l'url de modification d'une liste dont on est
             // pas le créateur
-            case 10 :
+            case 9 :
             {
+                $path = "../";
                 $content .= $this->securite();
             }
         }

@@ -101,12 +101,12 @@ class ControleurListe
                 }
             }else{
                 $vue = new VueListe([], $this->container);
-                $rs->getBody()->write( $vue->render(10));
+                $rs->getBody()->write( $vue->render(9));
                 return $rs;
             }
         }else{
             $vue = new VueListe([], $this->container);
-            $rs->getBody()->write( $vue->render(10));
+            $rs->getBody()->write( $vue->render(9));
             return $rs;
         }
     }

@@ -636,6 +636,22 @@ class VueListe
         return "$html";
     }
 
+    public function securite () : string{
+        $url_redirConnexion = $this->container->router->pathFor('connexion');
+        $html = <<<FIN
+        <div class="card">
+            <div class="card-header">
+                ERREUR !
+            </div>
+            <div class="card-body">
+                <h1>Vous n'avez pas accès à cette page ! <a href="{$url_redirConnexion}">Connectez vous</a></h1>
+            </div>
+        </div>
+
+        FIN;
+        return $html;
+    }
+
 
     /**
      * Render
@@ -755,6 +771,12 @@ class VueListe
             {
                 $path = "../../";
                 var_dump($this->tab);
+            }
+            // gestion de la sécurité: si on essaye de mettre l'url de modification d'une liste dont on est
+            // pas le créateur
+            case 10 :
+            {
+                $content .= $this->securite();
             }
         }
         $html = $html = <<<FIN
